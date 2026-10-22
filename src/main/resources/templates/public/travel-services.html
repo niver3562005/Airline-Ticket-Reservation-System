@@ -10,7 +10,7 @@
         <aside><span class="live-pulse"><i></i> Travel desk online</span><strong>Flight-aware service</strong><p>Add an airline PNR and our operations view connects the service request to your journey.</p></aside>
     </section>
 
-    <section class="section service-marketplace">
+    <section class="section service-marketplace" id="services">
         <div th:replace="~{fragments/layout :: flash}"></div>
         <div class="service-tabs" aria-label="Service categories">
             <a th:classappend="${selectedType == null ? 'active' : ''}" th:href="@{/travel-services}">All services</a>

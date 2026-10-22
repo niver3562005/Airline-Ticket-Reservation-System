@@ -65,7 +65,7 @@
     <section class="section destination-catalogue" id="country-guide">
         <div class="section-heading"><div><span class="eyebrow">50-COUNTRY TRAVEL DIRECTORY</span><h2>One world, ready to explore.</h2><p>Browse destination inspiration, local currency and entry-guidance coverage, then select a country above for detailed advisory information.</p></div><span class="catalogue-count" th:text="${countries.size() + ' destinations'}">50 destinations</span></div>
         <div class="country-gallery">
-            <a class="country-visual-card" th:each="country, stat : ${countries}" th:href="@{/travel-hub(visaCode=${country.countryCode})}" th:style="${'--country-image:url(' + country.imagePath + ');--focus:' + ((stat.index % 5) * 25) + '%'}">
+            <a class="country-visual-card" th:each="country : ${countries}" th:href="@{/travel-hub(visaCode=${country.countryCode})}" th:style="${'--country-image:url(' + country.imagePath + ')'}">
                 <div><span class="country-badge" th:text="${country.countryCode}"></span><small th:text="${country.localCurrency}"></small></div>
                 <h3 th:text="${country.featuredCity}"></h3><p th:text="${country.country}"></p><b>View entry guide →</b>
             </a>
@@ -76,6 +76,7 @@
         <div class="section hub-contained"><div class="section-heading inverse"><div><span class="eyebrow gold">FLIGHT + STAY</span><h2>Curated AeroVista escapes</h2><p>Ready-made journeys with transparent inclusions and flexible service support.</p></div></div>
             <div class="package-grid">
                 <article class="package-card" th:each="travelPackage : ${packages}">
+                    <div class="package-image"><img th:src="${travelPackage.imagePath}" th:alt="${travelPackage.title}" loading="lazy"><span>Flight + stay</span></div>
                     <div class="package-top"><span th:text="${#strings.replace(travelPackage.type, '_', ' ')}"></span><strong th:text="${travelPackage.destination.iataCode}"></strong></div>
                     <h3 th:text="${travelPackage.title}"></h3><p th:text="${travelPackage.description}"></p>
                     <div class="package-meta"><span><svg th:replace="~{fragments/icons :: calendar}"></svg><b th:text="${travelPackage.nights + ' nights'}"></b></span><span><svg th:replace="~{fragments/icons :: mapPin}"></svg><b th:text="${travelPackage.hotel}"></b></span></div>

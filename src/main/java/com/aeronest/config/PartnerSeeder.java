@@ -83,10 +83,36 @@ public class PartnerSeeder implements CommandLineRunner {
         value.setCity(city); value.setCountry(country); value.setDescription(description); value.setServiceHighlights(highlights);
         value.setContactPhone("+94 11 555 2026"); value.setContactEmail("partners@aerovista.test");
         value.setPriceFrom(BigDecimal.valueOf(price)); value.setRating(new BigDecimal(rating)); value.setOpen24Hours(open24Hours);
-        value.setImagePath(imageFor(type)); return value;
+        value.setImagePath(imageFor(code, type)); return value;
     }
 
-    private String imageFor(PartnerType type) {
+    private String imageFor(String code, PartnerType type) {
+        if (type == PartnerType.HOTEL) {
+            if ("HT-DXB-01".equals(code)) return "/images/hotels/DXB.jpg";
+            if ("HT-SIN-01".equals(code)) return "/images/hotels/SIN.jpg";
+            if ("HT-MLE-01".equals(code)) return "/images/hotels/MLE.jpg";
+            if (code.startsWith("HT-") && code.endsWith("-CITY"))
+                return "/images/hotels/" + code.substring(3, 5) + ".jpg";
+        }
+        String uniqueServiceImage = switch (code) {
+            case "CB-CMB-01" -> "cab-1";
+            case "CB-DXB-01" -> "cab-2";
+            case "CB-SIN-01" -> "cab-3";
+            case "CB-CMB-SH" -> "cab-4";
+            case "CB-DXB-EX" -> "cab-5";
+            case "CB-SIN-SH" -> "cab-6";
+            case "CB-MLE-BOAT" -> "cab-7";
+            case "AG-CMB-01" -> "agency-1";
+            case "AG-DXB-01" -> "agency-2";
+            case "AG-GLOBAL-01" -> "agency-3";
+            case "CF-CMB-01" -> "cafe-1";
+            case "CF-SIN-01" -> "cafe-2";
+            case "CF-DXB-01" -> "cafe-3";
+            case "SM-GLOBAL-01" -> "sim-1";
+            case "SM-DXB-01" -> "sim-2";
+            default -> null;
+        };
+        if (uniqueServiceImage != null) return "/images/services/" + uniqueServiceImage + ".jpg";
         return switch (type) {
             case HOTEL -> "/images/aerovista-hotels-v1.png";
             case CAB -> "/images/aerovista-transfers-v1.png";

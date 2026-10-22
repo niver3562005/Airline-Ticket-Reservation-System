@@ -7,6 +7,7 @@ import com.aeronest.repository.AirportRepository;
 import com.aeronest.repository.FlightRepository;
 import com.aeronest.repository.CountryTravelInfoRepository;
 import com.aeronest.repository.TravelPartnerRepository;
+import com.aeronest.repository.TravelPackageRepository;
 import com.aeronest.domain.DomainEnums.PartnerType;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,7 @@ class AdvancedTravelServiceIntegrationTest {
     @Autowired AirportRepository airports;
     @Autowired CountryTravelInfoRepository countries;
     @Autowired TravelPartnerRepository partners;
+    @Autowired TravelPackageRepository packages;
 
     @Test void findsAValidatedOneStopConnection() {
         Flight first = flights.findFirstByFlightNumberIgnoreCase("AN310").orElseThrow();
@@ -58,12 +60,20 @@ class AdvancedTravelServiceIntegrationTest {
 
     @Test void seedsFiftyDestinationsAndImageBackedHotels() {
         assertThat(countries.count()).isGreaterThanOrEqualTo(50);
-        assertThat(countries.findAllByOrderByCountryAsc()).allSatisfy(country -> {
+        var destinationCatalogue = countries.findAllByOrderByCountryAsc();
+        assertThat(destinationCatalogue).allSatisfy(country -> {
             assertThat(country.getFeaturedCity()).isNotBlank();
-            assertThat(country.getImagePath()).startsWith("/images/");
+            assertThat(country.getImagePath()).startsWith("/images/destinations/");
         });
-        assertThat(partners.findByActiveTrueAndTypeOrderByRatingDesc(PartnerType.HOTEL))
-                .hasSizeGreaterThanOrEqualTo(50)
-                .allSatisfy(hotel -> assertThat(hotel.getImagePath()).contains("hotels"));
+        assertThat(destinationCatalogue).extracting(country -> country.getImagePath()).doesNotHaveDuplicates();
+
+        var hotelCatalogue = partners.findByActiveTrueAndTypeOrderByRatingDesc(PartnerType.HOTEL);
+        assertThat(hotelCatalogue).hasSizeGreaterThanOrEqualTo(50)
+                .allSatisfy(hotel -> assertThat(hotel.getImagePath()).contains("/images/hotels/"));
+        assertThat(hotelCatalogue).extracting(hotel -> hotel.getImagePath()).doesNotHaveDuplicates();
+        assertThat(partners.findAll()).extracting(partner -> partner.getImagePath()).doesNotHaveDuplicates();
+        assertThat(packages.findAll()).allSatisfy(travelPackage ->
+                assertThat(travelPackage.getImagePath()).contains("/images/packages/"));
+        assertThat(packages.findAll()).extracting(travelPackage -> travelPackage.getImagePath()).doesNotHaveDuplicates();
     }
 }

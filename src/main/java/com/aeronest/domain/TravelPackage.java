@@ -19,6 +19,7 @@ public class TravelPackage extends BaseEntity {
     @Column(nullable = false, length = 600) private String description;
     @Column(nullable = false, length = 400) private String inclusions;
     @Column(nullable = false, length = 120) private String hotel;
+    @Column(length = 260) private String imagePath;
     @Column(nullable = false) private int nights;
     @Column(nullable = false, precision = 12, scale = 2) private BigDecimal pricePerPerson;
     private boolean active = true;
@@ -37,6 +38,8 @@ public class TravelPackage extends BaseEntity {
     public void setInclusions(String inclusions) { this.inclusions = inclusions; }
     public String getHotel() { return hotel; }
     public void setHotel(String hotel) { this.hotel = hotel; }
+    public String getImagePath() { return imagePath; }
+    public void setImagePath(String imagePath) { this.imagePath = imagePath; }
     public int getNights() { return nights; }
     public void setNights(int nights) { this.nights = nights; }
     public BigDecimal getPricePerPerson() { return pricePerPerson; }

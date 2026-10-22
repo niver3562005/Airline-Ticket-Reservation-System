@@ -51,6 +51,7 @@ public class ExperienceSeeder implements CommandLineRunner {
         expandCountryCatalogue();
         if (facilities.count() == 0 && airports.count() > 0) seedFacilities();
         if (packages.count() == 0 && airports.count() > 0) seedPackages();
+        upgradePackageImagery();
         if (airports.count() > 0 && aircraft.count() > 0) seedConnections();
         upgradeOperationalData();
     }
@@ -103,9 +104,15 @@ public class ExperienceSeeder implements CommandLineRunner {
                     6, "Check current digital arrival and health declarations",
                     "https://www.iatatravelcentre.com/", seed.currency(), seed.emergency()));
             info.setFeaturedCity(seed.city());
-            info.setImagePath("/images/aerovista-destinations-v1.png");
+            info.setImagePath("/images/destinations/" + seed.code() + ".jpg");
             countries.save(info);
         });
+    }
+
+    private void upgradePackageImagery() {
+        var availablePackages = packages.findAll();
+        availablePackages.forEach(value -> value.setImagePath("/images/packages/" + value.getCode() + ".jpg"));
+        packages.saveAll(availablePackages);
     }
 
     /** Fifty database-backed destinations used by the visa checker and visual destination gallery. */

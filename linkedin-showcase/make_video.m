@@ -65,14 +65,14 @@ static void DrawFeatureCaption(NSDictionary *scene, NSInteger index, NSInteger f
         nil];
     [gradient drawInRect:NSMakeRect(0, 650, CanvasWidth, 430) angle:-90];
 
-    DrawText([scene[@"section"] uppercaseString], NSMakeRect(205, 706, 1260, 34), 18, NSFontWeightBold, [NSColor colorWithCalibratedRed:0.92 green:0.72 blue:0.30 alpha:alpha], NSTextAlignmentLeft);
-    RoundedFill([NSColor colorWithCalibratedRed:0.10 green:0.42 blue:0.86 alpha:0.95 * alpha], NSMakeRect(112, 772, 66, 66), 18);
+    DrawText([scene[@"section"] uppercaseString], NSMakeRect(205, 706, 1260, 34), 18, NSFontWeightBold, [NSColor colorWithCalibratedRed:0.85 green:0.73 blue:0.55 alpha:alpha], NSTextAlignmentLeft);
+    RoundedFill([NSColor colorWithCalibratedRed:0.08 green:0.17 blue:0.35 alpha:0.96 * alpha], NSMakeRect(112, 772, 66, 66), 18);
     DrawText(@"✈", NSMakeRect(112, 783, 66, 48), 31, NSFontWeightMedium, [[NSColor whiteColor] colorWithAlphaComponent:alpha], NSTextAlignmentCenter);
     DrawText(scene[@"title"], NSMakeRect(205, 748, 1320, 80), 46, NSFontWeightBold, [[NSColor whiteColor] colorWithAlphaComponent:alpha], NSTextAlignmentLeft);
     DrawText(scene[@"subtitle"], NSMakeRect(208, 826, 1430, 58), 25, NSFontWeightRegular, [NSColor colorWithCalibratedRed:0.84 green:0.90 blue:1.0 alpha:alpha], NSTextAlignmentLeft);
     DrawText([NSString stringWithFormat:@"%02ld / %02ld", (long)index, (long)featureCount], NSMakeRect(1635, 792, 170, 36), 18, NSFontWeightSemibold, [[NSColor whiteColor] colorWithAlphaComponent:0.82 * alpha], NSTextAlignmentRight);
     Fill([[NSColor whiteColor] colorWithAlphaComponent:0.22 * alpha], NSMakeRect(112, 956, 1696, 4));
-    Fill([NSColor colorWithCalibratedRed:0.92 green:0.72 blue:0.30 alpha:alpha], NSMakeRect(112, 956, 1696.0 * index / featureCount, 4));
+    Fill([NSColor colorWithCalibratedRed:0.85 green:0.73 blue:0.55 alpha:alpha], NSMakeRect(112, 956, 1696.0 * index / featureCount, 4));
 }
 
 static void DrawIntro(NSDictionary *scene, double progress) {
@@ -82,19 +82,19 @@ static void DrawIntro(NSDictionary *scene, double progress) {
     DrawText(@"✈", NSMakeRect(150, 205, 82, 54), 40, NSFontWeightMedium, [[NSColor whiteColor] colorWithAlphaComponent:alpha], NSTextAlignmentCenter);
     DrawText(scene[@"title"], NSMakeRect(260, 168, 1200, 130), 104, NSFontWeightBold, [[NSColor whiteColor] colorWithAlphaComponent:alpha], NSTextAlignmentLeft);
     DrawText(scene[@"subtitle"], NSMakeRect(158, 330, 1400, 92), 35, NSFontWeightMedium, [NSColor colorWithCalibratedRed:0.90 green:0.94 blue:1.0 alpha:alpha], NSTextAlignmentLeft);
-    RoundedFill([NSColor colorWithCalibratedRed:0.92 green:0.72 blue:0.30 alpha:alpha], NSMakeRect(158, 466, 162, 8), 4);
+    RoundedFill([NSColor colorWithCalibratedRed:0.85 green:0.73 blue:0.55 alpha:alpha], NSMakeRect(158, 466, 162, 8), 4);
     DrawText(@"FLIGHTS  ·  STAYS  ·  TRANSFERS  ·  LIVE OPERATIONS", NSMakeRect(158, 510, 1340, 48), 21, NSFontWeightSemibold, [[NSColor whiteColor] colorWithAlphaComponent:0.9 * alpha], NSTextAlignmentLeft);
 }
 
 static void DrawOutro(NSDictionary *scene, double progress) {
     Fill([NSColor colorWithCalibratedRed:0.01 green:0.04 blue:0.12 alpha:0.84], NSMakeRect(0, 0, CanvasWidth, CanvasHeight));
     NSGradient *glow = [[NSGradient alloc] initWithColors:@[
-        [NSColor colorWithCalibratedRed:0.07 green:0.55 blue:0.78 alpha:0.35],
+        [NSColor colorWithCalibratedRed:0.91 green:0.71 blue:0.56 alpha:0.28],
         [NSColor clearColor]
     ]];
     [glow drawInRect:NSMakeRect(900, -200, 1200, 1200) relativeCenterPosition:NSMakePoint(0.2, -0.2)];
     CGFloat alpha = MIN(1.0, progress / 0.18);
-    DrawText(@"AEROVISTA", NSMakeRect(170, 174, 600, 42), 22, NSFontWeightBold, [NSColor colorWithCalibratedRed:0.92 green:0.72 blue:0.30 alpha:alpha], NSTextAlignmentLeft);
+    DrawText(@"AEROVISTA", NSMakeRect(170, 174, 600, 42), 22, NSFontWeightBold, [NSColor colorWithCalibratedRed:0.85 green:0.73 blue:0.55 alpha:alpha], NSTextAlignmentLeft);
     DrawText(scene[@"title"], NSMakeRect(165, 240, 1420, 110), 76, NSFontWeightBold, [[NSColor whiteColor] colorWithAlphaComponent:alpha], NSTextAlignmentLeft);
     DrawText(scene[@"subtitle"], NSMakeRect(170, 374, 1480, 80), 28, NSFontWeightMedium, [NSColor colorWithCalibratedRed:0.82 green:0.89 blue:1.0 alpha:alpha], NSTextAlignmentLeft);
 
@@ -108,7 +108,7 @@ static void DrawOutro(NSDictionary *scene, double progress) {
         x += chipWidth + 18;
     }
     DrawText(@"github.com/niver3562005/Airline-Ticket-Reservation-System", NSMakeRect(170, 830, 1350, 50), 24, NSFontWeightMedium, [NSColor colorWithCalibratedRed:0.86 green:0.91 blue:1.0 alpha:alpha], NSTextAlignmentLeft);
-    DrawText(@"YOUR JOURNEY, ELEVATED", NSMakeRect(170, 912, 900, 42), 20, NSFontWeightBold, [NSColor colorWithCalibratedRed:0.92 green:0.72 blue:0.30 alpha:alpha], NSTextAlignmentLeft);
+    DrawText(@"YOUR JOURNEY, ELEVATED", NSMakeRect(170, 912, 900, 42), 20, NSFontWeightBold, [NSColor colorWithCalibratedRed:0.85 green:0.73 blue:0.55 alpha:alpha], NSTextAlignmentLeft);
 }
 
 static void RenderFrame(NSDictionary *scene, NSImage *image, NSInteger index, NSInteger featureCount, double progress, CVPixelBufferRef buffer) {
@@ -140,9 +140,9 @@ int main(int argc, const char * argv[]) {
     @autoreleasepool {
         NSString *root = argc > 1 ? [NSString stringWithUTF8String:argv[1]] : [[NSFileManager defaultManager] currentDirectoryPath];
         NSString *capturePath = [root stringByAppendingPathComponent:@"linkedin-showcase/extended-captures"];
-        NSString *outputPath = [root stringByAppendingPathComponent:@"AeroVista-Complete-Platform-Walkthrough.mp4"];
+        NSString *outputPath = [root stringByAppendingPathComponent:@"AeroVista-Premium-Platform-Walkthrough.mp4"];
         NSArray<NSDictionary *> *scenes = @[
-            @{@"file": @"01-home.png", @"title": @"AeroVista", @"subtitle": @"Complete airline reservation and operations walkthrough", @"duration": @4.5, @"style": @"intro"},
+            @{@"file": @"01-home.png", @"title": @"AeroVista", @"subtitle": @"Premium airline reservation and operations experience", @"duration": @4.5, @"style": @"intro"},
 
             Feature(@"02-create-account.png", @"Account & Security", @"Create a passenger account", @"Validated registration, secure passwords and travel preferences", 2.1),
             Feature(@"03-verify-email.png", @"Account & Security", @"Secure email verification", @"Single-use activation protects every passenger identity", 1.9),
@@ -186,6 +186,7 @@ int main(int argc, const char * argv[]) {
             Feature(@"35-feedback-recorded.png", @"Passenger Care", @"Feedback case created", @"An auditable service case reaches the care team", 1.9),
             Feature(@"36-notifications.png", @"Passenger Care", @"Multi-channel notifications", @"Booking, payment, profile, check-in and partner events", 2.1),
             Feature(@"37-refund-quote.png", @"Passenger Care", @"Transparent cancellation quote", @"Paid amount, fee and cash return before confirmation", 2.5),
+            Feature(@"38-booking-cancelled.png", @"Passenger Care", @"Cancellation completed safely", @"A tracked cash-refund request opens automatically", 2.2),
             Feature(@"39-cancelled-in-account.png", @"Passenger Care", @"Account history after cancellation", @"Cancelled journeys and connected services remain visible", 2.3),
             Feature(@"40-refund-notifications.png", @"Passenger Care", @"Cancellation and refund alerts", @"Communications are recorded across the journey timeline", 2.2),
 
@@ -281,7 +282,7 @@ int main(int argc, const char * argv[]) {
         if (posterImage) {
             NSBitmapImageRep *poster = [[NSBitmapImageRep alloc] initWithCGImage:posterImage];
             NSData *posterData = [poster representationUsingType:NSBitmapImageFileTypePNG properties:@{}];
-            [posterData writeToFile:[root stringByAppendingPathComponent:@"AeroVista-Complete-Platform-Cover.png"] atomically:YES];
+            [posterData writeToFile:[root stringByAppendingPathComponent:@"AeroVista-Premium-Platform-Cover.png"] atomically:YES];
             CGImageRelease(posterImage);
         } else {
             NSLog(@"Poster export warning: %@", posterError);

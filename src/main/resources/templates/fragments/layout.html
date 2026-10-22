@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="AeroVista premium airline reservation and operations platform">
-    <meta name="theme-color" content="#0B1736">
+    <meta name="theme-color" content="#0D1B33">
     <title th:text="${title} + ' · AeroVista'">AeroVista</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/app.css}">
+    <link rel="stylesheet" th:href="@{/css/premium-redesign.css}">
     <script defer th:src="@{/js/app.js}"></script>
 </head>
 <body>
@@ -18,9 +19,11 @@
     <button class="mobile-menu-button" type="button" data-nav-toggle aria-label="Open navigation" aria-expanded="false"><svg th:replace="~{fragments/icons :: menu}"></svg></button>
     <div class="nav-links" data-nav-menu>
         <details class="nav-dropdown"><summary>Flights <span>⌄</span></summary><div><a th:href="@{/#book}">Book a flight<small>Search live availability</small></a><a th:href="@{/flight-schedule}">Flight schedule<small>Times, fares and baggage</small></a><a th:href="@{/flight-status}">Flight status<small>Live operations and tracking</small></a><a th:href="@{/deals}">Deals &amp; promo codes<small>Current demonstration offers</small></a></div></details>
-        <details class="nav-dropdown"><summary>Hotels <span>⌄</span></summary><div><a th:href="@{/travel-services(type='HOTEL')}">Hotel stays<small>Flight-aware accommodation</small></a><a th:href="@{/travel-services(type='CAB')}">Airport transfers<small>Meet-and-greet cabs</small></a></div></details>
-        <details class="nav-dropdown"><summary>Experiences <span>⌄</span></summary><div><a th:href="@{/packages}">Holiday packages<small>Curated flight and stay offers</small></a><a th:href="@{/travel-hub}">Travel intelligence<small>Visa and airport guidance</small></a></div></details>
+        <a class="nav-primary-link" th:href="@{/#destinations}">Explore destinations</a>
+        <a class="nav-primary-link" th:href="@{/deals}">Offers</a>
         <details class="nav-dropdown"><summary>Manage booking <span>⌄</span></summary><div><a th:href="@{/manage}">My booking<small>Check-in, seats and services</small></a><a th:href="@{/manage}">Changes &amp; refunds<small>Cancellation and disruption care</small></a><a th:href="@{/payment-options}">Payment options<small>Secure methods and refund rules</small></a></div></details>
+        <a class="nav-primary-link" th:href="@{/flight-status}">Flight status</a>
+        <a class="nav-primary-link" th:href="@{/support}">Support</a>
         <div class="mobile-auth-links">
             <a sec:authorize="hasAnyRole('ADMIN','AGENT')" th:href="@{/admin}">Operations dashboard</a>
             <a sec:authorize="hasRole('CUSTOMER')" th:href="@{/account}">My journeys</a>

@@ -36,6 +36,12 @@ The application combines a premium responsive passenger experience with a secure
 - JUnit 5, Spring Boot Test and MockMvc
 - Responsive custom CSS, inline SVG icon system and progressive-enhancement JavaScript
 
+### Premium interface system
+
+The passenger and operations experiences share one reference-led AeroVista design language: Sora display typography, Manrope body copy, Inter for dense travel data, a deep-navy/champagne palette, restrained shadows, generous rounded surfaces and responsive layouts. The home experience uses an airport-at-sunset hero and floating booking panel; the same tokens continue through authentication, search, checkout, confirmation, account, travel-service and administration pages. Motion respects the browser's reduced-motion preference.
+
+The LinkedIn showcase tooling lives in `linkedin-showcase/`. `capture_walkthrough.js` exercises the live MySQL-backed journey and records 54 verified screens, while `make_video.m` assembles them into a 55-scene `AeroVista-Premium-Platform-Walkthrough.mp4` with a matching cover image.
+
 ```text
 Browser → MVC Controllers → Business Services → JPA Repositories → Database
                               ↓

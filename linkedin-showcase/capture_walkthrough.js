@@ -296,7 +296,7 @@ async function main() {
   await textarea('textarea[name="passengers[0].specialAssistance"]', 'Priority baggage handling requested.');
   await evaluate(`(() => {
     const select = document.querySelector('select[name="passengers[0].seatNumber"]');
-    const option = Array.from(select.options).find(item => item.dataset.cabin === 'BUSINESS');
+    const option = Array.from(select.options).reverse().find(item => item.dataset.cabin === 'BUSINESS');
     if (!option) throw new Error('No Business seat is available');
     select.value = option.value;
     select.dispatchEvent(new Event('change', { bubbles: true }));

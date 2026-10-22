@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Deals & promo codes')}"></head>
+<body class="public-page soft-bg">
+<nav th:replace="~{fragments/layout :: publicNav}"></nav>
+<main>
+    <section class="deals-hero"><div><span class="eyebrow light">AEROVISTA PRIVATE FARES</span><h1>More world.<br><em>More possibility.</em></h1><p>Current demonstration promo codes, flexible fare inspiration and connected-journey savings in one vibrant place.</p><a class="btn btn-gold" th:href="@{/#book}">Search flights</a></div><aside><span>MEMBER MOMENT</span><strong>WELCOME20</strong><p>20% off a first demonstration booking.</p></aside></section>
+    <section class="section">
+        <div class="section-heading"><div><span class="eyebrow">PROMO PASSPORT</span><h2>Choose an offer for your journey.</h2><p>Copy a valid code and enter it during secure checkout. Server-side validation prevents expired or unknown codes.</p></div><a class="text-link" th:href="@{/payment-options}">Explore payment options →</a></div>
+        <div class="promotion-grid">
+            <article class="promotion-card" th:each="promotion : ${promotions}" th:classappend="${promotion.visualClass}">
+                <div><span th:text="${promotion.audience}"></span><b th:text="${promotion.discountPercent + '% OFF'}"></b></div>
+                <h2 th:text="${promotion.title}"></h2><p th:text="${promotion.description}"></p>
+                <footer><button type="button" class="promo-code" data-copy-code th:attr="data-code=${promotion.code}" th:text="${promotion.code}"></button><small th:text="${'Valid to ' + #temporals.format(promotion.validUntil, 'dd MMM yyyy')}"></small></footer>
+            </article>
+        </div>
+        <div class="offer-terms"><svg th:replace="~{fragments/icons :: shield}"></svg><div><strong>Transparent demonstration offers</strong><p>Promo codes apply to this educational reservation system only. Fare totals are recalculated on the server and shown on the confirmation. No real ticket or financial value is created.</p></div></div>
+    </section>
+    <section class="deal-journey-band"><div><span class="eyebrow gold">COMPLETE THE JOURNEY</span><h2>Flight, hotel and arrival transfer—beautifully connected.</h2><p>Pair a fare with a flight-aware stay, airport shuttle or chauffeur request.</p></div><div><a class="btn btn-light" th:href="@{/travel-services(type='HOTEL')}">Browse hotels</a><a class="btn btn-gold" th:href="@{/travel-services(type='CAB')}">Reserve a transfer</a></div></section>
+</main>
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body></html>

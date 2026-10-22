@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Flight schedule')}"></head>
+<body class="public-page schedule-page reference-inner-page">
+<nav th:replace="~{fragments/layout :: publicNav}"></nav>
+<main>
+    <section class="inner-airline-hero">
+        <div><span class="eyebrow light">PLAN WITH CONFIDENCE</span><h1>Flight schedule</h1><p>Departure times, revised arrivals, fare packages and cabin baggage allowances in one live view.</p></div>
+        <form th:action="@{/flight-schedule}" method="get" class="schedule-search"><label for="route">Search by city, airport or flight number</label><div><input id="route" name="route" th:value="${route}" placeholder="Try AN204, Colombo or DXB"><button class="btn btn-light" type="submit">Find flight</button></div></form>
+    </section>
+    <section class="schedule-shell">
+        <div class="schedule-intro"><div><span class="eyebrow">UPCOMING OPERATIONS</span><h2>Ten-plus journeys, ready to book.</h2><p>Every schedule is database-backed and includes live availability, aircraft, gate, baggage and all four cabin prices.</p></div><a class="btn btn-primary" th:href="@{/#book}">Search availability</a></div>
+        <div class="delay-service-note"><span class="notification-icon"><svg th:replace="~{fragments/icons :: bell}"></svg></span><div><strong>Automatic disruption care</strong><p>If a booked flight is delayed, AeroVista creates in-app, email and SMS alerts with the reason and revised departure time.</p></div><a th:href="@{/flight-status}">Track a flight</a></div>
+        <div class="schedule-grid" th:unless="${schedule.isEmpty()}">
+            <article class="schedule-card" th:each="flight : ${schedule}">
+                <div class="schedule-card-head"><div th:replace="~{fragments/layout :: flightIdentity(${flight})}"></div><span class="status" th:classappend="${' status-' + #strings.toLowerCase(flight.status)}" th:text="${flight.status}"></span></div>
+                <div class="schedule-route"><div><strong th:text="${#temporals.format(flight.estimatedDepartureAt, 'HH:mm')}"></strong><span th:text="${flight.origin.iataCode}"></span><small th:text="${flight.origin.city}"></small></div><div><small th:text="${flight.durationLabel}"></small><div class="flight-line"><i></i><svg th:replace="~{fragments/icons :: plane}"></svg><i></i></div><span>NON-STOP</span></div><div><strong th:text="${#temporals.format(flight.estimatedArrivalAt, 'HH:mm')}"></strong><span th:text="${flight.destination.iataCode}"></span><small th:text="${flight.destination.city}"></small></div></div>
+                <div class="schedule-date"><span th:text="${#temporals.format(flight.departureAt, 'EEE, dd MMM yyyy')}"></span><span th:text="${'Gate ' + (flight.departureGate ?: 'TBA')}"></span><span th:text="${flight.aircraft.model}"></span></div>
+                <div class="delay-alert" th:if="${flight.delayed}"><svg th:replace="~{fragments/icons :: bell}"></svg><div><strong th:text="${flight.delayMinutes + ' minute delay'}"></strong><span th:text="${flight.delayReason + ' · Revised departure ' + #temporals.format(flight.estimatedDepartureAt, 'HH:mm')}"></span></div></div>
+                <div class="fare-package"><div><small th:text="${flight.fareBrand}"></small><strong th:text="${'LKR ' + #numbers.formatDecimal(flight.economyFare, 0, 'COMMA', 0, 'POINT')}"></strong><span>Economy · taxes included</span></div><div class="baggage-stack"><span th:text="${flight.getBaggageAllowanceFor(T(com.aeronest.domain.DomainEnums.CabinClass).ECONOMY) + ' kg Economy'}"></span><span th:text="${flight.getBaggageAllowanceFor(T(com.aeronest.domain.DomainEnums.CabinClass).BUSINESS) + ' kg Business'}"></span></div></div>
+                <div class="schedule-features"><span th:text="${flight.onboardFeatures}"></span></div>
+                <div class="schedule-actions"><a class="text-link" th:href="@{/flight-status(flightNumber=${flight.flightNumber},flightDate=${#temporals.format(flight.departureAt,'yyyy-MM-dd')})}">Live status</a><a class="btn btn-primary btn-small" th:href="@{/book/{id}(id=${flight.id},travellers=1,cabin='ECONOMY')}">Select flight</a></div>
+            </article>
+        </div>
+        <div class="empty-state panel" th:if="${schedule.isEmpty()}"><h2>No flights match that search</h2><p>Try a flight number, airport code or city.</p><a class="btn btn-secondary" th:href="@{/flight-schedule}">Clear search</a></div>
+        <section class="connection-explainer"><div><span class="eyebrow light">SMART CONNECTIONS</span><h2>One itinerary. Smooth stopovers.</h2><p>Search results automatically combine validated flights with 45-minute to six-hour connections, through-itinerary support and clear stopover timing.</p></div><div class="connection-demo"><span>CMB</span><i></i><strong>SIN<small>2h 35m stopover</small></strong><i></i><span>BKK</span></div></section>
+    </section>
+</main>
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

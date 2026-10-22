@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Cabin classes')}"></head>
+<body class="public-page soft-bg"><nav th:replace="~{fragments/layout :: publicNav}"></nav>
+<main><section class="cabin-guide-hero"><span class="eyebrow light">TRAVEL YOUR WAY</span><h1>Four ways to feel at home<br>above the clouds.</h1><p>Compare space, priority services, baggage and onboard comfort before you choose a fare.</p><a class="btn btn-light" th:href="@{/#book}">Search cabin fares</a></section>
+<section class="section cabin-guide-grid">
+    <article class="cabin-tier"><span>01</span><small>SMART & SIMPLE</small><h2>Economy</h2><p>Comfortable essentials and dependable service for every journey.</p><ul><li>Standard seat selection</li><li>23 kg checked baggage</li><li>Meal and entertainment</li><li>Standard check-in lane</li></ul><a href="/#book">Choose Economy</a></article>
+    <article class="cabin-tier premium"><span>02</span><small>MORE PERSONAL SPACE</small><h2>Premium Economy</h2><p>Extra legroom, enhanced dining and an easier airport experience.</p><ul><li>Wider seat and extra recline</li><li>30 kg checked baggage</li><li>Priority check-in</li><li>Enhanced meal service</li></ul><a href="/#book">Choose Premium</a></article>
+    <article class="cabin-tier business"><span>03</span><small>ARRIVE READY</small><h2>Business</h2><p>Priority from check-in to baggage claim, with space to rest or work.</p><ul><li>Premium seat or lie-flat bed</li><li>40 kg checked baggage</li><li>Lounge access</li><li>Priority boarding and baggage</li></ul><a href="/#book">Choose Business</a></article>
+    <article class="cabin-tier first"><span>04</span><small>EXCEPTIONAL PRIVACY</small><h2>First</h2><p>Our most private cabin with personalised ground and onboard service.</p><ul><li>Private suite on selected aircraft</li><li>50 kg checked baggage</li><li>Dedicated host and dining</li><li>Chauffeur coordination</li></ul><a href="/#book">Choose First</a></article>
+</section></main><footer th:replace="~{fragments/layout :: footer}"></footer></body></html>

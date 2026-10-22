@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Your Journey, Elevated')}"></head>
+<body class="public-page home-page">
+<nav th:replace="~{fragments/layout :: publicNav}"></nav>
+<main>
+    <section class="hero" id="book">
+        <div class="hero-overlay"></div>
+        <div class="hero-copy">
+            <span class="eyebrow light"><svg th:replace="~{fragments/icons :: plane}"></svg> YOUR JOURNEY BEGINS HERE</span>
+            <h1>AeroVista</h1>
+            <p>More than a destination, it is an experience.</p>
+        </div>
+
+        <div class="flight-search-card" data-search-card>
+            <form th:action="@{/flights}" th:object="${search}" method="get">
+                <div class="search-card-header">
+                    <div class="booking-product-tabs"><a class="active" href="#book"><svg th:replace="~{fragments/icons :: plane}"></svg> Flights</a><a th:href="@{/travel-services(type='HOTEL')}"><svg th:replace="~{fragments/icons :: airport}"></svg> Hotels</a><a th:href="@{/packages}"><svg th:replace="~{fragments/icons :: globe}"></svg> Experiences</a><a th:href="@{/travel-services(type='CAB')}"><svg th:replace="~{fragments/icons :: mapPin}"></svg> Car rental</a></div>
+                    <div class="trip-tabs" role="radiogroup" aria-label="Trip type">
+                        <label><input type="radio" th:field="*{tripType}" value="ONE_WAY"><span>One way</span></label>
+                        <label><input type="radio" th:field="*{tripType}" value="ROUND_TRIP"><span>Round trip</span></label>
+                        <label><input type="radio" th:field="*{tripType}" value="MULTI_CITY"><span>Multi-city</span></label>
+                    </div>
+                </div>
+                <div class="reference-search-grid">
+                    <div class="field search-field route-field"><label>From</label><select th:field="*{originId}" data-origin required><option value="">City or airport</option><option th:each="a : ${airports}" th:value="${a.id}" th:text="${a.iataCode + ' — ' + a.city + ', ' + a.country}"></option></select></div>
+                    <button class="swap-button" type="button" data-swap-route aria-label="Swap origin and destination"><svg th:replace="~{fragments/icons :: swap}"></svg></button>
+                    <div class="field search-field route-field"><label>To</label><select th:field="*{destinationId}" data-destination required><option value="">City or airport</option><option th:each="a : ${airports}" th:value="${a.id}" th:text="${a.iataCode + ' — ' + a.city + ', ' + a.country}"></option></select></div>
+                    <div class="field search-field"><label>Departure</label><input type="date" th:field="*{departureDate}" required></div>
+                    <div class="field search-field return-date" data-return-date><label>Return</label><input type="date" th:field="*{returnDate}"></div>
+                    <details class="traveller-picker"><summary><span>Travellers</span><strong>Passengers & cabin</strong><small>Choose your journey</small></summary><div class="traveller-picker-panel"><div class="field compact-field"><label>Adults</label><select th:field="*{adults}"><option th:each="n : ${#numbers.sequence(1,6)}" th:value="${n}" th:text="${n}"></option></select></div><div class="field compact-field"><label>Children</label><select th:field="*{children}"><option th:each="n : ${#numbers.sequence(0,5)}" th:value="${n}" th:text="${n}"></option></select></div><div class="field compact-field"><label>Infants</label><select th:field="*{infants}"><option th:each="n : ${#numbers.sequence(0,2)}" th:value="${n}" th:text="${n}"></option></select></div><div class="field cabin-field"><label>Cabin class</label><select th:field="*{cabinClass}"><option value="ECONOMY">Economy</option><option value="PREMIUM_ECONOMY">Premium Economy</option><option value="BUSINESS">Business</option><option value="FIRST">First</option></select></div></div></details>
+                    <button class="btn btn-primary search-button" type="submit">Search flights <svg th:replace="~{fragments/icons :: arrow}"></svg></button>
+                </div>
+                <div class="form-error full" th:if="${#fields.hasAnyErrors()}" th:each="e : ${#fields.allErrors()}" th:text="${e}"></div>
+                <p class="multi-city-note" data-multi-city-note hidden>Start with your first route. Additional segments can be arranged from the results page.</p>
+            </form>
+        </div>
+    </section>
+
+    <section class="trust-strip reference-trust" aria-label="Service highlights"><div><span class="trust-icon"><svg th:replace="~{fragments/icons :: star}"></svg></span><p><strong>Best price promise</strong><small>Thoughtfully selected fares</small></p></div><div><span class="trust-icon"><svg th:replace="~{fragments/icons :: headset}"></svg></span><p><strong>24/7 customer care</strong><small>We are here to help</small></p></div><div><span class="trust-icon"><svg th:replace="~{fragments/icons :: shield}"></svg></span><p><strong>Secure booking</strong><small>Your data is protected</small></p></div><div><span class="trust-icon"><svg th:replace="~{fragments/icons :: calendar}"></svg></span><p><strong>Flexible options</strong><small>Change with confidence</small></p></div></section>
+
+    <section class="reference-offers" id="experience">
+        <a class="reference-offer-card dubai" href="#book"><span>POPULAR DESTINATION</span><h2>Dubai</h2><small>United Arab Emirates</small><p>From <strong>LKR 89,500</strong> / return</p><b>Book now</b></a>
+        <a class="reference-offer-card singapore" href="#book"><span>BEST DEALS</span><h2>Singapore</h2><small>Singapore</small><p>From <strong>LKR 74,200</strong> / return</p><b>Book now</b></a>
+        <article class="reference-offer-card offer"><span>EXCLUSIVE OFFERS</span><h2>Join AeroVista</h2><small>Use WELCOME20 and receive</small><p><strong>20% OFF</strong><br>selected demonstration fares.</p><a th:href="@{/deals}">Explore all deals <svg th:replace="~{fragments/icons :: arrow}"></svg></a></article>
+    </section>
+    <div class="airline-partners" aria-label="Airline network"><span>AEROVISTA</span><span>ONEWORLD</span><span>SKYLINK</span><span>CEYLON AIR</span><span>ASIA PACIFIC</span><span>GLOBAL CONNECT</span></div>
+
+    <section class="section connected-journey"><div class="section-heading"><div><span class="eyebrow">BEYOND THE TICKET</span><h2>One booking ecosystem. Every travel need.</h2><p>Connect the flight with accommodation, transfers, connectivity and destination expertise.</p></div><a class="text-link" th:href="@{/travel-services}">Explore all services <svg th:replace="~{fragments/icons :: arrow}"></svg></a></div><div class="journey-service-grid"><a th:href="@{/travel-services(type='HOTEL')}"><span>01</span><h3>Hotels</h3><p>Flight-aware stays and flexible check-in.</p></a><a th:href="@{/travel-services(type='CAB')}"><span>02</span><h3>Airport cabs</h3><p>Meet-and-greet transfers with live timing.</p></a><a th:href="@{/travel-services(type='TRAVEL_AGENCY')}"><span>03</span><h3>Travel agencies</h3><p>Multi-city and destination planning.</p></a><a th:href="@{/travel-services(type='SIM')}"><span>04</span><h3>Travel SIM</h3><p>Connected from the moment you land.</p></a></div></section>
+
+    <section class="section destinations-section" id="destinations">
+        <div class="section-heading"><div><span class="eyebrow">TRENDING DESTINATIONS</span><h2>The world is closer than you think.</h2><p>Hand-picked escapes, connected from Colombo.</p></div><a class="text-link" href="#deals">View flight deals <svg th:replace="~{fragments/icons :: arrow}"></svg></a></div>
+        <div class="destination-grid">
+            <article class="destination-card destination-dubai"><div><span>United Arab Emirates</span><h3>Dubai</h3><p>From LKR 89,500</p><a href="#book">Explore flights</a></div></article>
+            <article class="destination-card destination-singapore"><div><span>Singapore</span><h3>Singapore</h3><p>From LKR 74,200</p><a href="#book">Explore flights</a></div></article>
+            <article class="destination-card destination-maldives"><div><span>Maldives</span><h3>Malé</h3><p>From LKR 38,900</p><a href="#book">Explore flights</a></div></article>
+            <article class="destination-card destination-bangkok"><div><span>Thailand</span><h3>Bangkok</h3><p>From LKR 68,100</p><a href="#book">Explore flights</a></div></article>
+        </div>
+    </section>
+
+    <section class="deals-band" id="deals">
+        <div class="section">
+            <div class="section-heading inverse"><div><span class="eyebrow gold">FEATURED FARES</span><h2>More reasons to take off.</h2><p>Indicative one-way fares from Colombo, including taxes.</p></div></div>
+            <div class="deal-grid">
+                <article class="deal-card" th:each="f : ${featuredFlights}"><div class="deal-route"><span th:text="${f.origin.iataCode}">CMB</span><i></i><svg th:replace="~{fragments/icons :: plane}"></svg><i></i><span th:text="${f.destination.iataCode}">DXB</span></div><h3 th:text="${f.origin.city + ' to ' + f.destination.city}">Colombo to Dubai</h3><p th:text="${#temporals.format(f.departureAt, 'dd MMM yyyy') + ' · Non-stop · ' + f.durationLabel}"></p><div><span>Economy from</span><strong th:text="${'LKR ' + #numbers.formatDecimal(f.economyFare, 0, 'COMMA', 0, 'POINT')}"></strong></div><a class="btn btn-light btn-block" th:href="@{/book/{id}(id=${f.id},travellers=1,cabin='ECONOMY')}">Book now</a></article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section why-section">
+        <div class="section-heading centered"><div><span class="eyebrow">THE AEROVISTA DIFFERENCE</span><h2>Designed around the way you travel.</h2><p>Every detail, from search to boarding, is intentionally simple.</p></div></div>
+        <div class="benefit-grid">
+            <article><span class="feature-icon"><svg th:replace="~{fragments/icons :: shield}"></svg></span><h3>Secure booking</h3><p>Protected checkout, server-side validation and no stored card details.</p></article>
+            <article><span class="feature-icon"><svg th:replace="~{fragments/icons :: calendar}"></svg></span><h3>Flexible travel</h3><p>Manage, cancel and review your journeys in one calm workspace.</p></article>
+            <article><span class="feature-icon"><svg th:replace="~{fragments/icons :: headset}"></svg></span><h3>Always supported</h3><p>Clear guidance through every stage of your journey, day or night.</p></article>
+            <article><span class="feature-icon"><svg th:replace="~{fragments/icons :: ticket}"></svg></span><h3>Easy check-in</h3><p>Choose seats, check in online and keep every trip detail close.</p></article>
+        </div>
+    </section>
+
+    <section class="cabin-showcase" id="classes"><div class="section cabin-grid"><div><span class="eyebrow gold">TRAVEL YOUR WAY</span><h2>Comfort in every cabin.</h2><p>Economy, Premium Economy, Business and First each include clear comfort, baggage and airport-service benefits.</p><div class="cabin-tabs"><span>Economy</span><span>Premium</span><span class="active">Business</span><span>First</span></div></div><div class="cabin-card"><span>BUSINESS CLASS</span><h3>Room to think. Space to arrive refreshed.</h3><ul><li><svg th:replace="~{fragments/icons :: check}"></svg> Priority airport experience</li><li><svg th:replace="~{fragments/icons :: check}"></svg> Enhanced baggage allowance</li><li><svg th:replace="~{fragments/icons :: check}"></svg> Elevated onboard comfort</li></ul><a class="btn btn-gold" th:href="@{/cabin-guide}">Compare all four cabins</a></div></div></section>
+
+    <section class="section review-section"><div class="review-copy"><span class="eyebrow">PASSENGER STORIES</span><h2>Journeys worth remembering.</h2><p>Demonstration reviews below illustrate the intended customer experience.</p></div><div class="review-grid"><blockquote><p>“The booking flow felt effortless, and having every trip detail in one place made departure day wonderfully calm.”</p><footer><strong>Demo passenger</strong><span>Colombo to Singapore</span></footer></blockquote><blockquote><p>“Clear fares, a simple seat map and a confirmation that actually looks like a ticket. Exactly what travel should feel like.”</p><footer><strong>Demo passenger</strong><span>Colombo to Dubai</span></footer></blockquote></div></section>
+
+    <section class="newsletter"><div><span class="eyebrow light">THE WORLD, DELIVERED</span><h2>Be first to discover our latest fares.</h2><p>Occasional destination inspiration and travel offers. No clutter.</p></div><form data-newsletter><label class="sr-only" for="newsletter-email">Email address</label><input id="newsletter-email" type="email" placeholder="Your email address" required><button class="btn btn-gold" type="submit">Join the journey</button><small data-newsletter-message></small></form></section>
+ </main>
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

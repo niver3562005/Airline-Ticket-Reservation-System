@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Booking confirmed')}"></head>
+<body class="public-page confirmation-bg">
+<nav th:replace="~{fragments/layout :: publicNav}"></nav>
+<main class="confirmation-wrap">
+    <div class="success-mark"><svg th:replace="~{fragments/icons :: check}"></svg></div><span class="eyebrow">BOOKING CONFIRMED</span><h1>You're going places.</h1><p>Your itinerary has been reserved. Keep your booking reference handy.</p>
+    <article class="ticket">
+        <div class="ticket-main"><div class="ticket-top"><div th:replace="~{fragments/layout :: flightIdentity(${booking.flight})}"></div><span class="flight-badge" th:text="${booking.flight.fareBrand}"></span></div><div class="ticket-route"><div><strong th:text="${booking.flight.origin.iataCode}"></strong><span th:text="${booking.flight.origin.city}"></span></div><div class="ticket-flight"><span th:text="${booking.flight.durationLabel}"></span><div class="flight-line"><i></i><svg th:replace="~{fragments/icons :: plane}"></svg><i></i></div><small>NON-STOP</small></div><div><strong th:text="${booking.flight.destination.iataCode}"></strong><span th:text="${booking.flight.destination.city}"></span></div></div><div class="ticket-details"><div><small>DATE</small><strong th:text="${#temporals.format(booking.flight.departureAt, 'dd MMM yyyy')}"></strong></div><div><small>DEPARTURE</small><strong th:text="${#temporals.format(booking.flight.estimatedDepartureAt, 'HH:mm')}"></strong></div><div><small>TRAVELLERS</small><strong th:text="${booking.passengers.size()}"></strong></div><div><small>STATUS</small><strong th:text="${booking.status}"></strong></div></div></div>
+        <div class="ticket-stub"><small>BOOKING REFERENCE</small><strong th:text="${booking.pnr}"></strong><div class="barcode">|||| || | |||| | || |</div><span th:text="${booking.contactEmail}"></span></div>
+    </article>
+    <div class="confirmation-actions"><a class="btn btn-primary" th:href="@{/manage}">Manage booking</a><button class="btn btn-secondary" onclick="window.print()">Print itinerary</button></div>
+</main>
+</body>
+</html>

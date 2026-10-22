@@ -1,0 +1,20 @@
+services:
+  mysql:
+    image: mysql:8.4
+    environment:
+      MYSQL_DATABASE: aerovista
+      MYSQL_USER: aeronest
+      MYSQL_PASSWORD: aeronest
+      MYSQL_ROOT_PASSWORD: aeronest-root
+    ports:
+      - "3307:3306"
+    volumes:
+      - aerovista-mysql:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uaeronest", "-paeronest"]
+      interval: 5s
+      timeout: 3s
+      retries: 15
+
+volumes:
+  aerovista-mysql:

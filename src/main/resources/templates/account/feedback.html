@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Feedback & service recovery')}"></head>
+<body class="public-page account-page">
+<nav th:replace="~{fragments/layout :: publicNav}"></nav>
+<main class="account-shell">
+    <div th:replace="~{fragments/layout :: flash}"></div>
+    <div class="page-heading"><div><a class="back-link" th:href="@{/account}">Back to my journeys</a><span class="eyebrow">YOUR VOICE</span><h1>Feedback & service recovery</h1><p>Tell our care team what worked—or what we should make right.</p></div></div>
+    <div class="feedback-layout">
+        <form class="panel feedback-form" th:action="@{/account/feedback}" th:object="${feedbackForm}" method="post">
+            <div class="panel-head"><span class="number"><svg th:replace="~{fragments/icons :: star}"></svg></span><div><h2>Share your experience</h2><p>Every submission receives a trackable service case.</p></div></div>
+            <div class="rating-picker"><span>Overall rating</span><div><label th:each="score : ${#numbers.sequence(5,1)}"><input type="radio" th:field="*{rating}" th:value="${score}"><span th:text="${score + ' / 5'}"></span></label></div></div>
+            <div class="form-grid"><div class="field"><label>Area</label><select th:field="*{category}" required><option value="">Choose an area</option><option th:each="category : ${categories}" th:value="${category}" th:text="${#strings.capitalize(#strings.toLowerCase(#strings.replace(category, '_', ' ')))}"></option></select><small class="field-error" th:errors="*{category}"></small></div><div class="field"><label>Booking reference (optional)</label><input th:field="*{bookingReference}" maxlength="8" placeholder="A1B2C3"></div><div class="field span-2"><label>Subject</label><input th:field="*{subject}" placeholder="Tell us what this is about"><small class="field-error" th:errors="*{subject}"></small></div><div class="field span-2"><label>Comments</label><textarea th:field="*{comments}" rows="6" placeholder="Include the details that will help us understand and respond."></textarea><small class="field-error" th:errors="*{comments}"></small></div></div>
+            <button class="btn btn-primary" type="submit">Send to care team</button>
+        </form>
+        <aside class="panel feedback-history"><span class="eyebrow">MY CASES</span><h2>Feedback history</h2><p th:if="${feedbackHistory.isEmpty()}">You have no open feedback cases.</p><article th:each="item : ${feedbackHistory}"><div><span class="status" th:classappend="${item.status.name() == 'RESOLVED' ? ' status-confirmed' : ' status-pending'}" th:text="${item.status}"></span><time th:text="${#temporals.format(item.createdAt, 'dd MMM yyyy')}"></time></div><strong th:text="${item.subject}"></strong><p th:text="${item.comments}"></p><blockquote th:if="${item.response}" th:text="${item.response}"></blockquote></article></aside>
+    </div>
+</main>
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

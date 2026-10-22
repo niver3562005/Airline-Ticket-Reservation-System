@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('My journeys')}"></head>
+<body class="public-page account-page">
+<nav th:replace="~{fragments/layout :: publicNav}"></nav>
+<main class="account-shell">
+    <div th:replace="~{fragments/layout :: flash}"></div>
+    <section class="member-hero">
+        <div><span class="eyebrow light" th:text="${account.loyaltyTier + ' MEMBER'}">EXPLORER MEMBER</span><h1 th:text="${'Welcome back, ' + account.firstName + '.'}">Welcome back, Asha.</h1><p>Everything for your next journey—from entry guidance to live boarding updates—is ready here.</p><div class="member-actions"><a class="btn btn-light" th:href="@{/#book}">Book a new flight</a><a class="btn btn-ghost-light" th:href="@{/account/notifications}"><svg th:replace="~{fragments/icons :: bell}"></svg> Alerts <span class="count-badge" th:if="${unreadNotifications > 0}" th:text="${unreadNotifications}"></span></a><a class="btn btn-ghost-light" th:href="@{/account/profile}">Profile</a></div></div>
+        <div class="member-card"><div><span class="member-avatar" th:text="${account.initials}">AP</span><div><small>AEROVISTA JOURNEYS</small><strong th:text="${account.fullName}">Asha Perera</strong></div></div><span class="loyalty-number" th:text="${account.loyaltyNumber}">AV00001024</span><div><span><small>TIER</small><strong th:text="${account.loyaltyTier}">EXPLORER</strong></span><span><small>POINTS</small><strong th:text="${#numbers.formatInteger(account.loyaltyPoints, 1, 'COMMA')}">2,450</strong></span></div></div>
+    </section>
+
+    <section class="account-tool-grid">
+        <a th:href="@{/flight-status}"><span class="feature-icon"><svg th:replace="~{fragments/icons :: plane}"></svg></span><div><strong>Live flight status</strong><small>Gate, departure and arrival updates</small></div><svg th:replace="~{fragments/icons :: arrow}"></svg></a>
+        <a th:href="@{/travel-hub}"><span class="feature-icon"><svg th:replace="~{fragments/icons :: passport}"></svg></span><div><strong>Visa & airport guide</strong><small>Entry rules and terminal facilities</small></div><svg th:replace="~{fragments/icons :: arrow}"></svg></a>
+        <a th:href="@{/travel-services}"><span class="feature-icon"><svg th:replace="~{fragments/icons :: mapPin}"></svg></span><div><strong>Hotels & services</strong><small>Cabs, stays, SIMs and travel experts</small></div><svg th:replace="~{fragments/icons :: arrow}"></svg></a>
+    </section>
+    <section class="account-content" th:if="${!partnerReservations.isEmpty()}"><div class="account-section-heading"><div><span class="eyebrow">CONNECTED SERVICES</span><h2>Beyond-flight reservations</h2></div><a class="text-link" th:href="@{/travel-services}">Add a service <svg th:replace="~{fragments/icons :: arrow}"></svg></a></div><div class="service-booking-list"><article th:each="item : ${partnerReservations}"><span class="feature-icon"><svg th:replace="~{fragments/icons :: mapPin}"></svg></span><div><strong th:text="${item.partner.name}"></strong><small th:text="${item.reference + ' · ' + #temporals.format(item.serviceAt, 'dd MMM HH:mm')}"></small></div><span class="status" th:text="${item.status}"></span></article></div></section>
+
+    <section class="account-content account-dashboard-grid">
+        <div><div class="account-section-heading"><div><span class="eyebrow">MY JOURNEYS</span><h2>Booking history</h2><p>Trips booked with <span th:text="${account.email}"></span> appear automatically.</p></div><a class="text-link" th:href="@{/manage}">Find another booking <svg th:replace="~{fragments/icons :: arrow}"></svg></a></div>
+            <div class="account-empty" th:if="${bookings.isEmpty()}"><span class="empty-icon"><svg th:replace="~{fragments/icons :: ticket}"></svg></span><h3>No journeys yet</h3><p>Your future reservations will appear here.</p><a class="btn btn-primary" th:href="@{/#book}">Explore flights</a></div>
+            <div class="trip-list" th:unless="${bookings.isEmpty()}"><article class="account-trip" th:each="booking : ${bookings}"><div class="trip-date"><strong th:text="${#temporals.format(booking.flight.departureAt, 'dd')}">21</strong><span th:text="${#temporals.format(booking.flight.departureAt, 'MMM yyyy')}">OCT 2026</span></div><div class="trip-route"><div><strong th:text="${booking.flight.origin.iataCode}">CMB</strong><span th:text="${booking.flight.origin.city}">Colombo</span></div><div class="flight-line"><i></i><svg th:replace="~{fragments/icons :: plane}"></svg><i></i><small th:text="${booking.flight.durationLabel}"></small></div><div><strong th:text="${booking.flight.destination.iataCode}">DXB</strong><span th:text="${booking.flight.destination.city}">Dubai</span></div></div><div class="trip-reference"><span class="status" th:classappend="${' status-' + #strings.toLowerCase(booking.status)}" th:text="${booking.status}"></span><small>BOOKING REFERENCE</small><strong th:text="${booking.pnr}">A1B2C3</strong></div><form th:action="@{/manage}" method="post"><input type="hidden" name="pnr" th:value="${booking.pnr}"><input type="hidden" name="email" th:value="${account.email}"><button class="btn btn-secondary btn-small" type="submit">View journey</button></form></article></div>
+        </div>
+        <aside class="account-alerts panel"><div class="card-heading"><div><span class="eyebrow">RECENT ALERTS</span><h2>Journey updates</h2></div><a th:href="@{/account/notifications}">View all</a></div><p class="empty-mini" th:if="${notifications.isEmpty()}">Updates will appear after your first booking.</p><article th:each="item : ${notifications}"><span class="notification-icon"><svg th:replace="~{fragments/icons :: bell}"></svg></span><div><strong th:text="${item.title}"></strong><p th:text="${item.message}"></p><time th:text="${#temporals.format(item.createdAt, 'dd MMM · HH:mm')}"></time></div></article></aside>
+    </section>
+</main>
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

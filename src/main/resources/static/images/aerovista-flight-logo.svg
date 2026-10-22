@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 64" role="img" aria-labelledby="title desc">
+  <title id="title">AeroVista</title><desc id="desc">AeroVista wing and horizon airline logo</desc>
+  <defs><linearGradient id="wing" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#62b6ff"/><stop offset="1" stop-color="#175cd3"/></linearGradient></defs>
+  <rect width="64" height="64" rx="18" fill="#0b1736"/>
+  <path d="M13 38c14-1 26-9 38-24-4 15-11 27-23 36 9-2 18-5 26-10-7 10-17 16-31 17z" fill="url(#wing)"/>
+  <path d="M14 42c13 0 24-4 35-12-8 10-18 16-31 18z" fill="#d6aa5b"/>
+  <text x="77" y="36" font-family="Inter,Arial,sans-serif" font-size="25" font-weight="800" fill="#0b1736">AeroVista</text>
+  <text x="78" y="51" font-family="Inter,Arial,sans-serif" font-size="7" font-weight="700" letter-spacing="2.1" fill="#667085">JOURNEY, ELEVATED</text>
+</svg>

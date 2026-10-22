@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Complete your booking')}"></head>
+<body class="public-page soft-bg">
+<nav th:replace="~{fragments/layout :: publicNav}"></nav>
+<main class="section booking-page">
+    <div class="page-heading compact"><div><a class="back-link" href="javascript:history.back()">← Back to flights</a><span class="eyebrow">SECURE CHECKOUT</span><h1>Complete your booking</h1></div><div class="stepper"><span class="done">1</span><i></i><span class="active">2</span><i></i><span>3</span></div></div>
+    <form th:action="@{/book}" th:object="${bookingForm}" method="post" class="booking-layout">
+        <input type="hidden" th:field="*{flightId}">
+        <div class="booking-main">
+            <div class="panel error-panel" th:if="${#fields.hasGlobalErrors()}" th:each="e : ${#fields.globalErrors()}" th:text="${e}"></div>
+            <section class="panel"><div class="panel-head"><span class="number">1</span><div><h2>Contact details</h2><p>Your confirmation and travel updates will be sent here.</p></div></div><div class="form-grid"><div class="field span-2"><label>Contact name</label><input th:field="*{contactName}" placeholder="Full name"><small class="field-error" th:errors="*{contactName}"></small></div><div class="field"><label>Email address</label><input type="email" th:field="*{contactEmail}" placeholder="you@example.com"><small class="field-error" th:errors="*{contactEmail}"></small></div><div class="field"><label>Mobile number</label><input th:field="*{contactPhone}" placeholder="+94 77 123 4567"><small class="field-error" th:errors="*{contactPhone}"></small></div></div></section>
+            <section class="panel"><div class="panel-head"><span class="number">2</span><div><h2>Traveller details & seats</h2><p>Names must match each traveller's passport.</p></div></div>
+                <div class="traveller-card" th:each="p, stat : *{passengers}">
+                    <div class="traveller-title"><span th:text="${'Traveller ' + (stat.index + 1)}">Traveller 1</span><span class="muted">Adult</span></div>
+                    <div class="form-grid">
+                        <div class="field"><label>First name</label><input th:field="*{passengers[__${stat.index}__].firstName}"><small class="field-error" th:errors="*{passengers[__${stat.index}__].firstName}"></small></div>
+                        <div class="field"><label>Last name</label><input th:field="*{passengers[__${stat.index}__].lastName}"></div>
+                        <div class="field"><label>Date of birth</label><input type="date" th:field="*{passengers[__${stat.index}__].dateOfBirth}"></div>
+                        <div class="field"><label>Nationality</label><input th:field="*{passengers[__${stat.index}__].nationality}" placeholder="Sri Lankan"></div>
+                        <div class="field"><label>Passport number</label><input th:field="*{passengers[__${stat.index}__].passportNumber}"></div>
+                        <div class="field"><label>Frequent flyer number</label><input th:field="*{passengers[__${stat.index}__].frequentFlyerNumber}" placeholder="Optional"><small class="field-error" th:errors="*{passengers[__${stat.index}__].frequentFlyerNumber}"></small></div>
+                        <div class="field"><label>Cabin</label><select class="cabin-select" th:field="*{passengers[__${stat.index}__].cabinClass}"><option th:each="c : ${cabins}" th:value="${c}" th:text="${#strings.capitalize(#strings.toLowerCase(c))}"></option></select></div>
+                        <div class="field"><label>Meal preference</label><select th:field="*{passengers[__${stat.index}__].mealPreference}"><option value="">Standard meal</option><option value="Vegetarian">Vegetarian</option><option value="Vegan">Vegan</option><option value="Halal">Halal</option><option value="Gluten free">Gluten free</option><option value="Child meal">Child meal</option></select></div>
+                        <div class="field span-2"><label>Seat</label><select class="seat-select" th:field="*{passengers[__${stat.index}__].seatNumber}"><option value="">Select a seat</option><option th:each="s : ${seatMap}" th:if="${!s.occupied}" th:value="${s.label}" th:data-cabin="${s.cabin}" th:text="${s.label + ' · ' + #strings.capitalize(#strings.toLowerCase(s.cabin)) + (s.window ? ' · Window' : '')}"></option></select><small class="field-error" th:errors="*{passengers[__${stat.index}__].seatNumber}"></small></div>
+                        <div class="field span-2"><label>Accessibility or special assistance</label><textarea th:field="*{passengers[__${stat.index}__].specialAssistance}" rows="2" placeholder="Wheelchair, mobility, medical or other assistance (optional)"></textarea></div>
+                    </div>
+                </div>
+            </section>
+            <section class="panel payment-checkout"><div class="panel-head"><span class="number">3</span><div><h2>Payment</h2><p>Choose a protected demonstration payment route. Never enter real financial credentials.</p></div></div>
+                <div class="payment-choice-grid"><label th:each="m, stat : ${paymentMethods}"><input type="radio" th:field="*{paymentMethod}" th:value="${m}"><span><b th:text="${stat.index == 0 ? '◈' : (stat.index == 1 ? '↗' : '⌂')}"></b><strong th:text="${#strings.capitalizeWords(#strings.toLowerCase(#strings.replace(m,'_',' ')))}"></strong><small th:text="${stat.index == 0 ? 'Instant simulated approval' : (stat.index == 1 ? 'Tracked bank reference' : 'Pay through service desk')}"></small></span></label></div>
+                <div class="promo-checkout"><div class="field"><label>Promo code</label><input th:field="*{promoCode}" placeholder="Enter promo code" autocomplete="off"><small>Validated securely when you confirm.</small></div><a th:href="@{/deals}" target="_blank">View current deals →</a></div>
+                <div class="available-code-row"><button type="button" th:each="promotion : ${promotions}" data-fill-promo th:attr="data-code=${promotion.code}" th:text="${promotion.code + ' · ' + promotion.discountPercent + '%'}"></button></div>
+                <div class="payment-safety"><svg th:replace="~{fragments/icons :: shield}"></svg><div><strong>Protected educational checkout</strong><p>Payment references are simulated and stored in MySQL; raw card numbers are never requested or saved.</p></div></div>
+            </section>
+        </div>
+        <aside class="trip-summary panel"><div th:replace="~{fragments/layout :: flightIdentity(${flight})}"></div><span class="eyebrow">YOUR FLIGHT</span><div class="summary-route"><div><strong th:text="${flight.origin.iataCode}">CMB</strong><span th:text="${flight.origin.city}"></span></div><svg th:replace="~{fragments/icons :: plane}"></svg><div><strong th:text="${flight.destination.iataCode}">DXB</strong><span th:text="${flight.destination.city}"></span></div></div><div class="summary-row"><span>Date</span><strong th:text="${#temporals.format(flight.departureAt, 'dd MMM yyyy')}"></strong></div><div class="summary-row"><span>Departure</span><strong th:text="${#temporals.format(flight.estimatedDepartureAt, 'HH:mm')}"></strong></div><div class="summary-row"><span>Flight</span><strong th:text="${flight.flightNumber}"></strong></div><div class="summary-row"><span>Fare package</span><strong th:text="${flight.fareBrand}"></strong></div><div class="summary-row"><span>Aircraft</span><strong th:text="${flight.aircraft.model}"></strong></div><div class="summary-row"><span>Economy baggage</span><strong th:text="${flight.baggageAllowanceKg + ' kg'}"></strong></div><div class="delay-alert compact" th:if="${flight.delayed}"><svg th:replace="~{fragments/icons :: bell}"></svg><div><strong th:text="${flight.delayMinutes + ' minute delay'}"></strong><span th:text="${flight.delayReason}"></span></div></div><hr><p class="summary-note" th:text="${flight.onboardFeatures}"></p><p class="summary-note">Final fare is calculated using cabin choice, live demand and any valid promo code.</p><button class="btn btn-primary btn-block" type="submit">Confirm & pay securely</button><div class="secure-note"><svg th:replace="~{fragments/icons :: shield}"></svg> Encrypted checkout · No card data stored</div></aside>
+    </form>
+</main>
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

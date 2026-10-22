@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Payment options')}"></head>
+<body class="public-page soft-bg">
+<nav th:replace="~{fragments/layout :: publicNav}"></nav>
+<main>
+    <section class="payment-hero"><div><span class="eyebrow light">SECURE DEMONSTRATION CHECKOUT</span><h1>Pay your way.<br><em>Travel with confidence.</em></h1><p>Clear payment status, protected server-side processing and trackable cash-return workflows.</p><div class="hero-reassurance"><span><svg th:replace="~{fragments/icons :: shield}"></svg> No card details stored</span><span><svg th:replace="~{fragments/icons :: refund}"></svg> Refund tracking</span></div></div></section>
+    <section class="section payment-options-page">
+        <div class="section-heading"><div><span class="eyebrow">PAYMENT CHOICES</span><h2>Simple at checkout. Clear afterwards.</h2><p>Select a method on the passenger page; the platform records a payment reference and sends a status notification.</p></div></div>
+        <div class="payment-method-grid">
+            <article><span>01</span><h3>Card payment</h3><p>Immediate simulated approval with a protected payment reference. The project never asks for or stores real card numbers.</p><b>Instant confirmation</b></article>
+            <article><span>02</span><h3>Bank transfer</h3><p>Creates a pending payment reference so operations can model manual reconciliation and later confirmation.</p><b>Tracked pending status</b></article>
+            <article><span>03</span><h3>Pay at counter</h3><p>Reserve the itinerary and complete the demonstration payment through an AeroVista service desk.</p><b>Airport service option</b></article>
+        </div>
+        <div class="payment-flow"><div><span>1</span><strong>Select</strong><small>Choose passengers, cabin, seats and extras.</small></div><i></i><div><span>2</span><strong>Validate</strong><small>Contact, passport, seat and promo rules run on the server.</small></div><i></i><div><span>3</span><strong>Confirm</strong><small>Receive PNR, payment reference and booking notification.</small></div><i></i><div><span>4</span><strong>Manage</strong><small>Check in, request services, cancel or track a refund.</small></div></div>
+    </section>
+    <section class="refund-policy-band"><div><span class="eyebrow light">FLEXIBLE CASH RETURNS</span><h2>Know the value before you cancel.</h2><p>Manage Booking calculates the cash return and any fee before submission: a 24-hour grace period, 95% return more than seven days before departure, 85% return until four hours before departure, and full return for airline cancellations.</p></div><a class="btn btn-gold" th:href="@{/manage}">Manage a booking</a></section>
+</main>
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body></html>

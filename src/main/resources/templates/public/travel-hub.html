@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Travel hub & 24/7 support')}"></head>
+<body class="public-page soft-bg" th:attr="data-telemetry-refresh=${telemetry != null and (statusFlight.status.name() == 'IN_AIR' or statusFlight.status.name() == 'DEPARTED') ? 'true' : null}">
+<nav th:replace="~{fragments/layout :: publicNav}"></nav>
+<main>
+    <section class="travel-hub-hero">
+        <div>
+            <span class="eyebrow light">TRAVEL WITH CLARITY</span>
+            <h1>Every detail, before you fly.</h1>
+            <p>Track live operations, check visa guidance, compare curated packages and plan your time at the airport from one intelligent travel hub.</p>
+            <div class="hub-trust"><span><svg th:replace="~{fragments/icons :: clock}"></svg> 24/7 assistance</span><span><svg th:replace="~{fragments/icons :: bell}"></svg> Journey alerts</span><span><svg th:replace="~{fragments/icons :: shield}"></svg> Verified sources</span></div>
+        </div>
+        <aside class="hub-live-card">
+            <span class="live-pulse"><i></i> Operations online</span>
+            <strong>Always-on journey care</strong>
+            <p>Booking, payment, check-in, boarding, departure, delay and arrival notifications are coordinated across in-app, email and SMS channels.</p>
+            <a class="btn btn-light" th:href="@{/manage}">Manage my booking</a>
+        </aside>
+    </section>
+
+    <section class="hub-tools section">
+        <article class="hub-tool-card status-tool">
+            <div class="hub-card-title"><span class="feature-icon"><svg th:replace="~{fragments/icons :: plane}"></svg></span><div><span class="eyebrow">LIVE OPERATIONS</span><h2>Flight status</h2></div></div>
+            <p>Check the latest gate, schedule and operating state by flight number.</p>
+            <form method="get" th:action="@{/flight-status}" class="hub-inline-form">
+                <div class="field"><label for="flightNumber">Flight number</label><input id="flightNumber" name="flightNumber" th:value="${selectedFlightNumber}" placeholder="AN204" maxlength="6" required></div>
+                <div class="field"><label for="flightDate">Departure date</label><input id="flightDate" type="date" name="flightDate" th:value="${selectedFlightDate}" required></div>
+                <button class="btn btn-primary" type="submit">Track flight</button>
+            </form>
+            <div class="flight-status-result" th:if="${statusFlight}">
+                <div><span class="status" th:classappend="${' status-' + #strings.toLowerCase(statusFlight.status)}" th:text="${statusFlight.status}"></span><strong th:text="${statusFlight.flightNumber}"></strong></div>
+                <div class="status-route"><span th:text="${statusFlight.origin.iataCode}"></span><i></i><svg th:replace="~{fragments/icons :: plane}"></svg><i></i><span th:text="${statusFlight.destination.iataCode}"></span></div>
+                <div><small th:text="${statusFlight.delayed ? 'REVISED DEPARTURE' : 'DEPARTURE'}">DEPARTURE</small><strong th:text="${#temporals.format(statusFlight.estimatedDepartureAt, 'dd MMM · HH:mm')}"></strong><span th:text="${'Gate ' + statusFlight.departureGate}"></span></div>
+            </div>
+            <div class="delay-alert" th:if="${statusFlight != null and statusFlight.delayed}"><svg th:replace="~{fragments/icons :: bell}"></svg><div><strong th:text="${statusFlight.delayMinutes + ' minute delay · ' + statusFlight.delayReason}"></strong><span>Booked passengers receive the revised timing automatically by email, SMS and in-app notification.</span></div></div>
+            <div class="live-flight-panel" th:if="${telemetry}">
+                <div class="live-flight-heading"><div><span class="live-pulse"><i></i> <span th:text="${statusFlight.status.name() == 'IN_AIR' ? 'Live position' : 'Operations data'}"></span></span><strong th:text="${telemetry.nearestLocation}"></strong></div><small th:text="${'Updated ' + #temporals.format(telemetry.observedAt, 'HH:mm:ss')}"></small></div>
+                <div class="route-progress"><span th:text="${statusFlight.origin.iataCode}"></span><div><i th:style="${'width:' + telemetry.progressPercent + '%'}"></i><b th:style="${'left:' + telemetry.progressPercent + '%'}"><svg th:replace="~{fragments/icons :: plane}"></svg></b></div><span th:text="${statusFlight.destination.iataCode}"></span></div>
+                <div class="telemetry-grid"><div><small>ALTITUDE</small><strong th:text="${#numbers.formatInteger(telemetry.altitudeFeet, 1, 'COMMA') + ' ft'}"></strong></div><div><small>GROUND SPEED</small><strong th:text="${telemetry.groundSpeedKmh + ' km/h'}"></strong></div><div><small>TIME TO LAND</small><strong th:text="${telemetry.remainingMinutes + ' min'}"></strong></div><div><small>POSITION</small><strong th:text="${telemetry.latitude + ', ' + telemetry.longitude}"></strong></div></div>
+                <p th:text="${telemetry.operationalNote}"></p><small class="simulation-note">Demonstration telemetry generated by the AeroVista operations simulator; it is not a real-world aircraft feed.</small>
+            </div>
+            <div class="availability-strip" th:if="${availability}"><article th:each="item : ${availability}"><small th:text="${item.displayName}"></small><strong th:text="${item.available + ' available'}"></strong><span th:text="${'LKR ' + #numbers.formatDecimal(item.fare, 0, 'COMMA', 0, 'POINT')}"></span></article></div>
+            <div class="flash error" th:if="${statusError}"><span class="alert-mark">!</span><span th:text="${statusError}"></span></div>
+        </article>
+
+        <article class="hub-tool-card visa-tool">
+            <div class="hub-card-title"><span class="feature-icon gold"><svg th:replace="~{fragments/icons :: passport}"></svg></span><div><span class="eyebrow">ENTRY GUIDANCE</span><h2>Visa & document checker</h2></div></div>
+            <p>Starter guidance for Sri Lankan ordinary passport holders. Requirements can change—always confirm with the linked authority.</p>
+            <form method="get" th:action="@{/travel-hub}" class="hub-inline-form visa-form">
+                <div class="field"><label for="visaCode">Destination country</label><select id="visaCode" name="visaCode" required><option value="">Choose destination</option><option th:each="country : ${countries}" th:value="${country.countryCode}" th:text="${country.country}"></option></select></div>
+                <button class="btn btn-primary" type="submit">Check guidance</button>
+            </form>
+            <div class="visa-result" th:if="${visaResult}">
+                <img class="visa-destination-image" th:src="${visaResult.imagePath}" th:alt="${visaResult.featuredCity + ', ' + visaResult.country}">
+                <div><span class="country-badge" th:text="${visaResult.countryCode}"></span><div><small>REQUIREMENT</small><strong th:text="${#strings.replace(visaResult.visaRequirement, '_', ' ')}"></strong></div></div>
+                <h3 th:text="${visaResult.country}"></h3><p th:text="${visaResult.summary}"></p>
+                <ul><li><strong>Passport validity:</strong> <span th:text="${visaResult.passportValidityMonths + ' month(s) minimum guidance'}"></span></li><li><strong>Entry basics:</strong> <span th:text="${visaResult.entryRequirements}"></span></li><li><strong>Arrival form:</strong> <span th:text="${visaResult.arrivalForm}"></span></li><li><strong>Currency:</strong> <span th:text="${visaResult.localCurrency}"></span></li></ul>
+                <a class="text-link" th:href="${visaResult.officialUrl}" target="_blank" rel="noopener">Verify on official immigration site <svg th:replace="~{fragments/icons :: arrow}"></svg></a>
+            </div>
+            <div class="flash error" th:if="${visaError}"><span class="alert-mark">!</span><span th:text="${visaError}"></span></div>
+        </article>
+    </section>
+
+    <section class="section destination-catalogue" id="country-guide">
+        <div class="section-heading"><div><span class="eyebrow">50-COUNTRY TRAVEL DIRECTORY</span><h2>One world, ready to explore.</h2><p>Browse destination inspiration, local currency and entry-guidance coverage, then select a country above for detailed advisory information.</p></div><span class="catalogue-count" th:text="${countries.size() + ' destinations'}">50 destinations</span></div>
+        <div class="country-gallery">
+            <a class="country-visual-card" th:each="country, stat : ${countries}" th:href="@{/travel-hub(visaCode=${country.countryCode})}" th:style="${'--country-image:url(' + country.imagePath + ');--focus:' + ((stat.index % 5) * 25) + '%'}">
+                <div><span class="country-badge" th:text="${country.countryCode}"></span><small th:text="${country.localCurrency}"></small></div>
+                <h3 th:text="${country.featuredCity}"></h3><p th:text="${country.country}"></p><b>View entry guide →</b>
+            </a>
+        </div>
+    </section>
+
+    <section class="hub-section navy-section" id="packages">
+        <div class="section hub-contained"><div class="section-heading inverse"><div><span class="eyebrow gold">FLIGHT + STAY</span><h2>Curated AeroVista escapes</h2><p>Ready-made journeys with transparent inclusions and flexible service support.</p></div></div>
+            <div class="package-grid">
+                <article class="package-card" th:each="travelPackage : ${packages}">
+                    <div class="package-top"><span th:text="${#strings.replace(travelPackage.type, '_', ' ')}"></span><strong th:text="${travelPackage.destination.iataCode}"></strong></div>
+                    <h3 th:text="${travelPackage.title}"></h3><p th:text="${travelPackage.description}"></p>
+                    <div class="package-meta"><span><svg th:replace="~{fragments/icons :: calendar}"></svg><b th:text="${travelPackage.nights + ' nights'}"></b></span><span><svg th:replace="~{fragments/icons :: mapPin}"></svg><b th:text="${travelPackage.hotel}"></b></span></div>
+                    <div class="package-inclusions" th:text="${travelPackage.inclusions}"></div>
+                    <footer><div><small>FROM · PER PERSON</small><strong th:text="${'LKR ' + #numbers.formatDecimal(travelPackage.pricePerPerson, 0, 'COMMA', 0, 'POINT')}"></strong></div><a class="btn btn-primary btn-small" th:href="@{/#book}">Find flights</a></footer>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="facilities">
+        <div class="section-heading"><div><span class="eyebrow">AIRPORT INTELLIGENCE</span><h2>Know your airport before arrival.</h2><p>Lounges, connectivity, assistance, family services and transfer guidance.</p></div></div>
+        <div class="airport-filter-row"><a th:href="@{/airport-guide/CMB}">Colombo CMB</a><a th:href="@{/airport-guide/DXB}">Dubai DXB</a><a th:href="@{/airport-guide/SIN}">Singapore SIN</a><a th:href="@{/airport-guide/MLE}">Malé MLE</a></div>
+        <div class="facility-grid">
+            <article class="facility-card" th:each="facility : ${selectedFacilities != null ? selectedFacilities : facilities}">
+                <span class="facility-code" th:text="${facility.airport.iataCode}"></span><span class="feature-icon small"><svg th:replace="~{fragments/icons :: wifi}"></svg></span>
+                <small th:text="${#strings.replace(facility.type, '_', ' ')}"></small><h3 th:text="${facility.name}"></h3><p th:text="${facility.description}"></p>
+                <footer><span><svg th:replace="~{fragments/icons :: mapPin}"></svg><span th:text="${facility.location}"></span></span><span th:if="${facility.open24Hours}"><svg th:replace="~{fragments/icons :: clock}"></svg> 24 hours</span></footer>
+            </article>
+        </div>
+    </section>
+
+    <section class="support-band" id="support">
+        <div><span class="eyebrow light">24/7 GLOBAL CARE</span><h2>Real help, whenever plans change.</h2><p>Our educational service centre models always-on support for booking questions, disruptions, accessibility, payments and refunds.</p></div>
+        <div class="support-channels"><article><svg th:replace="~{fragments/icons :: phone}"></svg><div><small>CALL ANYTIME</small><strong>+94 11 555 2026</strong><span>Priority disruption support</span></div></article><article><svg th:replace="~{fragments/icons :: mail}"></svg><div><small>EMAIL CARE</small><strong>care@aerovista.test</strong><span>Replies tracked in service centre</span></div></article><article><svg th:replace="~{fragments/icons :: headset}"></svg><div><small>SELF-SERVICE</small><strong>Manage booking</strong><span>Check-in, cancellation and refund tracking</span></div></article></div>
+    </section>
+</main>
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

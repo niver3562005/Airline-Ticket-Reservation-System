@@ -1,0 +1,52 @@
+spring:
+  application:
+    name: AeroVista
+  datasource:
+    url: jdbc:h2:file:./data/aeronest
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+  thymeleaf:
+    cache: false
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+server:
+  port: 8080
+  servlet:
+    session:
+      timeout: 30m
+      cookie:
+        http-only: true
+        same-site: lax
+  error:
+    include-message: always
+
+aeronest:
+  booking:
+    hold-minutes: 12
+  notifications:
+    email-webhook: ${EMAIL_NOTIFICATION_WEBHOOK:}
+    sms-webhook: ${SMS_NOTIFICATION_WEBHOOK:}
+  telemetry:
+    refresh-millis: 30000
+
+---
+spring:
+  config:
+    activate:
+      on-profile: mysql
+  datasource:
+    url: ${DB_URL:jdbc:mysql://127.0.0.1:3307/aerovista?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Colombo}
+    username: ${DB_USERNAME:aeronest}
+    password: ${DB_PASSWORD:aeronest}
+  jpa:
+    hibernate:
+      ddl-auto: update

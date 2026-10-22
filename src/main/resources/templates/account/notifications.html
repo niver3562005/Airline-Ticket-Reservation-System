@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Journey notifications')}"></head>
+<body class="public-page account-page">
+<nav th:replace="~{fragments/layout :: publicNav}"></nav>
+<main class="account-shell">
+    <div class="page-heading"><div><a class="back-link" th:href="@{/account}">Back to my journeys</a><span class="eyebrow">JOURNEY CONTROL</span><h1>Notifications</h1><p>Booking, payment, security, boarding and flight operation updates in one timeline.</p></div><div class="profile-identity"><span class="member-avatar" th:text="${account.initials}"></span><div><strong th:text="${account.fullName}"></strong><span th:text="${account.loyaltyNumber}"></span></div></div></div>
+    <div class="account-empty" th:if="${notifications.isEmpty()}"><span class="empty-icon"><svg th:replace="~{fragments/icons :: bell}"></svg></span><h3>No notifications yet</h3><p>Journey updates will appear here after you book or update your profile.</p></div>
+    <section class="notification-timeline" th:unless="${notifications.isEmpty()}">
+        <article th:each="item : ${notifications}" th:classappend="${item.read ? '' : ' unread'}">
+            <span class="notification-icon"><svg th:replace="~{fragments/icons :: bell}"></svg></span>
+            <div><div><span class="notification-type" th:text="${#strings.replace(item.type, '_', ' ')}"></span><time th:text="${#temporals.format(item.createdAt, 'dd MMM yyyy · HH:mm')}"></time></div><h2 th:text="${item.title}"></h2><p th:text="${item.message}"></p><small th:text="${'Delivered in app · ' + item.deliveryStatus}"></small></div>
+            <form th:if="${!item.read}" th:action="@{/account/notifications/{id}/read(id=${item.id})}" method="post"><button class="btn btn-secondary btn-small" type="submit">Mark read</button></form>
+        </article>
+    </section>
+</main>
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

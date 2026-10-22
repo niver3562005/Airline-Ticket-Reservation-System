@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="AeroVista premium airline reservation and operations platform">
+    <meta name="theme-color" content="#0B1736">
+    <title th:text="${title} + ' · AeroVista'">AeroVista</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+    <script defer th:src="@{/js/app.js}"></script>
+</head>
+<body>
+<nav class="public-nav" th:fragment="publicNav" data-public-nav>
+    <a class="brand" th:href="@{/}" aria-label="AeroVista home"><span class="brand-mark"><svg th:replace="~{fragments/icons :: plane}"></svg></span><span>AeroVista<small>Your Journey, Elevated</small></span></a>
+    <button class="mobile-menu-button" type="button" data-nav-toggle aria-label="Open navigation" aria-expanded="false"><svg th:replace="~{fragments/icons :: menu}"></svg></button>
+    <div class="nav-links" data-nav-menu>
+        <details class="nav-dropdown"><summary>Flights <span>⌄</span></summary><div><a th:href="@{/#book}">Book a flight<small>Search live availability</small></a><a th:href="@{/flight-schedule}">Flight schedule<small>Times, fares and baggage</small></a><a th:href="@{/flight-status}">Flight status<small>Live operations and tracking</small></a><a th:href="@{/deals}">Deals &amp; promo codes<small>Current demonstration offers</small></a></div></details>
+        <details class="nav-dropdown"><summary>Hotels <span>⌄</span></summary><div><a th:href="@{/travel-services(type='HOTEL')}">Hotel stays<small>Flight-aware accommodation</small></a><a th:href="@{/travel-services(type='CAB')}">Airport transfers<small>Meet-and-greet cabs</small></a></div></details>
+        <details class="nav-dropdown"><summary>Experiences <span>⌄</span></summary><div><a th:href="@{/packages}">Holiday packages<small>Curated flight and stay offers</small></a><a th:href="@{/travel-hub}">Travel intelligence<small>Visa and airport guidance</small></a></div></details>
+        <details class="nav-dropdown"><summary>Manage booking <span>⌄</span></summary><div><a th:href="@{/manage}">My booking<small>Check-in, seats and services</small></a><a th:href="@{/manage}">Changes &amp; refunds<small>Cancellation and disruption care</small></a><a th:href="@{/payment-options}">Payment options<small>Secure methods and refund rules</small></a></div></details>
+        <div class="mobile-auth-links">
+            <a sec:authorize="hasAnyRole('ADMIN','AGENT')" th:href="@{/admin}">Operations dashboard</a>
+            <a sec:authorize="hasRole('CUSTOMER')" th:href="@{/account}">My journeys</a>
+            <a sec:authorize="isAnonymous()" th:href="@{/login}">Log in</a>
+            <a sec:authorize="isAnonymous()" th:href="@{/register}">Create an account</a>
+            <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
+                <button class="mobile-signout" type="submit"><svg th:replace="~{fragments/icons :: logout}"></svg> Sign out</button>
+            </form>
+        </div>
+    </div>
+    <div class="nav-actions">
+        <a sec:authorize="hasAnyRole('ADMIN','AGENT')" class="nav-text-link" th:href="@{/admin}">Operations</a>
+        <a sec:authorize="hasRole('CUSTOMER')" class="account-pill" th:href="@{/account}"><span class="avatar avatar-small" th:text="${#authentication.name.substring(0,1).toUpperCase()}">A</span><span>My trips</span></a>
+        <form sec:authorize="isAuthenticated()" class="desktop-signout" th:action="@{/logout}" method="post">
+            <button class="nav-signout" type="submit" aria-label="Sign out"><svg th:replace="~{fragments/icons :: logout}"></svg><span>Sign out</span></button>
+        </form>
+        <a sec:authorize="isAnonymous()" class="nav-text-link nav-create-account" th:href="@{/register}">Create account</a>
+        <a sec:authorize="isAnonymous()" class="btn btn-primary btn-nav nav-sign-in" th:href="@{/login}">Sign in</a>
+    </div>
+</nav>
+
+<aside class="sidebar" th:fragment="sidebar(active)">
+    <a class="brand brand-light" th:href="@{/admin}"><span class="brand-mark"><svg th:replace="~{fragments/icons :: plane}"></svg></span><span>AeroVista<small>Operations Control</small></span></a>
+    <p class="sidebar-label">WORKSPACE</p>
+    <nav>
+        <a th:classappend="${active == 'dashboard'} ? 'active'" th:href="@{/admin}"><svg th:replace="~{fragments/icons :: dashboard}"></svg> Overview</a>
+        <a th:classappend="${active == 'flights'} ? 'active'" th:href="@{/admin/flights}"><svg th:replace="~{fragments/icons :: plane}"></svg> Flights</a>
+        <a th:classappend="${active == 'bookings'} ? 'active'" th:href="@{/admin/bookings}"><svg th:replace="~{fragments/icons :: ticket}"></svg> Bookings</a>
+        <a th:classappend="${active == 'service'} ? 'active'" th:href="@{/admin/service-center}"><svg th:replace="~{fragments/icons :: headset}"></svg> Service centre</a>
+        <a sec:authorize="hasRole('ADMIN')" th:classappend="${active == 'aircraft'} ? 'active'" th:href="@{/admin/aircraft}"><svg th:replace="~{fragments/icons :: fleet}"></svg> Fleet</a>
+        <a sec:authorize="hasRole('ADMIN')" th:classappend="${active == 'airports'} ? 'active'" th:href="@{/admin/airports}"><svg th:replace="~{fragments/icons :: airport}"></svg> Airports</a>
+    </nav>
+    <div class="sidebar-bottom">
+        <div class="user-chip"><span class="avatar" th:text="${#authentication.name.substring(0,1).toUpperCase()}">A</span><div><strong th:text="${#authentication.name}">admin</strong><small>Operations staff</small></div></div>
+        <form th:action="@{/logout}" method="post"><button class="link-button" type="submit"><svg th:replace="~{fragments/icons :: logout}"></svg> Sign out</button></form>
+    </div>
+</aside>
+
+<div th:fragment="flash" class="flash-stack">
+    <div class="flash success" th:if="${success}"><svg th:replace="~{fragments/icons :: check}"></svg><span th:text="${success}"></span></div>
+    <div class="flash error" th:if="${error}"><span class="alert-mark">!</span><span th:text="${error}"></span></div>
+</div>
+
+<div th:fragment="flightIdentity(flight)" class="flight-identity">
+    <img th:src="@{/images/aerovista-flight-logo.svg}" src="/images/aerovista-flight-logo.svg" alt="AeroVista airline">
+    <div><strong th:text="${flight.flightNumber}">AN204</strong><span>AeroVista operated</span></div>
+</div>
+
+<footer th:fragment="footer" class="mega-footer" id="support">
+    <div class="footer-glow"></div>
+    <div class="mega-footer-inner">
+        <div class="footer-columns">
+            <section><h3>About AeroVista</h3><a th:href="@{/#experience}">Our story</a><a th:href="@{/#destinations}">Global network</a><a th:href="@{/cabin-guide}">Cabin experience</a><a th:href="@{/travel-hub}">Sustainable journeys</a><a th:href="@{/support}">Careers & media</a></section>
+            <section><h3>Direct connect</h3><a th:href="@{/travel-services(type='TRAVEL_AGENCY')}">Travel agency network</a><a th:href="@{/travel-services(type='HOTEL')}">Hotel partners</a><a th:href="@{/travel-services(type='CAB')}">Airport transfers</a><a th:href="@{/travel-services(type='SIM')}">Travel SIM services</a><a th:href="@{/travel-services}">Supplier services</a></section>
+            <section><h3>Help</h3><a th:href="@{/support}">24/7 contact centre</a><a th:href="@{/manage}">Disruption support</a><a th:href="@{/manage}">Priority airport care</a><a th:href="@{/travel-hub}">Visa & airport guide</a><a sec:authorize="hasRole('CUSTOMER')" th:href="@{/account/feedback}">Feedback & claims</a></section>
+            <section><h3>Services</h3><a th:href="@{/#book}">Book a flight</a><a th:href="@{/deals}">Deals &amp; promo codes</a><a th:href="@{/payment-options}">Payment options</a><a th:href="@{/flight-schedule}">Flight schedule</a><a th:href="@{/flight-status}">Live flight tracking</a><a th:href="@{/manage}">Fast-track check-in</a><a th:href="@{/travel-services(type='CAFE')}">Airport dining</a><a th:href="@{/packages}">Holidays &amp; packages</a></section>
+            <section class="footer-subscribe"><span class="eyebrow gold">PRIVATE FARE ALERTS</span><h3>Travel beautifully.</h3><p>Receive destination inspiration and selected AeroVista offers.</p><form data-newsletter><label class="sr-only" for="footer-email">Email</label><input id="footer-email" type="email" placeholder="Email address" required><label class="footer-check"><input type="checkbox" required><span>I agree to receive occasional offers.</span></label><button class="btn btn-gold" type="submit">Subscribe</button><small data-newsletter-message></small></form></section>
+        </div>
+        <div class="footer-community"><a class="brand brand-light" th:href="@{/}"><span class="brand-mark"><svg th:replace="~{fragments/icons :: plane}"></svg></span><span>AeroVista<small>Your Journey, Elevated</small></span></a><div><strong>Follow the journey</strong><a href="https://www.linkedin.com" rel="noopener" target="_blank">in</a><a href="https://www.youtube.com" rel="noopener" target="_blank">YouTube</a><a href="https://www.instagram.com" rel="noopener" target="_blank">Instagram</a><a href="https://x.com" rel="noopener" target="_blank">X</a></div></div>
+    </div>
+    <div class="footer-legal"><span>© 2026 AeroVista · Educational airline platform</span><nav><a th:href="@{/privacy-policy}">Privacy policy</a><a th:href="@{/cookie-policy}">Cookie policy</a><a th:href="@{/legal-notice}">Legal notice</a><button type="button" data-cookie-settings>Cookie settings</button></nav></div>
+    <section class="cookie-banner" data-cookie-banner hidden aria-label="Cookie preferences"><div><span class="cookie-icon">◌</span><div><strong>Your privacy, your choice</strong><p>We use necessary storage to run AeroVista. Optional preferences help tailor this demonstration; no advertising or analytics scripts are loaded.</p><a th:href="@{/cookie-policy}">Read the cookie policy</a></div></div><div class="cookie-actions"><button class="btn btn-secondary" type="button" data-cookie-customize>Customize</button><button class="btn btn-secondary" type="button" data-cookie-necessary>Necessary only</button><button class="btn btn-gold" type="button" data-cookie-accept>Accept all</button></div></section>
+    <div class="cookie-modal" data-cookie-modal hidden><div class="cookie-modal-backdrop" data-cookie-close></div><section role="dialog" aria-modal="true" aria-labelledby="cookie-title"><button class="cookie-close" type="button" data-cookie-close aria-label="Close">×</button><span class="eyebrow">PRIVACY CENTRE</span><h2 id="cookie-title">Choose your experience</h2><p>Control optional browser storage. Necessary storage keeps security and consent choices working.</p><label class="cookie-toggle"><span><strong>Necessary</strong><small>Security, sessions and saved consent</small></span><input type="checkbox" checked disabled></label><label class="cookie-toggle"><span><strong>Preferences</strong><small>Remember interface and travel preferences</small></span><input type="checkbox" data-cookie-category="preferences"></label><label class="cookie-toggle"><span><strong>Analytics</strong><small>Reserved for anonymous service improvement; none loaded now</small></span><input type="checkbox" data-cookie-category="analytics"></label><label class="cookie-toggle"><span><strong>Marketing</strong><small>Reserved for tailored offers; none loaded now</small></span><input type="checkbox" data-cookie-category="marketing"></label><button class="btn btn-primary btn-block" type="button" data-cookie-save>Save my choices</button></section></div>
+</footer>
+</body>
+</html>

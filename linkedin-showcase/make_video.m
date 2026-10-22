@@ -28,6 +28,17 @@ static void DrawText(NSString *text, NSRect rect, CGFloat size, NSFontWeight wei
     [text drawInRect:rect withAttributes:attributes];
 }
 
+static NSDictionary *Feature(NSString *file, NSString *section, NSString *title, NSString *subtitle, double duration) {
+    return @{
+        @"file": file,
+        @"section": section,
+        @"title": title,
+        @"subtitle": subtitle,
+        @"duration": @(duration),
+        @"style": @"feature"
+    };
+}
+
 static void DrawScreenshot(NSImage *image, double progress, NSInteger index) {
     CGFloat zoom = 1.0 + 0.035 * progress;
     CGFloat drawWidth = CanvasWidth * zoom;
@@ -54,9 +65,10 @@ static void DrawFeatureCaption(NSDictionary *scene, NSInteger index, NSInteger f
         nil];
     [gradient drawInRect:NSMakeRect(0, 650, CanvasWidth, 430) angle:-90];
 
+    DrawText([scene[@"section"] uppercaseString], NSMakeRect(205, 706, 1260, 34), 18, NSFontWeightBold, [NSColor colorWithCalibratedRed:0.92 green:0.72 blue:0.30 alpha:alpha], NSTextAlignmentLeft);
     RoundedFill([NSColor colorWithCalibratedRed:0.10 green:0.42 blue:0.86 alpha:0.95 * alpha], NSMakeRect(112, 772, 66, 66), 18);
     DrawText(@"✈", NSMakeRect(112, 783, 66, 48), 31, NSFontWeightMedium, [[NSColor whiteColor] colorWithAlphaComponent:alpha], NSTextAlignmentCenter);
-    DrawText(scene[@"title"], NSMakeRect(205, 748, 1260, 80), 50, NSFontWeightBold, [[NSColor whiteColor] colorWithAlphaComponent:alpha], NSTextAlignmentLeft);
+    DrawText(scene[@"title"], NSMakeRect(205, 748, 1320, 80), 46, NSFontWeightBold, [[NSColor whiteColor] colorWithAlphaComponent:alpha], NSTextAlignmentLeft);
     DrawText(scene[@"subtitle"], NSMakeRect(208, 826, 1430, 58), 25, NSFontWeightRegular, [NSColor colorWithCalibratedRed:0.84 green:0.90 blue:1.0 alpha:alpha], NSTextAlignmentLeft);
     DrawText([NSString stringWithFormat:@"%02ld / %02ld", (long)index, (long)featureCount], NSMakeRect(1635, 792, 170, 36), 18, NSFontWeightSemibold, [[NSColor whiteColor] colorWithAlphaComponent:0.82 * alpha], NSTextAlignmentRight);
     Fill([[NSColor whiteColor] colorWithAlphaComponent:0.22 * alpha], NSMakeRect(112, 956, 1696, 4));
@@ -86,7 +98,7 @@ static void DrawOutro(NSDictionary *scene, double progress) {
     DrawText(scene[@"title"], NSMakeRect(165, 240, 1420, 110), 76, NSFontWeightBold, [[NSColor whiteColor] colorWithAlphaComponent:alpha], NSTextAlignmentLeft);
     DrawText(scene[@"subtitle"], NSMakeRect(170, 374, 1480, 80), 28, NSFontWeightMedium, [NSColor colorWithCalibratedRed:0.82 green:0.89 blue:1.0 alpha:alpha], NSTextAlignmentLeft);
 
-    NSArray *chips = @[@"50 destinations", @"10 scheduled flights", @"Refund workflows", @"Travel services", @"MySQL persistence", @"48 automated tests"];
+    NSArray *chips = @[@"50 destinations", @"15 scheduled flights", @"Refund workflows", @"Travel services", @"MySQL persistence", @"48 automated tests"];
     CGFloat x = 170, y = 500;
     for (NSString *chip in chips) {
         CGFloat chipWidth = 70 + chip.length * 13;
@@ -127,21 +139,72 @@ static void RenderFrame(NSDictionary *scene, NSImage *image, NSInteger index, NS
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         NSString *root = argc > 1 ? [NSString stringWithUTF8String:argv[1]] : [[NSFileManager defaultManager] currentDirectoryPath];
-        NSString *capturePath = [root stringByAppendingPathComponent:@"linkedin-showcase/captures"];
-        NSString *outputPath = [root stringByAppendingPathComponent:@"AeroVista-LinkedIn-Showcase.mp4"];
+        NSString *capturePath = [root stringByAppendingPathComponent:@"linkedin-showcase/extended-captures"];
+        NSString *outputPath = [root stringByAppendingPathComponent:@"AeroVista-Complete-Platform-Walkthrough.mp4"];
         NSArray<NSDictionary *> *scenes = @[
-            @{@"file": @"01-home.png", @"title": @"AeroVista", @"subtitle": @"A premium airline reservation and journey-management platform", @"duration": @4.2, @"style": @"intro"},
-            @{@"file": @"02-search.png", @"title": @"Smart flight search", @"subtitle": @"Cabin choices, baggage allowances, stopovers and connecting routes", @"duration": @3.2, @"style": @"feature"},
-            @{@"file": @"03-schedule.png", @"title": @"Live operations", @"subtitle": @"Availability, delays, cancellations and passenger recovery", @"duration": @3.2, @"style": @"feature"},
-            @{@"file": @"04-countries.png", @"title": @"50-country travel guide", @"subtitle": @"Visa guidance, destination details and unique local imagery", @"duration": @3.2, @"style": @"feature"},
-            @{@"file": @"05-packages.png", @"title": @"Curated journeys", @"subtitle": @"Packages, promo codes and connected travel experiences", @"duration": @3.2, @"style": @"feature"},
-            @{@"file": @"06-hotels.png", @"title": @"Hotel marketplace", @"subtitle": @"Distinct stays across 50 international destinations", @"duration": @3.2, @"style": @"feature"},
-            @{@"file": @"07-cabs.png", @"title": @"Airport transfers", @"subtitle": @"Cabs, shuttles and journey-linked passenger services", @"duration": @3.2, @"style": @"feature"},
-            @{@"file": @"08-deals.png", @"title": @"Deals that convert", @"subtitle": @"Clear promotions, benefits and validated offer codes", @"duration": @3.2, @"style": @"feature"},
-            @{@"file": @"09-payment.png", @"title": @"Secure payment flow", @"subtitle": @"Notifications, refund eligibility and cash-return tracking", @"duration": @3.2, @"style": @"feature"},
-            @{@"file": @"10-manage.png", @"title": @"Manage every journey", @"subtitle": @"Check-in, boarding, cancellations, refunds and 24/7 care", @"duration": @3.2, @"style": @"feature"},
-            @{@"file": @"11-login.png", @"title": @"Protected passenger accounts", @"subtitle": @"Profiles, preferences and complete booking history", @"duration": @3.2, @"style": @"feature"},
-            @{@"file": @"01-home.png", @"title": @"Built for the complete journey", @"subtitle": @"Spring Boot · Thymeleaf · MVC · MySQL · Responsive UI · Automated tests", @"duration": @5.0, @"style": @"outro"}
+            @{@"file": @"01-home.png", @"title": @"AeroVista", @"subtitle": @"Complete airline reservation and operations walkthrough", @"duration": @4.5, @"style": @"intro"},
+
+            Feature(@"02-create-account.png", @"Account & Security", @"Create a passenger account", @"Validated registration, secure passwords and travel preferences", 2.1),
+            Feature(@"03-verify-email.png", @"Account & Security", @"Secure email verification", @"Single-use activation protects every passenger identity", 1.9),
+            Feature(@"04-sign-in.png", @"Account & Security", @"Passenger sign-in", @"Secure access to bookings, preferences and journey alerts", 1.9),
+            Feature(@"05-account-welcome.png", @"Account & Security", @"Personal journey dashboard", @"Loyalty identity, live tools, bookings and recent updates", 2.2),
+            Feature(@"06-manage-profile.png", @"Account & Security", @"Manage the passenger profile", @"Contact details, preferences and account security", 1.9),
+            Feature(@"07-profile-updated.png", @"Account & Security", @"Profile update confirmed", @"Saved preferences create a passenger notification", 1.8),
+
+            Feature(@"08-flight-schedule.png", @"Flight Discovery", @"Published flight schedule", @"Flight numbers, aircraft, gates, times and live status", 2.1),
+            Feature(@"09-flight-search.png", @"Flight Discovery", @"Live flight availability", @"Prices, remaining seats, delay alerts and baggage details", 2.2),
+            Feature(@"10-cabin-allowances.png", @"Flight Discovery", @"Four cabin experiences", @"Economy through First with 23–50 kg baggage allowances", 2.1),
+
+            Feature(@"11-booking-contact.png", @"Booking & Payment", @"Flight checkout", @"Account-aware contact details and a complete flight summary", 2.1),
+            Feature(@"12-passenger-seat.png", @"Booking & Payment", @"Passenger, meal and seat selection", @"Passport validation, Business seat, meal and assistance", 2.5),
+            Feature(@"13-payment-promo.png", @"Booking & Payment", @"Protected payment and promotions", @"Validated offers with no stored card details", 2.2),
+            Feature(@"14-booking-confirmation.png", @"Booking & Payment", @"Booking confirmed", @"Ticket, itinerary, payment status and a unique PNR", 2.8),
+            Feature(@"15-account-booking.png", @"Booking & Payment", @"Booking added to the account", @"Journey history and real-time booking notifications", 2.0),
+
+            Feature(@"16-manage-booking.png", @"Journey Management", @"Manage the complete journey", @"Flight times, PNR, readiness and passenger controls", 2.2),
+            Feature(@"17-journey-readiness.png", @"Journey Management", @"Check-in and boarding readiness", @"Document, security and boarding stages for every passenger", 2.1),
+            Feature(@"18-check-in-complete.png", @"Journey Management", @"Online check-in complete", @"The passenger is ready for security and boarding", 2.0),
+            Feature(@"19-priority-airport-care.png", @"Journey Management", @"Priority airport care", @"Fast-track, boarding, baggage and meet-and-assist", 2.2),
+            Feature(@"20-priority-confirmed.png", @"Journey Management", @"Airport service confirmed", @"A priced request is sent to the operations team", 2.0),
+
+            Feature(@"21-accommodations.png", @"Connected Travel", @"Global accommodation marketplace", @"53 distinctive hotels across 50 destinations", 2.2),
+            Feature(@"22-hotel-reservation.png", @"Connected Travel", @"Flight-connected hotel reservation", @"Dates, transfers, preferences and airline PNR", 2.2),
+            Feature(@"23-service-confirmation.png", @"Connected Travel", @"Accommodation confirmed", @"The service appears in passenger care and the dashboard", 2.0),
+            Feature(@"24-airport-transfers.png", @"Connected Travel", @"Cabs and airport shuttles", @"Private transfers, shared shuttles and chauffeurs", 2.0),
+            Feature(@"25-travel-agencies.png", @"Connected Travel", @"Verified travel agencies", @"Multi-city planning and destination assistance", 1.9),
+            Feature(@"26-airport-dining.png", @"Connected Travel", @"Airport dining", @"Terminal cafés and dietary requests before departure", 1.9),
+            Feature(@"27-travel-sim.png", @"Connected Travel", @"Travel SIM and eSIM", @"Connectivity ready from the moment of arrival", 1.9),
+            Feature(@"28-packages.png", @"Connected Travel", @"Curated flight-and-stay packages", @"City, family, business, wellness and island journeys", 2.1),
+
+            Feature(@"29-visa-guide.png", @"Travel Intelligence", @"Visa and destination guidance", @"Entry details with links to official authorities", 2.0),
+            Feature(@"30-live-tracking.png", @"Travel Intelligence", @"Real-time flight telemetry", @"Position, speed, altitude, ETA and availability", 2.5),
+            Feature(@"31-airport-facilities.png", @"Travel Intelligence", @"Airport facilities", @"Lounges, dining, accessibility, transport and family services", 2.0),
+            Feature(@"32-deals.png", @"Travel Intelligence", @"Deals and promotions", @"Transparent offers and validated discount codes", 1.9),
+            Feature(@"33-payment-options.png", @"Travel Intelligence", @"Flexible payment options", @"Card, bank transfer and pay-at-counter", 1.9),
+
+            Feature(@"34-feedback.png", @"Passenger Care", @"Passenger feedback", @"Rated, categorized and linked to the booking", 2.0),
+            Feature(@"35-feedback-recorded.png", @"Passenger Care", @"Feedback case created", @"An auditable service case reaches the care team", 1.9),
+            Feature(@"36-notifications.png", @"Passenger Care", @"Multi-channel notifications", @"Booking, payment, profile, check-in and partner events", 2.1),
+            Feature(@"37-refund-quote.png", @"Passenger Care", @"Transparent cancellation quote", @"Paid amount, fee and cash return before confirmation", 2.5),
+            Feature(@"39-cancelled-in-account.png", @"Passenger Care", @"Account history after cancellation", @"Cancelled journeys and connected services remain visible", 2.3),
+            Feature(@"40-refund-notifications.png", @"Passenger Care", @"Cancellation and refund alerts", @"Communications are recorded across the journey timeline", 2.2),
+
+            Feature(@"41-admin-sign-in.png", @"Airline Operations", @"Secure staff access", @"Role-based passenger and operations separation", 1.9),
+            Feature(@"42-operations-dashboard.png", @"Airline Operations", @"Airline operations dashboard", @"Flights, bookings, check-in, revenue and activity KPIs", 2.6),
+            Feature(@"43-flight-operations.png", @"Airline Operations", @"Flight schedule management", @"Aircraft, gates, fares and operational statuses", 2.0),
+            Feature(@"44-flight-control.png", @"Airline Operations", @"Live flight control", @"Manifest, seat map, delay and operational controls", 2.0),
+            Feature(@"45-telemetry-control.png", @"Airline Operations", @"Telemetry control", @"Latitude, longitude, altitude, speed and ETA", 2.0),
+            Feature(@"46-booking-operations.png", @"Airline Operations", @"Operational booking detail", @"Payments, travellers, seats and readiness", 2.1),
+            Feature(@"47-manifest-readiness.png", @"Airline Operations", @"Passenger manifest", @"Check-in, security and boarding controls", 2.0),
+            Feature(@"48-service-center.png", @"Airline Operations", @"Passenger service centre", @"Refunds, feedback, disruptions and delivery monitoring", 2.1),
+            Feature(@"49-connected-services-ops.png", @"Airline Operations", @"Connected-service operations", @"Hotel, cab, agency, café and SIM queues", 2.0),
+            Feature(@"50-priority-ops.png", @"Airline Operations", @"Priority airport operations", @"Fast-track and baggage requests tracked for fulfilment", 2.0),
+            Feature(@"51-refund-operations.png", @"Airline Operations", @"Refund operations", @"Cash returns, fees and processor status", 2.4),
+            Feature(@"52-feedback-operations.png", @"Airline Operations", @"Feedback and service recovery", @"Ratings and auditable staff responses", 2.0),
+            Feature(@"53-airport-management.png", @"Airline Operations", @"Airport management", @"Validated IATA data and global operational locations", 2.0),
+            Feature(@"54-fleet-management.png", @"Airline Operations", @"Fleet management", @"Aircraft capacity and cabin-layout controls", 2.0),
+
+            @{@"file": @"01-home.png", @"title": @"One platform. Every journey.", @"subtitle": @"Spring Boot · Thymeleaf · MVC · MySQL · Responsive UI · 48 automated tests", @"duration": @5.5, @"style": @"outro"}
         ];
 
         NSMutableDictionary<NSString *, NSImage *> *images = [NSMutableDictionary dictionary];
@@ -163,7 +226,7 @@ int main(int argc, const char * argv[]) {
             AVVideoWidthKey: @(CanvasWidth),
             AVVideoHeightKey: @(CanvasHeight),
             AVVideoCompressionPropertiesKey: @{
-                AVVideoAverageBitRateKey: @8000000,
+                AVVideoAverageBitRateKey: @6000000,
                 AVVideoProfileLevelKey: AVVideoProfileLevelH264HighAutoLevel,
                 AVVideoMaxKeyFrameIntervalKey: @60
             }
@@ -218,7 +281,7 @@ int main(int argc, const char * argv[]) {
         if (posterImage) {
             NSBitmapImageRep *poster = [[NSBitmapImageRep alloc] initWithCGImage:posterImage];
             NSData *posterData = [poster representationUsingType:NSBitmapImageFileTypePNG properties:@{}];
-            [posterData writeToFile:[root stringByAppendingPathComponent:@"AeroVista-LinkedIn-Cover.png"] atomically:YES];
+            [posterData writeToFile:[root stringByAppendingPathComponent:@"AeroVista-Complete-Platform-Cover.png"] atomically:YES];
             CGImageRelease(posterImage);
         } else {
             NSLog(@"Poster export warning: %@", posterError);

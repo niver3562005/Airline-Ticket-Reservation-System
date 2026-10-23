@@ -968,3 +968,135 @@ body.admin-page {
     .workspace-task-grid > a { min-height: 190px; }
     .account-tool-grid { grid-template-columns: 1fr; }
 }
+
+/* Immersive journey canvas -------------------------------------------------
+   Carries the airport-at-sunrise atmosphere through the functional pages so
+   confirmations, booking management and operations never fall back to a flat
+   white/blue application shell. Content surfaces stay calm and accessible. */
+body.public-page:not(.home-page),
+body.auth-page,
+body.admin-page {
+    background-color: #eef4fb;
+    background-image:
+        linear-gradient(180deg, rgba(245,248,253,.38) 0%, rgba(248,249,252,.5) 36%, rgba(243,247,252,.58) 70%, rgba(255,248,239,.64) 100%),
+        url('/images/aerovista-journey-canvas-v1.png?v=2');
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+body.public-page:not(.home-page)::after,
+body.auth-page::after,
+body.admin-page::after {
+    content: "";
+    position: fixed;
+    z-index: -1;
+    inset: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(circle at 8% 22%, rgba(246,190,126,.2), transparent 25rem),
+        radial-gradient(circle at 91% 12%, rgba(57,112,183,.2), transparent 28rem);
+}
+
+.public-page:not(.home-page) .public-nav {
+    border-color: rgba(255,255,255,.78);
+    background: rgba(255,255,255,.86);
+    box-shadow: 0 20px 58px rgba(7,25,55,.18);
+}
+
+body.public-page:not(.home-page) .panel,
+body.confirmation-bg .ticket,
+body.admin-page .admin-card,
+body.admin-page .fleet-card,
+body.admin-page .metric-grid article {
+    border-color: rgba(255,255,255,.84);
+    background-color: rgba(255,255,255,.9);
+    box-shadow: 0 20px 55px rgba(9,31,65,.13);
+    backdrop-filter: blur(18px) saturate(130%);
+    -webkit-backdrop-filter: blur(18px) saturate(130%);
+}
+
+.auth-page .auth-panel {
+    background: rgba(248,250,253,.82);
+    backdrop-filter: blur(20px) saturate(125%);
+    -webkit-backdrop-filter: blur(20px) saturate(125%);
+}
+.auth-page .auth-box {
+    border: 1px solid rgba(255,255,255,.88);
+    box-shadow: 0 24px 70px rgba(7,26,58,.16);
+}
+
+.confirmation-bg {
+    position: relative;
+    overflow-x: hidden;
+}
+.confirmation-bg .confirmation-wrap {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    padding-top: 150px;
+}
+.confirmation-bg .confirmation-wrap::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    width: min(1160px, calc(100vw - 32px));
+    height: 520px;
+    top: 106px;
+    left: 50%;
+    border: 1px solid rgba(255,255,255,.55);
+    border-radius: 42px;
+    transform: translateX(-50%);
+    background:
+        radial-gradient(circle at 84% 12%, rgba(237,187,128,.28), transparent 29%),
+        linear-gradient(135deg, rgba(255,255,255,.74), rgba(232,240,251,.58));
+    box-shadow: 0 32px 90px rgba(8,28,61,.16);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+.confirmation-bg .success-mark {
+    box-shadow: 0 14px 34px rgba(31,122,90,.2), 0 0 0 9px rgba(255,255,255,.5);
+}
+.confirmation-bg .confirmation-wrap > p { color: #56667d; }
+.confirmation-bg .ticket { box-shadow: 0 28px 75px rgba(8,27,58,.2); }
+
+.manage-page,
+.booking-page,
+.results-page,
+.profile-page,
+.account-shell {
+    padding-bottom: 92px;
+}
+.manage-page .managed-booking,
+.booking-page .booking-layout,
+.results-page .results-layout,
+.profile-page .profile-grid,
+.account-page .account-content {
+    position: relative;
+    z-index: 1;
+}
+
+.admin-main {
+    min-height: 100vh;
+}
+.admin-page .admin-header {
+    background-image:
+        linear-gradient(105deg, rgba(7,24,52,.96), rgba(20,56,103,.76)),
+        url('/images/aerovista-journey-canvas-v1.png');
+    background-position: center 43%;
+    background-size: cover;
+}
+
+@media (max-width: 900px) {
+    body.public-page:not(.home-page),
+    body.auth-page,
+    body.admin-page { background-attachment: scroll; background-position: 62% top; }
+    .confirmation-bg .confirmation-wrap { padding-top: 126px; }
+    .confirmation-bg .confirmation-wrap::before { top: 88px; height: 620px; border-radius: 28px; }
+}
+
+@media (max-width: 640px) {
+    .confirmation-bg .confirmation-wrap { padding: 112px 18px 64px; }
+    .confirmation-bg .confirmation-wrap::before { width: calc(100vw - 16px); top: 84px; border-radius: 24px; }
+}

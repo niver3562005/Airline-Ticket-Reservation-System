@@ -262,6 +262,10 @@ async function main() {
   const verifyPath = await evaluate(`document.querySelector('a[href*="/verify-email"]')?.getAttribute('href')`);
   if (!verifyPath) throw new Error('Verification link was not created');
   await navigate(verifyPath);
+  // Verification can return to the last role-specific login in a reused
+  // capture profile. Always continue through the customer portal so the
+  // walkthrough remains deterministic.
+  await navigate('/login/customer');
 
   await field('input[name="username"]', email);
   await field('input[name="password"]', password);

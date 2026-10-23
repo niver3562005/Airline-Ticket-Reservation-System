@@ -1100,3 +1100,377 @@ body.admin-page .metric-grid article {
     .confirmation-bg .confirmation-wrap { padding: 112px 18px 64px; }
     .confirmation-bg .confirmation-wrap::before { width: calc(100vw - 16px); top: 84px; border-radius: 24px; }
 }
+
+/* AeroVista jewel surfaces -------------------------------------------------
+   Functional screens use the same navy, cobalt and champagne atmosphere as
+   the flagship booking experience. Each card family gets its own tonal
+   identity while forms and data remain easy to scan. */
+:root {
+    --av-night-2: #06152f;
+    --av-cobalt-2: #174f93;
+    --av-azure-2: #3279bd;
+    --av-indigo-2: #443b79;
+    --av-orchid-2: #654c78;
+    --av-bronze-2: #8c632d;
+    --av-champagne-2: #e7c48d;
+    --av-steel-2: #344d70;
+    --av-jewel-shadow: 0 24px 58px rgba(4, 22, 52, .24);
+}
+
+/* Status and action colours stay within the airline identity. */
+.status,
+.badge {
+    border: 1px solid rgba(255,255,255,.24);
+    box-shadow: 0 8px 20px rgba(5,24,53,.13);
+}
+.status-confirmed,
+.status-scheduled,
+.status-arrived,
+.status-active,
+.status-on-time,
+.badge-success {
+    color: #fff !important;
+    border-color: rgba(231,196,141,.42) !important;
+    background: linear-gradient(135deg, #153f78, #2e73b8) !important;
+}
+.status-pending,
+.status-delayed,
+.badge-warning {
+    color: #102548 !important;
+    border-color: rgba(255,255,255,.48) !important;
+    background: linear-gradient(135deg, #f3d7a5, #c99953) !important;
+}
+.status-cancelled,
+.status-failed,
+.status-inactive,
+.badge-danger {
+    color: #fff !important;
+    border-color: rgba(231,196,141,.3) !important;
+    background: linear-gradient(135deg, #344d70, #5e4774) !important;
+}
+.delay-copy { color: #745021 !important; }
+.btn-danger,
+.actions button,
+.card-actions button {
+    color: #fff !important;
+    border-color: rgba(231,196,141,.48) !important;
+    background: linear-gradient(135deg, #243e69, #604978) !important;
+    box-shadow: 0 12px 26px rgba(32,38,79,.2);
+}
+.actions button,
+.card-actions button { padding: 7px 11px; border-radius: 999px; }
+.feature-icon.danger {
+    color: #fff !important;
+    background: linear-gradient(135deg, #263f6a, #654b79) !important;
+}
+.metric-icon.green,
+.workspace-task-icon.green {
+    color: #fff !important;
+    background: linear-gradient(135deg, #1a5a91, #347ea6) !important;
+}
+.metric-icon.amber,
+.workspace-task-icon.amber {
+    color: #12294d !important;
+    background: linear-gradient(135deg, #efd4a2, #c4944e) !important;
+}
+.metric-icon.violet,
+.workspace-task-icon.violet {
+    color: #fff !important;
+    background: linear-gradient(135deg, #3f427f, #725487) !important;
+}
+
+/* Confirmation becomes a composed premium ticket, not a card floating in an
+   empty page. */
+.confirmation-bg .confirmation-wrap {
+    width: min(1120px, calc(100% - 34px));
+    padding-bottom: 96px;
+}
+.confirmation-bg .confirmation-wrap::before {
+    height: 650px;
+    border-color: rgba(255,255,255,.5);
+    background:
+        radial-gradient(circle at 18% 10%, rgba(231,196,141,.34), transparent 27%),
+        radial-gradient(circle at 88% 28%, rgba(57,117,183,.3), transparent 34%),
+        linear-gradient(135deg, rgba(6,24,54,.64), rgba(20,65,113,.38));
+    box-shadow: 0 34px 100px rgba(4,20,46,.33);
+    backdrop-filter: blur(11px) saturate(145%);
+    -webkit-backdrop-filter: blur(11px) saturate(145%);
+}
+.confirmation-bg .success-mark {
+    color: #fff;
+    background: linear-gradient(145deg, #10396e, #2c70b1 66%, #d3a85f);
+    box-shadow: 0 18px 40px rgba(5,32,71,.32), 0 0 0 9px rgba(255,255,255,.3);
+}
+.confirmation-bg .confirmation-wrap > h1,
+.confirmation-bg .confirmation-wrap > p { color: #fff; text-shadow: 0 3px 18px rgba(3,18,42,.35); }
+.confirmation-bg .confirmation-wrap > p { color: rgba(255,255,255,.78); }
+.confirmation-bg .ticket {
+    position: relative;
+    isolation: isolate;
+    border: 1px solid rgba(231,196,141,.48);
+    color: #fff;
+    background: linear-gradient(118deg, rgba(7,27,60,.98), rgba(21,67,116,.96) 63%, rgba(10,37,75,.98));
+    box-shadow: 0 32px 80px rgba(3,18,43,.4);
+}
+.confirmation-bg .ticket::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(circle at 12% 18%, rgba(231,196,141,.25), transparent 22%),
+        radial-gradient(circle at 70% 100%, rgba(71,142,202,.3), transparent 34%),
+        repeating-linear-gradient(118deg, transparent 0 52px, rgba(255,255,255,.025) 52px 53px);
+}
+.confirmation-bg .ticket-main { background: transparent; }
+.confirmation-bg .ticket-top img {
+    padding: 7px 10px;
+    border-radius: 11px;
+    filter: none;
+    opacity: 1;
+    background: rgba(255,255,255,.96);
+}
+.confirmation-bg .ticket-top strong,
+.confirmation-bg .ticket-route strong,
+.confirmation-bg .ticket-details strong { color: #fff; }
+.confirmation-bg .ticket-route span,
+.confirmation-bg .ticket-details small,
+.confirmation-bg .ticket-flight small { color: rgba(226,236,249,.72); }
+.confirmation-bg .ticket-flight .icon { color: var(--av-champagne-2); }
+.confirmation-bg .ticket-details {
+    gap: 10px;
+    border-top-color: rgba(255,255,255,.16);
+}
+.confirmation-bg .ticket-details > div {
+    min-height: 66px;
+    justify-content: center;
+    padding: 10px 12px;
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 12px;
+    background: rgba(255,255,255,.07);
+}
+.confirmation-bg .ticket-stub {
+    border-left-color: rgba(231,196,141,.66);
+    background:
+        radial-gradient(circle at 85% 12%, rgba(255,255,255,.19), transparent 24%),
+        linear-gradient(160deg, #b88643, #7d5727 55%, #122d57);
+}
+.confirmation-bg .ticket-stub small,
+.confirmation-bg .ticket-stub span { color: rgba(255,255,255,.76); }
+.confirmation-bg .confirmation-actions .btn-secondary {
+    color: #fff;
+    border-color: rgba(255,255,255,.58);
+    background: rgba(6,27,60,.56);
+    backdrop-filter: blur(12px);
+}
+.confirmation-bg .confirmation-actions .btn-primary {
+    color: #10264a;
+    background: linear-gradient(135deg, #f1d7a7, #c8964f);
+}
+
+/* Passenger journey cards. */
+.journey-card,
+.journey-progress,
+.role-responsibility-panel,
+.customer-responsibility,
+.admin-responsibility {
+    color: #fff;
+    border-color: rgba(231,196,141,.3) !important;
+    background:
+        radial-gradient(circle at 88% 0, rgba(231,196,141,.22), transparent 28%),
+        linear-gradient(125deg, rgba(6,24,55,.97), rgba(23,79,147,.92)) !important;
+    box-shadow: var(--av-jewel-shadow);
+}
+.journey-card h1, .journey-card h2, .journey-card h3,
+.journey-progress h1, .journey-progress h2, .journey-progress h3,
+.role-responsibility-panel h2 { color: #fff; }
+.journey-card p, .journey-card small, .journey-card span,
+.journey-progress p, .journey-progress small, .journey-progress span,
+.role-responsibility-panel p { color: rgba(225,236,249,.76); }
+.role-permission-badge {
+    color: #fff;
+    border-color: rgba(231,196,141,.4);
+    background: rgba(255,255,255,.1);
+}
+.role-responsibility-panel .eyebrow { color: var(--av-champagne-2) !important; }
+.progress-track > div::before,
+.progress-track > i { border-color: rgba(231,196,141,.46) !important; background: rgba(255,255,255,.12) !important; }
+.progress-track > div.complete::before,
+.progress-track > div.active::before { color: #10264a !important; background: var(--av-champagne-2) !important; }
+
+.manage-actions-grid .panel:nth-child(4n+1),
+.account-tool-grid > a:nth-child(4n+1),
+.workspace-task-grid > a:nth-child(4n+1),
+.metric-grid article:nth-child(4n+1),
+.facility-card:nth-child(4n+1),
+.payment-method-grid article:nth-child(4n+1),
+.cabin-tier:nth-child(4n+1) {
+    background: linear-gradient(145deg, #09234c, #175493) !important;
+}
+.manage-actions-grid .panel:nth-child(4n+2),
+.account-tool-grid > a:nth-child(4n+2),
+.workspace-task-grid > a:nth-child(4n+2),
+.metric-grid article:nth-child(4n+2),
+.facility-card:nth-child(4n+2),
+.payment-method-grid article:nth-child(4n+2),
+.cabin-tier:nth-child(4n+2) {
+    background: linear-gradient(145deg, #163e70, #327bb5) !important;
+}
+.manage-actions-grid .panel:nth-child(4n+3),
+.account-tool-grid > a:nth-child(4n+3),
+.workspace-task-grid > a:nth-child(4n+3),
+.metric-grid article:nth-child(4n+3),
+.facility-card:nth-child(4n+3),
+.payment-method-grid article:nth-child(4n+3),
+.cabin-tier:nth-child(4n+3) {
+    background: linear-gradient(145deg, #664725, #a5793c 48%, #193a67) !important;
+}
+.manage-actions-grid .panel:nth-child(4n+4),
+.account-tool-grid > a:nth-child(4n+4),
+.workspace-task-grid > a:nth-child(4n+4),
+.metric-grid article:nth-child(4n+4),
+.facility-card:nth-child(4n+4),
+.payment-method-grid article:nth-child(4n+4),
+.cabin-tier:nth-child(4n+4) {
+    background: linear-gradient(145deg, #282f67, #654c78) !important;
+}
+.manage-actions-grid .panel,
+.account-tool-grid > a,
+.workspace-task-grid > a,
+.metric-grid article,
+.facility-card,
+.payment-method-grid article,
+.cabin-tier {
+    color: #fff !important;
+    border-color: rgba(255,255,255,.2) !important;
+    box-shadow: 0 18px 42px rgba(4,22,52,.24) !important;
+}
+.manage-actions-grid .panel h2, .manage-actions-grid .panel h3,
+.account-tool-grid > a h2, .account-tool-grid > a h3, .account-tool-grid > a strong,
+.workspace-task-grid > a h2, .workspace-task-grid > a h3, .workspace-task-grid > a strong,
+.metric-grid article strong,
+.facility-card h2, .facility-card h3,
+.payment-method-grid article h2, .payment-method-grid article h3,
+.cabin-tier h2 { color: #fff !important; }
+.manage-actions-grid .panel p, .manage-actions-grid .panel small,
+.account-tool-grid > a p, .account-tool-grid > a small,
+.workspace-task-grid > a p, .workspace-task-grid > a small,
+.metric-grid article small, .metric-grid article span:last-child,
+.facility-card p, .facility-card small,
+.payment-method-grid article p,
+.cabin-tier p, .cabin-tier li { color: rgba(230,239,250,.76) !important; }
+.account-tool-grid > a > span:last-child,
+.workspace-task-grid > a > span:last-child,
+.facility-card > a,
+.payment-method-grid article b,
+.cabin-tier > a { color: var(--av-champagne-2) !important; }
+.workspace-task-grid > a::after,
+.metric-grid article::after { background: rgba(255,255,255,.08) !important; }
+
+/* Rich, individually toned fleet and connected-service cards. */
+.fleet-card:nth-child(4n+1),
+.partner-card:nth-child(4n+1) { background: linear-gradient(150deg, #09234a, #18558f) !important; }
+.fleet-card:nth-child(4n+2),
+.partner-card:nth-child(4n+2) { background: linear-gradient(150deg, #183c6b, #4c4b86) !important; }
+.fleet-card:nth-child(4n+3),
+.partner-card:nth-child(4n+3) { background: linear-gradient(150deg, #745128, #a7773a 42%, #1b416f) !important; }
+.fleet-card:nth-child(4n+4),
+.partner-card:nth-child(4n+4) { background: linear-gradient(150deg, #252f62, #674a72) !important; }
+.fleet-card,
+.partner-card {
+    color: #fff;
+    border-color: rgba(255,255,255,.2) !important;
+    box-shadow: 0 20px 48px rgba(4,21,49,.26) !important;
+}
+.fleet-card h2, .fleet-card strong,
+.partner-card h3, .partner-card strong { color: #fff !important; }
+.fleet-card span, .fleet-card small,
+.partner-card p, .partner-card small { color: rgba(231,240,250,.76) !important; }
+.fleet-card .plane-art { color: rgba(231,196,141,.28); }
+.fleet-stats, .partner-card footer { border-color: rgba(255,255,255,.17) !important; }
+.fleet-card .code-chip {
+    color: #10264a !important;
+    background: linear-gradient(135deg, #f6f8fc, #e5d0a9);
+}
+.fleet-card .card-actions > a { color: var(--av-champagne-2) !important; }
+.partner-highlights { color: rgba(255,255,255,.82); background: rgba(255,255,255,.09); }
+.partner-card::after { background: linear-gradient(90deg, #f0d39f, #4c9bd0) !important; }
+
+/* Forms and operational tables keep a light reading plane, but gain a vivid
+   edge, depth and atmospheric colour so they no longer look unfinished. */
+.admin-card,
+.account-content,
+.profile-grid > .panel,
+.feedback-form,
+.feedback-history,
+.booking-main > .panel,
+.filter-panel,
+.payment-flow,
+.notification-timeline {
+    position: relative;
+    border: 1px solid rgba(255,255,255,.82) !important;
+    background:
+        radial-gradient(circle at 96% 0, rgba(47,117,183,.18), transparent 28%),
+        linear-gradient(145deg, rgba(255,255,255,.93), rgba(226,238,251,.86)) !important;
+    box-shadow: 0 22px 52px rgba(4,22,52,.17) !important;
+    backdrop-filter: blur(18px) saturate(135%);
+    -webkit-backdrop-filter: blur(18px) saturate(135%);
+}
+.admin-card::before,
+.profile-grid > .panel::before,
+.feedback-form::before,
+.feedback-history::before,
+.booking-main > .panel::before,
+.filter-panel::before,
+.payment-flow::before,
+.notification-timeline::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 5px;
+    border-radius: inherit;
+    background: linear-gradient(180deg, #225f9f, #dfb978, #514377);
+}
+.admin-card:nth-child(3n+2),
+.profile-grid > .panel:nth-child(3n+2),
+.booking-main > .panel:nth-child(3n+2) {
+    background: radial-gradient(circle at 94% 4%, rgba(231,196,141,.25), transparent 30%), linear-gradient(145deg, rgba(255,252,246,.94), rgba(232,239,249,.88)) !important;
+}
+.admin-card:nth-child(3n+3),
+.profile-grid > .panel:nth-child(3n+3),
+.booking-main > .panel:nth-child(3n+3) {
+    background: radial-gradient(circle at 94% 4%, rgba(91,73,126,.17), transparent 30%), linear-gradient(145deg, rgba(250,249,255,.94), rgba(226,235,248,.88)) !important;
+}
+
+.cancellation-panel {
+    color: #fff;
+    border-color: rgba(231,196,141,.34) !important;
+    background:
+        radial-gradient(circle at 8% 10%, rgba(231,196,141,.2), transparent 26%),
+        linear-gradient(125deg, #172f59, #5b4773) !important;
+    box-shadow: var(--av-jewel-shadow);
+}
+.cancellation-panel h2,
+.cancellation-panel h3,
+.cancellation-panel strong { color: #fff; }
+.cancellation-panel p,
+.cancellation-panel small { color: rgba(232,239,250,.76) !important; }
+.refund-amounts > span {
+    color: #fff !important;
+    border: 1px solid rgba(255,255,255,.15);
+    background: rgba(255,255,255,.1) !important;
+}
+.refund-amounts .refund-due {
+    color: #11264a !important;
+    background: linear-gradient(135deg, #f0d8a9, #c99a55) !important;
+}
+.cancellation-panel .btn-danger {
+    color: #10264a !important;
+    background: linear-gradient(135deg, #f1d7a6, #c7944d) !important;
+}
+
+@media (max-width: 760px) {
+    .confirmation-bg .ticket-details { grid-template-columns: repeat(2, 1fr); }
+    .confirmation-bg .confirmation-wrap::before { height: 760px; }
+}

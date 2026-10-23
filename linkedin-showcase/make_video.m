@@ -215,22 +215,25 @@ int main(int argc, const char * argv[]) {
             outputPath = [root stringByAppendingPathComponent:@"AeroVista-LinkedIn-Short-Walkthrough.mp4"];
             coverPath = [root stringByAppendingPathComponent:@"AeroVista-LinkedIn-Short-Cover.png"];
             scenes = @[
-                @{@"file": @"01-home.png", @"title": @"AeroVista", @"subtitle": @"A premium journey from search to arrival", @"duration": @3.8, @"style": @"intro"},
-                Feature(@"02-workspace-selector.png", @"Secure Access", @"One platform. Three workspaces.", @"Purpose-built access for customers, airline staff and administrators", 2.8),
-                Feature(@"04-customer-dashboard.png", @"Passenger Experience", @"The passenger journey hub", @"Bookings, check-in, alerts, payments, services and feedback", 2.8),
-                Feature(@"05-long-term-schedule.png", @"Flight Discovery", @"Year-round schedules", @"Future dates, rotating times, fares and baggage packages", 3.1),
-                Feature(@"06-flight-checkout.png", @"Booking", @"Complete flight checkout", @"Cabin, passenger, seat, promotion and payment choices", 3.0),
-                Feature(@"07-booking-confirmation.png", @"Booking", @"Booking confirmed", @"A complete itinerary, payment status and passenger PNR", 2.8),
-                Feature(@"08-manage-booking.png", @"Journey Management", @"Manage the complete journey", @"Check-in, readiness, services and cancellation controls", 2.8),
-                Feature(@"09-refund-quote.png", @"Passenger Care", @"Transparent cancellations", @"Fees and expected cash returns are shown before confirmation", 3.0),
-                Feature(@"10-travel-services.png", @"Connected Travel", @"Travel beyond the flight", @"Hotels, transfers, agencies, cafés and eSIM services", 2.8),
-                Feature(@"11-live-flight.png", @"Live Operations", @"Live flight intelligence", @"Status, position, altitude, speed and estimated arrival", 3.0),
-                Feature(@"13-staff-dashboard.png", @"Airline Staff", @"Daily operations workspace", @"Flights, manifests, boarding, disruptions and service recovery", 3.0),
-                Feature(@"14-flight-operations.png", @"Airline Staff", @"Long-term schedule control", @"Aircraft, gates, fares, packages and flight status", 2.8),
-                Feature(@"15-service-center.png", @"Airline Staff", @"Passenger service centre", @"Refunds, feedback, priority care and partner requests", 2.8),
-                Feature(@"17-admin-dashboard.png", @"Administration", @"Administrator control centre", @"Fleet, airports, schedules, revenue and service oversight", 3.0),
-                Feature(@"18-fleet-management.png", @"Administration", @"Fleet and capacity management", @"Aircraft availability and cabin layouts ready for operations", 2.7),
-                @{@"file": @"01-home.png", @"title": @"AeroVista", @"subtitle": @"A complete passenger and airline operations experience", @"duration": @4.2, @"style": @"outro"}
+                @{@"file": @"01-home.png", @"title": @"AeroVista", @"subtitle": @"A premium journey from search to arrival", @"duration": @4.5, @"style": @"intro"},
+                Feature(@"02-workspace-selector.png", @"Secure Access", @"One platform. Three workspaces.", @"Purpose-built access for customers, airline staff and administrators", 3.4),
+                Feature(@"03-customer-login.png", @"Passenger Access", @"A polished, protected welcome", @"Secure account access begins the connected passenger journey", 3.0),
+                Feature(@"04-customer-dashboard.png", @"Passenger Experience", @"The passenger journey hub", @"Bookings, check-in, alerts, payments, services and feedback", 3.4),
+                Feature(@"05-long-term-schedule.png", @"Flight Discovery", @"Year-round schedules", @"Future dates, rotating times, fares and baggage packages", 3.7),
+                Feature(@"06-flight-checkout.png", @"Booking", @"Complete flight checkout", @"Cabin, passenger, seat, promotion and payment choices", 3.6),
+                Feature(@"07-booking-confirmation.png", @"Booking", @"Booking confirmed", @"A complete itinerary, payment status and passenger PNR", 3.5),
+                Feature(@"08-manage-booking.png", @"Journey Management", @"Manage the complete journey", @"Check-in, readiness, services and cancellation controls", 3.5),
+                Feature(@"09-refund-quote.png", @"Passenger Care", @"Transparent cancellations", @"Fees and expected cash returns are shown before confirmation", 3.6),
+                Feature(@"10-travel-services.png", @"Connected Travel", @"Travel beyond the flight", @"Hotels, transfers, agencies, cafés and eSIM services", 3.5),
+                Feature(@"11-live-flight.png", @"Live Operations", @"Live flight intelligence", @"Status, position, altitude, speed and estimated arrival", 3.6),
+                Feature(@"12-staff-login.png", @"Airline Staff", @"Secure operations access", @"Staff enter a dedicated workspace for passenger and flight readiness", 3.0),
+                Feature(@"13-staff-dashboard.png", @"Airline Staff", @"Daily operations workspace", @"Flights, manifests, boarding, disruptions and service recovery", 3.6),
+                Feature(@"14-flight-operations.png", @"Airline Staff", @"Long-term schedule control", @"Aircraft, gates, fares, packages and flight status", 3.4),
+                Feature(@"15-service-center.png", @"Airline Staff", @"Passenger service centre", @"Refunds, feedback, priority care and partner requests", 3.4),
+                Feature(@"16-admin-login.png", @"Administration", @"Protected administrator access", @"Governance tools stay separated from passenger and staff workflows", 3.0),
+                Feature(@"17-admin-dashboard.png", @"Administration", @"Administrator control centre", @"Fleet, airports, schedules, revenue and service oversight", 3.6),
+                Feature(@"18-fleet-management.png", @"Administration", @"Fleet and capacity management", @"Aircraft availability and cabin layouts ready for operations", 3.4),
+                @{@"file": @"01-home.png", @"title": @"AeroVista", @"subtitle": @"A complete passenger and airline operations experience", @"duration": @5.0, @"style": @"outro"}
             ];
         }
 

@@ -82,8 +82,32 @@ async function field(selector, value) {
   await evaluate(`(() => {
     const element = document.querySelector(${JSON.stringify(selector)});
     if (!element) throw new Error('Missing field: ' + ${JSON.stringify(selector)});
-    const setter = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set;
+    const prototype = element instanceof HTMLSelectElement ? HTMLSelectElement.prototype : HTMLInputElement.prototype;
+    const setter = Object.getOwnPropertyDescriptor(prototype, 'value')?.set;
+    if (setter) setter.call(element, ${JSON.stringify(value)}); else element.value = ${JSON.stringify(value)};
+    element.dispatchEvent(new Event('input', { bubbles: true }));
+    element.dispatchEvent(new Event('change', { bubbles: true }));
+    return true;
+  })()`);
+}
+
+async function textarea(selector, value) {
+  await evaluate(`(() => {
+    const element = document.querySelector(${JSON.stringify(selector)});
+    if (!element) throw new Error('Missing textarea: ' + ${JSON.stringify(selector)});
+    const setter = Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype, 'value').set;
     setter.call(element, ${JSON.stringify(value)});
+    element.dispatchEvent(new Event('input', { bubbles: true }));
+    element.dispatchEvent(new Event('change', { bubbles: true }));
+    return true;
+  })()`);
+}
+
+async function checked(selector, value = true) {
+  await evaluate(`(() => {
+    const element = document.querySelector(${JSON.stringify(selector)});
+    if (!element) throw new Error('Missing choice: ' + ${JSON.stringify(selector)});
+    element.checked = ${value};
     element.dispatchEvent(new Event('input', { bubbles: true }));
     element.dispatchEvent(new Event('change', { bubbles: true }));
     return true;
@@ -100,8 +124,18 @@ async function submit(selector) {
   await waitForPage();
 }
 
-async function capture(file, title, subtitle) {
-  await evaluate(`window.scrollTo({ top: 0, behavior: 'instant' }); document.activeElement?.blur(); true`);
+async function capture(file, title, subtitle, selector = null) {
+  if (selector) {
+    await evaluate(`(() => {
+      const element = document.querySelector(${JSON.stringify(selector)});
+      if (!element) throw new Error('Missing capture target: ' + ${JSON.stringify(selector)});
+      window.scrollTo({ top: Math.max(0, element.getBoundingClientRect().top + window.scrollY - 120), behavior: 'instant' });
+      document.activeElement?.blur();
+      return true;
+    })()`);
+  } else {
+    await evaluate(`window.scrollTo({ top: 0, behavior: 'instant' }); document.activeElement?.blur(); true`);
+  }
   await delay(250);
   const screenshot = await cdp.call('Page.captureScreenshot', {
     format: 'png',
@@ -168,9 +202,37 @@ async function main() {
   await navigate(bookingPath);
   await capture('flight-checkout', 'Complete flight checkout', 'Cabin, passenger, seat, promotion and payment choices');
 
-  reuseCapture('14-booking-confirmation.png', 'booking-confirmation', 'Booking confirmed', 'A complete itinerary, payment status and passenger PNR');
-  reuseCapture('16-manage-booking.png', 'manage-booking', 'Manage the journey', 'Check-in, readiness, connected services and cancellation controls');
-  reuseCapture('37-refund-quote.png', 'refund-quote', 'Transparent cancellations', 'Passengers see fees and expected cash returns before confirming');
+  const marker = Date.now().toString().slice(-8);
+  await field('input[name="passengers[0].firstName"]', 'Nivetha');
+  await field('input[name="passengers[0].lastName"]', 'Ravindran');
+  await field('input[name="passengers[0].dateOfBirth"]', '1998-08-14');
+  await field('input[name="passengers[0].nationality"]', 'Sri Lankan');
+  await field('input[name="passengers[0].passportNumber"]', `S${marker.slice(1)}`);
+  await field('input[name="passengers[0].frequentFlyerNumber"]', `AV-${marker}`);
+  await field('select[name="passengers[0].mealPreference"]', 'Vegetarian');
+  await textarea('textarea[name="passengers[0].specialAssistance"]', 'Priority baggage handling requested.');
+  await evaluate(`(() => {
+    const select = document.querySelector('select[name="passengers[0].seatNumber"]');
+    const cabin = document.querySelector('select[name="passengers[0].cabinClass"]')?.value;
+    const option = Array.from(select.options).find(item => item.value && item.dataset.cabin === cabin);
+    if (!option) throw new Error('No seat is available');
+    select.value = option.value;
+    select.dispatchEvent(new Event('change', { bubbles: true }));
+    return option.value;
+  })()`);
+  await checked('input[name="paymentMethod"][value="CARD"]', true);
+  await field('input[name="promoCode"]', 'FLY10');
+  await submit('form.booking-layout');
+  const pnr = await evaluate(`location.pathname.split('/').filter(Boolean).pop()`);
+  if (!pnr || pnr.length !== 6) throw new Error(`Booking failed; current URL is ${await evaluate('location.href')}`);
+  await capture('booking-confirmation', 'Booking confirmed', 'A complete itinerary, payment status and passenger PNR');
+
+  await navigate('/manage');
+  await field('input[name="pnr"]', pnr);
+  await field('input[name="email"]', 'traveller@aerovista.test');
+  await submit('form.lookup-card');
+  await capture('manage-booking', 'Manage the journey', 'Check-in, readiness, connected services and cancellation controls');
+  await capture('refund-quote', 'Transparent cancellations', 'Passengers see fees and expected cash returns before confirming', '.refund-quote-panel');
 
   await navigate('/travel-services?type=HOTEL');
   await capture('travel-services', 'Travel beyond the flight', 'Hotels, transfers, agencies, cafés and eSIM services');

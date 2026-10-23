@@ -33,7 +33,7 @@ public class AdminServiceCenterController {
         this.travelPartners = travelPartners; this.disruptions = disruptions; this.journeyServices = journeyServices;
     }
 
-    @GetMapping("/admin/service-center")
+    @GetMapping("/operations/service-center")
     public String serviceCenter(Model model) {
         model.addAttribute("refunds", refunds.all()); model.addAttribute("feedbackItems", feedback.all());
         model.addAttribute("deliveries", notifications.recentDeliveries().stream().limit(20).toList());
@@ -44,36 +44,36 @@ public class AdminServiceCenterController {
         return "admin/service-center";
     }
 
-    @PostMapping("/admin/service-center/refunds/{id}/complete")
+    @PostMapping("/operations/service-center/refunds/{id}/complete")
     public String completeRefund(@PathVariable Long id, RedirectAttributes redirect) {
         try { refunds.complete(id); redirect.addFlashAttribute("success", "Refund completed and passenger notifications sent."); }
         catch (BusinessRuleException ex) { redirect.addFlashAttribute("error", ex.getMessage()); }
-        return "redirect:/admin/service-center";
+        return "redirect:/operations/service-center";
     }
 
-    @PostMapping("/admin/service-center/feedback/{id}/resolve")
+    @PostMapping("/operations/service-center/feedback/{id}/resolve")
     public String resolveFeedback(@PathVariable Long id, @RequestParam String response, RedirectAttributes redirect) {
         try { feedback.resolve(id, response); redirect.addFlashAttribute("success", "Feedback response saved and case resolved."); }
         catch (BusinessRuleException ex) { redirect.addFlashAttribute("error", ex.getMessage()); }
-        return "redirect:/admin/service-center";
+        return "redirect:/operations/service-center";
     }
 
-    @PostMapping("/admin/service-center/partners/{id}/status")
+    @PostMapping("/operations/service-center/partners/{id}/status")
     public String partnerStatus(@PathVariable Long id, @RequestParam PartnerReservationStatus status, RedirectAttributes redirect) {
         travelPartners.updateStatus(id, status); redirect.addFlashAttribute("success", "Partner reservation status updated.");
-        return "redirect:/admin/service-center";
+        return "redirect:/operations/service-center";
     }
 
-    @PostMapping("/admin/service-center/journey-services/{id}/status")
+    @PostMapping("/operations/service-center/journey-services/{id}/status")
     public String journeyServiceStatus(@PathVariable Long id, @RequestParam JourneyServiceStatus status, RedirectAttributes redirect) {
         journeyServices.updateStatus(id, status); redirect.addFlashAttribute("success", "Airport journey service status updated.");
-        return "redirect:/admin/service-center";
+        return "redirect:/operations/service-center";
     }
 
-    @PostMapping("/admin/service-center/disruptions/{id}/complete")
+    @PostMapping("/operations/service-center/disruptions/{id}/complete")
     public String completeDisruption(@PathVariable Long id, RedirectAttributes redirect) {
         try { disruptions.complete(id); redirect.addFlashAttribute("success", "Passenger cancellation arrangement completed and notifications sent."); }
         catch (BusinessRuleException ex) { redirect.addFlashAttribute("error", ex.getMessage()); }
-        return "redirect:/admin/service-center";
+        return "redirect:/operations/service-center";
     }
 }

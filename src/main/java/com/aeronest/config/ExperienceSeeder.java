@@ -250,9 +250,9 @@ public class ExperienceSeeder implements CommandLineRunner {
 
     private String fareBrand(String flightNumber) {
         return switch (flightNumber) {
-            case "AN112", "AN113", "AN612", "AN845" -> "Vista Saver";
-            case "AN204", "AN205", "AN508", "AN509" -> "Vista Flex";
-            case "AN722", "AN900" -> "Vista Signature";
+            case "AN112", "AN113", "AN612", "AN845", "AN840", "AN841", "AN870", "AN871" -> "Vista Saver";
+            case "AN204", "AN205", "AN508", "AN509", "AN820", "AN821", "AN860", "AN861" -> "Vista Flex";
+            case "AN722", "AN900", "AN880", "AN881" -> "Vista Signature";
             default -> "Vista Smart";
         };
     }

@@ -25,7 +25,8 @@
         <a class="nav-primary-link" th:href="@{/flight-status}">Flight status</a>
         <a class="nav-primary-link" th:href="@{/support}">Support</a>
         <div class="mobile-auth-links">
-            <a sec:authorize="hasAnyRole('ADMIN','AGENT')" th:href="@{/admin}">Operations dashboard</a>
+            <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin}">Admin control</a>
+            <a sec:authorize="hasRole('AGENT') and !hasRole('ADMIN')" th:href="@{/staff}">Staff workspace</a>
             <a sec:authorize="hasRole('CUSTOMER')" th:href="@{/account}">My journeys</a>
             <a sec:authorize="isAnonymous()" th:href="@{/login}">Log in</a>
             <a sec:authorize="isAnonymous()" th:href="@{/register}">Create an account</a>
@@ -35,7 +36,8 @@
         </div>
     </div>
     <div class="nav-actions">
-        <a sec:authorize="hasAnyRole('ADMIN','AGENT')" class="nav-text-link" th:href="@{/admin}">Operations</a>
+        <a sec:authorize="hasRole('ADMIN')" class="nav-text-link" th:href="@{/admin}">Admin control</a>
+        <a sec:authorize="hasRole('AGENT') and !hasRole('ADMIN')" class="nav-text-link" th:href="@{/staff}">Staff workspace</a>
         <a sec:authorize="hasRole('CUSTOMER')" class="account-pill" th:href="@{/account}"><span class="avatar avatar-small" th:text="${#authentication.name.substring(0,1).toUpperCase()}">A</span><span>My trips</span></a>
         <form sec:authorize="isAuthenticated()" class="desktop-signout" th:action="@{/logout}" method="post">
             <button class="nav-signout" type="submit" aria-label="Sign out"><svg th:replace="~{fragments/icons :: logout}"></svg><span>Sign out</span></button>
@@ -46,18 +48,20 @@
 </nav>
 
 <aside class="sidebar" th:fragment="sidebar(active)">
-    <a class="brand brand-light" th:href="@{/admin}"><span class="brand-mark"><svg th:replace="~{fragments/icons :: plane}"></svg></span><span>AeroVista<small>Operations Control</small></span></a>
+    <a sec:authorize="hasRole('ADMIN')" class="brand brand-light" th:href="@{/admin}"><span class="brand-mark"><svg th:replace="~{fragments/icons :: plane}"></svg></span><span>AeroVista<small>Administration</small></span></a>
+    <a sec:authorize="hasRole('AGENT') and !hasRole('ADMIN')" class="brand brand-light" th:href="@{/staff}"><span class="brand-mark"><svg th:replace="~{fragments/icons :: plane}"></svg></span><span>AeroVista<small>Staff Operations</small></span></a>
     <p class="sidebar-label">WORKSPACE</p>
     <nav>
-        <a th:classappend="${active == 'dashboard'} ? 'active'" th:href="@{/admin}"><svg th:replace="~{fragments/icons :: dashboard}"></svg> Overview</a>
-        <a th:classappend="${active == 'flights'} ? 'active'" th:href="@{/admin/flights}"><svg th:replace="~{fragments/icons :: plane}"></svg> Flights</a>
-        <a th:classappend="${active == 'bookings'} ? 'active'" th:href="@{/admin/bookings}"><svg th:replace="~{fragments/icons :: ticket}"></svg> Bookings</a>
-        <a th:classappend="${active == 'service'} ? 'active'" th:href="@{/admin/service-center}"><svg th:replace="~{fragments/icons :: headset}"></svg> Service centre</a>
+        <a sec:authorize="hasRole('ADMIN')" th:classappend="${active == 'dashboard'} ? 'active'" th:href="@{/admin}"><svg th:replace="~{fragments/icons :: dashboard}"></svg> Admin overview</a>
+        <a sec:authorize="hasRole('AGENT') and !hasRole('ADMIN')" th:classappend="${active == 'staff-dashboard'} ? 'active'" th:href="@{/staff}"><svg th:replace="~{fragments/icons :: dashboard}"></svg> Shift overview</a>
+        <a th:classappend="${active == 'flights'} ? 'active'" th:href="@{/operations/flights}"><svg th:replace="~{fragments/icons :: plane}"></svg> Flight control</a>
+        <a th:classappend="${active == 'bookings'} ? 'active'" th:href="@{/operations/bookings}"><svg th:replace="~{fragments/icons :: ticket}"></svg> Passenger operations</a>
+        <a th:classappend="${active == 'service'} ? 'active'" th:href="@{/operations/service-center}"><svg th:replace="~{fragments/icons :: headset}"></svg> Service recovery</a>
         <a sec:authorize="hasRole('ADMIN')" th:classappend="${active == 'aircraft'} ? 'active'" th:href="@{/admin/aircraft}"><svg th:replace="~{fragments/icons :: fleet}"></svg> Fleet</a>
         <a sec:authorize="hasRole('ADMIN')" th:classappend="${active == 'airports'} ? 'active'" th:href="@{/admin/airports}"><svg th:replace="~{fragments/icons :: airport}"></svg> Airports</a>
     </nav>
     <div class="sidebar-bottom">
-        <div class="user-chip"><span class="avatar" th:text="${#authentication.name.substring(0,1).toUpperCase()}">A</span><div><strong th:text="${#authentication.name}">admin</strong><small>Operations staff</small></div></div>
+        <div class="user-chip"><span class="avatar" th:text="${#authentication.name.substring(0,1).toUpperCase()}">A</span><div><strong th:text="${#authentication.name}">admin</strong><small sec:authorize="hasRole('ADMIN')">Administrator</small><small sec:authorize="hasRole('AGENT') and !hasRole('ADMIN')">Airline staff</small></div></div>
         <form th:action="@{/logout}" method="post"><button class="link-button" type="submit"><svg th:replace="~{fragments/icons :: logout}"></svg> Sign out</button></form>
     </div>
 </aside>

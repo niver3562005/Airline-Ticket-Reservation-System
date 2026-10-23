@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-@Controller @RequestMapping("/admin/flights")
+@Controller @RequestMapping("/operations/flights")
 public class AdminFlightController {
     private final FlightService flights; private final AirportService airports; private final AircraftService aircraft; private final SeatMapService seats;
     private final FlightAvailabilityService availability; private final FlightTelemetryService telemetry;
@@ -44,23 +44,23 @@ public class AdminFlightController {
                        @RequestParam Long originId, @RequestParam Long destinationId, @RequestParam Long aircraftId,
                        Model model, RedirectAttributes redirect) {
         if (result.hasErrors()) { loadOptions(model); return "flights/form"; }
-        try { flights.save(flight, originId, destinationId, aircraftId); redirect.addFlashAttribute("success", "Flight saved successfully."); return "redirect:/admin/flights"; }
+        try { flights.save(flight, originId, destinationId, aircraftId); redirect.addFlashAttribute("success", "Flight saved successfully."); return "redirect:/operations/flights"; }
         catch (BusinessRuleException ex) { result.reject("flight", ex.getMessage()); loadOptions(model); return "flights/form"; }
     }
     @PostMapping("/{id}/status") public String status(@PathVariable Long id, @RequestParam FlightStatus status, RedirectAttributes redirect) {
-        flights.updateStatus(id, status); redirect.addFlashAttribute("success", "Flight status updated."); return "redirect:/admin/flights";
+        flights.updateStatus(id, status); redirect.addFlashAttribute("success", "Flight status updated."); return "redirect:/operations/flights";
     }
     @PostMapping("/{id}/delete") public String delete(@PathVariable Long id, RedirectAttributes redirect) {
         try { flights.delete(id); redirect.addFlashAttribute("success", "Flight deleted."); }
         catch (BusinessRuleException ex) { redirect.addFlashAttribute("error", ex.getMessage()); }
-        return "redirect:/admin/flights";
+        return "redirect:/operations/flights";
     }
     @PostMapping("/{id}/telemetry")
     public String telemetry(@PathVariable Long id, @Valid @ModelAttribute TelemetryForm telemetryForm, BindingResult result,
                             Model model, RedirectAttributes redirect) {
         if (result.hasErrors()) { detail(id, model); model.addAttribute("telemetryForm", telemetryForm); return "flights/detail"; }
         telemetry.update(flights.get(id), telemetryForm); redirect.addFlashAttribute("success", "Live operations telemetry updated.");
-        return "redirect:/admin/flights/" + id;
+        return "redirect:/operations/flights/" + id;
     }
     private void loadOptions(Model model) { model.addAttribute("airports", airports.active()); model.addAttribute("aircraftList", aircraft.active()); model.addAttribute("statuses", FlightStatus.values()); }
 }

@@ -28,6 +28,12 @@ class SecurityAndPageIntegrationTest {
     }
     @Test void passengerAuthenticationPagesArePublic() throws Exception {
         mvc.perform(get("/login")).andExpect(status().isOk()).andExpect(view().name("public/login"));
+        mvc.perform(get("/login/customer")).andExpect(status().isOk()).andExpect(view().name("public/role-login"))
+                .andExpect(content().string(org.hamcrest.Matchers.containsString("Customer portal")));
+        mvc.perform(get("/login/staff")).andExpect(status().isOk()).andExpect(view().name("public/role-login"))
+                .andExpect(content().string(org.hamcrest.Matchers.containsString("Airline staff portal")));
+        mvc.perform(get("/login/admin")).andExpect(status().isOk()).andExpect(view().name("public/role-login"))
+                .andExpect(content().string(org.hamcrest.Matchers.containsString("Administrator portal")));
         mvc.perform(get("/register")).andExpect(status().isOk()).andExpect(view().name("public/register"));
         mvc.perform(get("/forgot-password")).andExpect(status().isOk()).andExpect(view().name("public/forgot-password"));
     }
@@ -86,9 +92,13 @@ class SecurityAndPageIntegrationTest {
     @Test void publicScheduleShowsAirlineIdentityFaresAndDelayCare() throws Exception {
         mvc.perform(get("/flight-schedule"))
                 .andExpect(status().isOk()).andExpect(view().name("public/flight-schedule"))
-                .andExpect(content().string(org.hamcrest.Matchers.containsString("Ten-plus journeys")))
+                .andExpect(content().string(org.hamcrest.Matchers.containsString("A year of journeys")))
                 .andExpect(content().string(org.hamcrest.Matchers.containsString("aerovista-flight-logo.svg")))
                 .andExpect(content().string(org.hamcrest.Matchers.containsString("Automatic disruption care")));
+        mvc.perform(get("/flight-schedule").param("route", "AN880"))
+                .andExpect(status().isOk()).andExpect(view().name("public/flight-schedule"))
+                .andExpect(content().string(org.hamcrest.Matchers.containsString("AN880")))
+                .andExpect(content().string(org.hamcrest.Matchers.containsString("Vista Signature")));
     }
     @Test void routeSearchRendersAValidatedOneStopItinerary() throws Exception {
         Flight firstLeg = flights.findFirstByFlightNumberIgnoreCase("AN310").orElseThrow();
@@ -138,14 +148,18 @@ class SecurityAndPageIntegrationTest {
     }
     @Test void anonymousUserIsRedirectedFromOperations() throws Exception {
         mvc.perform(get("/admin")).andExpect(status().is3xxRedirection()).andExpect(redirectedUrlPattern("**/login"));
+        mvc.perform(get("/staff")).andExpect(status().is3xxRedirection()).andExpect(redirectedUrlPattern("**/login"));
+        mvc.perform(get("/operations/flights")).andExpect(status().is3xxRedirection()).andExpect(redirectedUrlPattern("**/login"));
     }
     @Test @WithMockUser(username = "agent", roles = "AGENT")
-    void agentCanViewOperationsDashboard() throws Exception {
-        mvc.perform(get("/admin")).andExpect(status().isOk()).andExpect(view().name("admin/dashboard"));
+    void agentUsesStaffWorkspaceAndCannotOpenAdminControl() throws Exception {
+        mvc.perform(get("/staff")).andExpect(status().isOk()).andExpect(view().name("staff/dashboard"))
+                .andExpect(content().string(org.hamcrest.Matchers.containsString("Daily operations and passenger care")));
+        mvc.perform(get("/admin")).andExpect(status().isForbidden());
     }
     @Test @WithMockUser(username = "agent", roles = "AGENT")
     void agentCanViewPassengerServiceCentre() throws Exception {
-        mvc.perform(get("/admin/service-center")).andExpect(status().isOk()).andExpect(view().name("admin/service-center"))
+        mvc.perform(get("/operations/service-center")).andExpect(status().isOk()).andExpect(view().name("admin/service-center"))
                 .andExpect(content().string(org.hamcrest.Matchers.containsString("Service centre")))
                 .andExpect(content().string(org.hamcrest.Matchers.containsString("Delivery monitor")));
     }
@@ -156,5 +170,12 @@ class SecurityAndPageIntegrationTest {
     @Test @WithMockUser(username = "admin", roles = {"ADMIN", "AGENT"})
     void administratorCanManageAircraft() throws Exception {
         mvc.perform(get("/admin/aircraft")).andExpect(status().isOk()).andExpect(view().name("aircraft/list"));
+    }
+
+    @Test void demoStaffAndAdministratorReachTheirOwnWorkspaces() throws Exception {
+        mvc.perform(SecurityMockMvcRequestBuilders.formLogin().user("agent").password("agent123"))
+                .andExpect(status().is3xxRedirection()).andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl("/staff"));
+        mvc.perform(SecurityMockMvcRequestBuilders.formLogin().user("admin").password("aeronest123"))
+                .andExpect(status().is3xxRedirection()).andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl("/admin"));
     }
 }

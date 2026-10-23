@@ -27,14 +27,7 @@ public class PublicController {
     }
     @GetMapping("/flight-schedule")
     public String schedule(@RequestParam(required = false) String route, Model model) {
-        List<Flight> schedule = flights.publicSchedule();
-        if (route != null && !route.isBlank()) {
-            String query = route.trim().toLowerCase();
-            schedule = schedule.stream().filter(f -> (f.getFlightNumber() + " " + f.getOrigin().getIataCode() + " " +
-                    f.getDestination().getIataCode() + " " + f.getOrigin().getCity() + " " + f.getDestination().getCity())
-                    .toLowerCase().contains(query)).toList();
-        }
-        model.addAttribute("schedule", schedule); model.addAttribute("route", route == null ? "" : route);
+        model.addAttribute("schedule", flights.publicSchedule(route)); model.addAttribute("route", route == null ? "" : route);
         return "public/flight-schedule";
     }
     @GetMapping("/flights")

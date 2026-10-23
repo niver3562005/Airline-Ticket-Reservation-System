@@ -1,56 +1,21 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/layout :: head('Sign in')}"></head>
-<body class="auth-page">
+<head th:replace="~{fragments/layout :: head('Choose your workspace')}"></head>
+<body class="auth-page portal-access-page">
 <section class="auth-visual">
     <div class="auth-shade"></div>
-    <a class="brand brand-light" th:href="@{/}">
-        <span class="brand-mark"><svg th:replace="~{fragments/icons :: plane}"></svg></span>
-        <span>AeroVista<small>Your Journey, Elevated</small></span>
-    </a>
-    <div class="auth-quote">
-        <span class="eyebrow light">WELCOME ABOARD</span>
-        <h1>Your journeys,<br>all in one place.</h1>
-        <p>Access your bookings, manage upcoming flights and move through every journey with confidence.</p>
-        <div class="auth-route"><span>CMB</span><i></i><svg th:replace="~{fragments/icons :: plane}"></svg><i></i><span>THE WORLD</span></div>
-    </div>
+    <a class="brand brand-light" th:href="@{/}"><span class="brand-mark"><svg th:replace="~{fragments/icons :: plane}"></svg></span><span>AeroVista<small>Your Journey, Elevated</small></span></a>
+    <div class="auth-quote"><span class="eyebrow light">ONE AIRLINE · THREE WORKSPACES</span><h1>The right tools,<br>for every journey.</h1><p>Choose your AeroVista workspace to continue with the tasks and information assigned to your role.</p><div class="auth-route"><span>CUSTOMER</span><i></i><svg th:replace="~{fragments/icons :: plane}"></svg><i></i><span>OPERATIONS</span></div></div>
 </section>
-<main class="auth-panel">
-    <div class="auth-box">
-        <a class="auth-back" th:href="@{/}">Back to home</a>
-        <span class="eyebrow">MEMBER ACCESS</span>
-        <h2>Welcome back.</h2>
-        <p>Sign in with your passenger email or staff username.</p>
-        <div th:replace="~{fragments/layout :: flash}"></div>
-        <div class="flash error" th:if="${param.error}"><span class="alert-mark">!</span><span>We could not sign you in. Check your credentials and verify your email.</span></div>
-        <div class="flash error" th:if="${param.locked}"><span class="alert-mark">!</span><span>Too many attempts. Please try again in 15 minutes.</span></div>
-        <form th:action="@{/login}" method="post" data-loading-form>
-            <div class="field">
-                <label for="username">Email or staff username</label>
-                <input id="username" name="username" autocomplete="username" placeholder="you@example.com" required>
-            </div>
-            <div class="field password-field">
-                <label for="password">Password</label>
-                <div>
-                    <input id="password" type="password" name="password" autocomplete="current-password" required>
-                    <button type="button" data-password-toggle aria-label="Show password"><svg th:replace="~{fragments/icons :: eye}"></svg></button>
-                </div>
-            </div>
-            <div class="form-row">
-                <label class="check-field simple"><input type="checkbox" name="remember-me"><span>Remember me for 14 days</span></label>
-                <a th:href="@{/forgot-password}">Forgot password?</a>
-            </div>
-            <button class="btn btn-primary btn-block btn-large" type="submit"><span>Sign in securely</span><svg th:replace="~{fragments/icons :: arrow}"></svg></button>
-        </form>
-        <p class="auth-switch">New to AeroVista? <a th:href="@{/register}">Create an account</a></p>
-        <details class="demo-credentials">
-            <summary>Demo access details</summary>
-            <span>Passenger: traveller@aerovista.test / Travel@123</span>
-            <span>Administrator: admin / aeronest123</span>
-            <span>Agent: agent / agent123</span>
-        </details>
-        <p class="security-copy"><svg th:replace="~{fragments/icons :: shield}"></svg> Protected by encrypted sessions and login throttling.</p>
+<main class="auth-panel portal-panel"><div class="auth-box portal-picker">
+    <a class="auth-back" th:href="@{/}">Back to home</a><span class="eyebrow">SECURE ACCESS</span><h2>Choose your workspace.</h2><p>Each portal has its own responsibilities, navigation and permissions.</p>
+    <div th:replace="~{fragments/layout :: flash}"></div><div class="flash error" th:if="${param.error}"><span class="alert-mark">!</span><span>We could not sign you in. Choose the correct workspace and try again.</span></div>
+    <div class="portal-choice-grid">
+        <a class="portal-choice customer" th:href="@{/login/customer}"><span class="portal-choice-icon"><svg th:replace="~{fragments/icons :: ticket}"></svg></span><div><small>PASSENGER ACCESS</small><strong>Customer</strong><p>Book flights, manage journeys, check in, request services and track refunds.</p></div><svg class="portal-arrow" th:replace="~{fragments/icons :: arrow}"></svg></a>
+        <a class="portal-choice staff" th:href="@{/login/staff}"><span class="portal-choice-icon"><svg th:replace="~{fragments/icons :: headset}"></svg></span><div><small>DAILY OPERATIONS</small><strong>Airline staff</strong><p>Run flights, passenger readiness, service recovery, alerts and boarding.</p></div><svg class="portal-arrow" th:replace="~{fragments/icons :: arrow}"></svg></a>
+        <a class="portal-choice admin" th:href="@{/login/admin}"><span class="portal-choice-icon"><svg th:replace="~{fragments/icons :: dashboard}"></svg></span><div><small>GOVERNANCE ACCESS</small><strong>Administrator</strong><p>Control airports, fleet, schedules, commercial oversight and system governance.</p></div><svg class="portal-arrow" th:replace="~{fragments/icons :: arrow}"></svg></a>
     </div>
-</main>
+    <p class="security-copy"><svg th:replace="~{fragments/icons :: shield}"></svg> Role-based permissions protect every workspace.</p>
+</div></main>
 </body>
 </html>

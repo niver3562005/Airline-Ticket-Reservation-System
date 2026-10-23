@@ -25,19 +25,26 @@ public class SecurityConfig {
                                 "/travel-services/**", "/cabin-guide",
                                 "/deals", "/payment-options",
                                 "/privacy-policy", "/cookie-policy", "/legal-notice",
-                                "/login", "/register", "/verification-sent", "/verify-email", "/forgot-password", "/reset-password",
+                                "/login", "/login/**", "/register", "/verification-sent", "/verify-email", "/forgot-password", "/reset-password",
                                 "/css/**", "/js/**", "/images/**", "/error", "/h2-console/**").permitAll()
                         .requestMatchers("/account/**").hasRole("CUSTOMER")
-                        .requestMatchers("/admin/airports/**", "/admin/aircraft/**").hasRole("ADMIN")
-                        .requestMatchers("/admin/**").hasAnyRole("ADMIN", "AGENT")
+                        .requestMatchers("/staff/**").hasRole("AGENT")
+                        .requestMatchers("/operations/**").hasAnyRole("ADMIN", "AGENT")
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .formLogin(form -> form.loginPage("/login").loginProcessingUrl("/login")
                         .successHandler((request, response, authentication) -> {
                             attempts.succeeded(LoginRateLimitFilter.key(request));
-                            response.sendRedirect(hasRole(authentication, "ROLE_CUSTOMER") ? "/account" : "/admin");
+                            response.sendRedirect(homeFor(authentication));
                         })
                         .failureHandler((request, response, exception) -> {
-                            attempts.failed(LoginRateLimitFilter.key(request)); response.sendRedirect("/login?error");
+                            attempts.failed(LoginRateLimitFilter.key(request));
+                            String portal = request.getParameter("portal");
+                            String target = switch (portal == null ? "" : portal) {
+                                case "customer", "staff", "admin" -> "/login/" + portal + "?error";
+                                default -> "/login?error";
+                            };
+                            response.sendRedirect(target);
                         }).permitAll())
                 .rememberMe(remember -> remember.key("aerovista-local-development-key")
                         .tokenValiditySeconds(14 * 24 * 60 * 60).rememberMeParameter("remember-me"))
@@ -52,5 +59,11 @@ public class SecurityConfig {
 
     private static boolean hasRole(Authentication authentication, String role) {
         return authentication.getAuthorities().stream().anyMatch(authority -> role.equals(authority.getAuthority()));
+    }
+
+    private static String homeFor(Authentication authentication) {
+        if (hasRole(authentication, "ROLE_ADMIN")) return "/admin";
+        if (hasRole(authentication, "ROLE_AGENT")) return "/staff";
+        return "/account";
     }
 }

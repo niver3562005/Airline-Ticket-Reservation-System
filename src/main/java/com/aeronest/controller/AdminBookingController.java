@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-@Controller @RequestMapping("/admin/bookings")
+@Controller @RequestMapping("/operations/bookings")
 public class AdminBookingController {
     private final BookingService bookings;
     public AdminBookingController(BookingService bookings) { this.bookings = bookings; }
@@ -28,6 +28,6 @@ public class AdminBookingController {
                                   RedirectAttributes redirect) {
         try { bookings.updatePassengerOperations(passengerId, securityStatus, boardingStatus); redirect.addFlashAttribute("success", "Passenger readiness updated and notifications queued."); }
         catch (BusinessRuleException ex) { redirect.addFlashAttribute("error", ex.getMessage()); }
-        return "redirect:/admin/bookings/" + pnr;
+        return "redirect:/operations/bookings/" + pnr;
     }
 }

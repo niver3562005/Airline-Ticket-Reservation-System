@@ -32,9 +32,16 @@ public class FlightService {
     }
     public List<Flight> all() { return flights.findAllByOrderByDepartureAtAsc(); }
     public List<Flight> featured() { return flights.findTop8ByDepartureAtAfterOrderByDepartureAtAsc(LocalDateTime.now()).stream().limit(4).toList(); }
-    public List<Flight> publicSchedule() { return flights.findAllByOrderByDepartureAtAsc().stream()
-            .filter(flight -> flight.getDepartureAt().isAfter(LocalDateTime.now().minusHours(6)))
-            .limit(15).toList(); }
+    public List<Flight> publicSchedule() { return publicSchedule(null); }
+    public List<Flight> publicSchedule(String route) {
+        String query = route == null ? "" : route.trim().toLowerCase();
+        return flights.findAllByOrderByDepartureAtAsc().stream()
+                .filter(flight -> flight.getDepartureAt().isAfter(LocalDateTime.now().minusHours(6)))
+                .filter(flight -> query.isBlank() || (flight.getFlightNumber() + " " + flight.getOrigin().getIataCode() + " " +
+                        flight.getDestination().getIataCode() + " " + flight.getOrigin().getCity() + " " +
+                        flight.getDestination().getCity()).toLowerCase().contains(query))
+                .limit(query.isBlank() ? 15 : 60).toList();
+    }
     public Flight get(Long id) { return flights.findById(id).orElseThrow(() -> new ResourceNotFoundException("Flight not found")); }
     public List<Flight> search(Long originId, Long destinationId, LocalDate date) {
         if (originId.equals(destinationId)) throw new BusinessRuleException("Origin and destination must be different");

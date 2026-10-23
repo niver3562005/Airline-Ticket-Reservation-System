@@ -11,9 +11,12 @@ data/
 .env
 *.zip
 *.mp4
+!AeroVista-LinkedIn-Short-Walkthrough.mp4
 AeroVista-LinkedIn-Cover.png
 linkedin-showcase/captures/
 linkedin-showcase/extended-captures/
+linkedin-showcase/short-captures/
 AeroVista-Complete-Platform-Cover.png
 AeroVista-Premium-Platform-Cover.png
 /AeroVista-Airline-Reservation-System/
+/AeroVista-Airline-Reservation-System 2/

@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -24,10 +25,23 @@ public class AuthController {
     @GetMapping("/login")
     public String login(Authentication authentication) {
         if (authentication != null && authentication.isAuthenticated() && !(authentication instanceof AnonymousAuthenticationToken)) {
-            boolean customer = authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_CUSTOMER"));
-            return "redirect:" + (customer ? "/account" : "/admin");
+            return "redirect:" + homeFor(authentication);
         }
         return "public/login";
+    }
+
+    @GetMapping("/login/{portal:customer|staff|admin}")
+    public String roleLogin(@PathVariable String portal, Authentication authentication, Model model) {
+        if (authentication != null && authentication.isAuthenticated() && !(authentication instanceof AnonymousAuthenticationToken)) {
+            return "redirect:" + homeFor(authentication);
+        }
+        model.addAttribute("portal", portal);
+        model.addAttribute("portalLabel", switch (portal) {
+            case "admin" -> "Administrator";
+            case "staff" -> "Airline staff";
+            default -> "Customer";
+        });
+        return "public/role-login";
     }
 
     @GetMapping("/register") public String register(Model model) {
@@ -82,5 +96,15 @@ public class AuthController {
         if (result.hasErrors()) return "public/reset-password";
         try { accounts.resetPassword(passwordResetForm); redirect.addFlashAttribute("success", "Password updated. Sign in with your new password."); return "redirect:/login"; }
         catch (BusinessRuleException ex) { model.addAttribute("error", ex.getMessage()); return "public/reset-password"; }
+    }
+
+    private static String homeFor(Authentication authentication) {
+        if (hasRole(authentication, "ROLE_ADMIN")) return "/admin";
+        if (hasRole(authentication, "ROLE_AGENT")) return "/staff";
+        return "/account";
+    }
+
+    private static boolean hasRole(Authentication authentication, String role) {
+        return authentication.getAuthorities().stream().anyMatch(authority -> role.equals(authority.getAuthority()));
     }
 }

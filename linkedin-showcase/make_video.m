@@ -98,7 +98,7 @@ static void DrawOutro(NSDictionary *scene, double progress) {
     DrawText(scene[@"title"], NSMakeRect(165, 240, 1420, 110), 76, NSFontWeightBold, [[NSColor whiteColor] colorWithAlphaComponent:alpha], NSTextAlignmentLeft);
     DrawText(scene[@"subtitle"], NSMakeRect(170, 374, 1480, 80), 28, NSFontWeightMedium, [NSColor colorWithCalibratedRed:0.82 green:0.89 blue:1.0 alpha:alpha], NSTextAlignmentLeft);
 
-    NSArray *chips = @[@"50 destinations", @"15 scheduled flights", @"Refund workflows", @"Travel services", @"MySQL persistence", @"48 automated tests"];
+    NSArray *chips = @[@"Role-based portals", @"Year-round schedules", @"Refund workflows", @"Travel services", @"MySQL persistence", @"Automated testing"];
     CGFloat x = 170, y = 500;
     for (NSString *chip in chips) {
         CGFloat chipWidth = 70 + chip.length * 13;
@@ -139,8 +139,10 @@ static void RenderFrame(NSDictionary *scene, NSImage *image, NSInteger index, NS
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         NSString *root = argc > 1 ? [NSString stringWithUTF8String:argv[1]] : [[NSFileManager defaultManager] currentDirectoryPath];
+        BOOL shortMode = argc > 2 && [[[NSString alloc] initWithUTF8String:argv[2]] isEqualToString:@"short"];
         NSString *capturePath = [root stringByAppendingPathComponent:@"linkedin-showcase/extended-captures"];
         NSString *outputPath = [root stringByAppendingPathComponent:@"AeroVista-Premium-Platform-Walkthrough.mp4"];
+        NSString *coverPath = [root stringByAppendingPathComponent:@"AeroVista-Premium-Platform-Cover.png"];
         NSArray<NSDictionary *> *scenes = @[
             @{@"file": @"01-home.png", @"title": @"AeroVista", @"subtitle": @"Premium airline reservation and operations experience", @"duration": @4.5, @"style": @"intro"},
 
@@ -205,8 +207,32 @@ int main(int argc, const char * argv[]) {
             Feature(@"53-airport-management.png", @"Airline Operations", @"Airport management", @"Validated IATA data and global operational locations", 2.0),
             Feature(@"54-fleet-management.png", @"Airline Operations", @"Fleet management", @"Aircraft capacity and cabin-layout controls", 2.0),
 
-            @{@"file": @"01-home.png", @"title": @"One platform. Every journey.", @"subtitle": @"Spring Boot · Thymeleaf · MVC · MySQL · Responsive UI · 48 automated tests", @"duration": @5.5, @"style": @"outro"}
+            @{@"file": @"01-home.png", @"title": @"One platform. Every journey.", @"subtitle": @"Spring Boot · Thymeleaf · MVC · MySQL · Responsive UI · Automated tests", @"duration": @5.5, @"style": @"outro"}
         ];
+
+        if (shortMode) {
+            capturePath = [root stringByAppendingPathComponent:@"linkedin-showcase/short-captures"];
+            outputPath = [root stringByAppendingPathComponent:@"AeroVista-LinkedIn-Short-Walkthrough.mp4"];
+            coverPath = [root stringByAppendingPathComponent:@"AeroVista-LinkedIn-Short-Cover.png"];
+            scenes = @[
+                @{@"file": @"01-home.png", @"title": @"AeroVista", @"subtitle": @"A premium journey from search to arrival", @"duration": @3.8, @"style": @"intro"},
+                Feature(@"02-workspace-selector.png", @"Secure Access", @"One platform. Three workspaces.", @"Purpose-built access for customers, airline staff and administrators", 2.8),
+                Feature(@"04-customer-dashboard.png", @"Passenger Experience", @"The passenger journey hub", @"Bookings, check-in, alerts, payments, services and feedback", 2.8),
+                Feature(@"05-long-term-schedule.png", @"Flight Discovery", @"Year-round schedules", @"Future dates, rotating times, fares and baggage packages", 3.1),
+                Feature(@"06-flight-checkout.png", @"Booking", @"Complete flight checkout", @"Cabin, passenger, seat, promotion and payment choices", 3.0),
+                Feature(@"07-booking-confirmation.png", @"Booking", @"Booking confirmed", @"A complete itinerary, payment status and passenger PNR", 2.8),
+                Feature(@"08-manage-booking.png", @"Journey Management", @"Manage the complete journey", @"Check-in, readiness, services and cancellation controls", 2.8),
+                Feature(@"09-refund-quote.png", @"Passenger Care", @"Transparent cancellations", @"Fees and expected cash returns are shown before confirmation", 3.0),
+                Feature(@"10-travel-services.png", @"Connected Travel", @"Travel beyond the flight", @"Hotels, transfers, agencies, cafés and eSIM services", 2.8),
+                Feature(@"11-live-flight.png", @"Live Operations", @"Live flight intelligence", @"Status, position, altitude, speed and estimated arrival", 3.0),
+                Feature(@"13-staff-dashboard.png", @"Airline Staff", @"Daily operations workspace", @"Flights, manifests, boarding, disruptions and service recovery", 3.0),
+                Feature(@"14-flight-operations.png", @"Airline Staff", @"Long-term schedule control", @"Aircraft, gates, fares, packages and flight status", 2.8),
+                Feature(@"15-service-center.png", @"Airline Staff", @"Passenger service centre", @"Refunds, feedback, priority care and partner requests", 2.8),
+                Feature(@"17-admin-dashboard.png", @"Administration", @"Administrator control centre", @"Fleet, airports, schedules, revenue and service oversight", 3.0),
+                Feature(@"18-fleet-management.png", @"Administration", @"Fleet and capacity management", @"Aircraft availability and cabin layouts ready for operations", 2.7),
+                @{@"file": @"01-home.png", @"title": @"AeroVista", @"subtitle": @"A complete passenger and airline operations experience", @"duration": @4.2, @"style": @"outro"}
+            ];
+        }
 
         NSMutableDictionary<NSString *, NSImage *> *images = [NSMutableDictionary dictionary];
         for (NSDictionary *scene in scenes) {
@@ -282,7 +308,7 @@ int main(int argc, const char * argv[]) {
         if (posterImage) {
             NSBitmapImageRep *poster = [[NSBitmapImageRep alloc] initWithCGImage:posterImage];
             NSData *posterData = [poster representationUsingType:NSBitmapImageFileTypePNG properties:@{}];
-            [posterData writeToFile:[root stringByAppendingPathComponent:@"AeroVista-Premium-Platform-Cover.png"] atomically:YES];
+            [posterData writeToFile:coverPath atomically:YES];
             CGImageRelease(posterImage);
         } else {
             NSLog(@"Poster export warning: %@", posterError);

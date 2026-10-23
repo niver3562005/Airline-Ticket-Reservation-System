@@ -9,7 +9,7 @@
         <form th:action="@{/flight-schedule}" method="get" class="schedule-search"><label for="route">Search by city, airport or flight number</label><div><input id="route" name="route" th:value="${route}" placeholder="Try AN204, Colombo or DXB"><button class="btn btn-light" type="submit">Find flight</button></div></form>
     </section>
     <section class="schedule-shell">
-        <div class="schedule-intro"><div><span class="eyebrow">UPCOMING OPERATIONS</span><h2>Ten-plus journeys, ready to book.</h2><p>Every schedule is database-backed and includes live availability, aircraft, gate, baggage and all four cabin prices.</p></div><a class="btn btn-primary" th:href="@{/#book}">Search availability</a></div>
+        <div class="schedule-intro"><div><span class="eyebrow">YEAR-ROUND OPERATIONS</span><h2>A year of journeys, ready to book.</h2><p>Every destination has 50 long-term services with live availability, rotating times, aircraft, gate, baggage and all four cabin prices.</p></div><a class="btn btn-primary" th:href="@{/#book}">Search availability</a></div>
         <div class="delay-service-note"><span class="notification-icon"><svg th:replace="~{fragments/icons :: bell}"></svg></span><div><strong>Automatic disruption care</strong><p>If a booked flight is delayed, AeroVista creates in-app, email and SMS alerts with the reason and revised departure time.</p></div><a th:href="@{/flight-status}">Track a flight</a></div>
         <div class="schedule-grid" th:unless="${schedule.isEmpty()}">
             <article class="schedule-card" th:each="flight : ${schedule}">

@@ -73,7 +73,7 @@ DB_USERNAME=aeronest
 DB_PASSWORD=aeronest
 ```
 
-7. Press **Run**. Hibernate creates or upgrades the tables and the seeders add airports, aircraft, 15 scheduled/live flights, connecting segments, 50 destination countries, 53 city hotels, cabs/shuttles, packages and demonstration accounts.
+7. Press **Run**. Hibernate creates or upgrades the tables and the seeders add airports, aircraft, 50 long-term services for every international destination, connecting segments, 50 destination countries, 53 city hotels, cabs/shuttles, packages and demonstration accounts.
 8. Open [http://localhost:8080](http://localhost:8080).
 
 You can also run the project from IntelliJ's Terminal:

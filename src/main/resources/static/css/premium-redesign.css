@@ -342,6 +342,458 @@ button, input, select, textarea { font: inherit; }
 .cookie-banner { border-color: rgba(217,185,139,.35); box-shadow: var(--av-shadow-deep); }
 .cookie-modal > section { border-radius: 26px; box-shadow: var(--av-shadow-deep); }
 
+/* Vibrant journey layer ------------------------------------------------------
+   Inspired by ParkNGo's use of themed contrast: every functional surface gets
+   an intentional mood, while AeroVista keeps its own navy/champagne identity. */
+:root {
+    --av-cream: #fff8ef;
+    --av-sky: #edf5ff;
+    --av-mint: #eaf7f2;
+    --av-lilac: #f2efff;
+    --av-coral: #fff0ea;
+    --av-sun: #f6d7a8;
+}
+
+body.soft-bg,
+body.account-page,
+body.admin-page {
+    background:
+        radial-gradient(circle at 7% 11%, rgba(233,181,143,.18), transparent 22rem),
+        radial-gradient(circle at 93% 20%, rgba(84,130,198,.14), transparent 25rem),
+        radial-gradient(circle at 55% 88%, rgba(217,185,139,.12), transparent 30rem),
+        linear-gradient(180deg, #f8f9fc 0%, #f3f5f9 52%, #f9f5ef 100%);
+    background-attachment: fixed;
+}
+.public-page:not(.home-page) main,
+.account-shell,
+.admin-main { position: relative; isolation: isolate; }
+.public-page:not(.home-page) main::before,
+.account-shell::before,
+.admin-main::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    pointer-events: none;
+    width: 270px;
+    height: 270px;
+    border: 54px solid rgba(20,44,88,.025);
+    border-radius: 50%;
+    top: 95px;
+    right: -110px;
+}
+
+/* Themed page introductions replace large empty white openings. */
+.results-heading,
+.booking-page > .page-heading,
+.profile-page > .page-heading,
+.account-shell > .page-heading,
+.feedback-layout + .page-heading,
+.manage-intro {
+    position: relative;
+    overflow: hidden;
+    padding: 30px 34px;
+    border: 1px solid rgba(217,185,139,.2);
+    border-radius: 24px;
+    color: white;
+    background:
+        radial-gradient(circle at 88% 18%, rgba(233,181,143,.28), transparent 30%),
+        radial-gradient(circle at 10% 100%, rgba(64,101,164,.35), transparent 40%),
+        linear-gradient(125deg, var(--av-deep), var(--av-navy) 64%, var(--av-blue));
+    box-shadow: var(--av-shadow);
+}
+.results-heading::after,
+.booking-page > .page-heading::after,
+.profile-page > .page-heading::after,
+.account-shell > .page-heading::after,
+.manage-intro::after,
+.admin-header::after {
+    content: "";
+    position: absolute;
+    width: 230px;
+    height: 230px;
+    border: 42px solid rgba(255,255,255,.055);
+    border-radius: 50%;
+    right: -70px;
+    top: -120px;
+    pointer-events: none;
+}
+.results-heading h1,
+.booking-page > .page-heading h1,
+.profile-page > .page-heading h1,
+.account-shell > .page-heading h1,
+.manage-intro h1 { color: white; }
+.results-heading p,
+.booking-page > .page-heading p,
+.profile-page > .page-heading p,
+.account-shell > .page-heading p,
+.manage-intro p { color: rgba(255,255,255,.72); }
+.results-heading .eyebrow,
+.booking-page > .page-heading .eyebrow,
+.profile-page > .page-heading .eyebrow,
+.account-shell > .page-heading .eyebrow,
+.manage-intro .eyebrow { color: var(--av-sun); }
+.results-heading .back-link,
+.booking-page > .page-heading .back-link,
+.profile-page > .page-heading .back-link,
+.account-shell > .page-heading .back-link { color: rgba(255,255,255,.8); }
+.results-heading .result-count,
+.profile-page .profile-identity {
+    position: relative;
+    z-index: 1;
+    color: white;
+    border-color: rgba(255,255,255,.18);
+    background: rgba(255,255,255,.1);
+    backdrop-filter: blur(12px);
+}
+.profile-page .profile-identity span { color: rgba(255,255,255,.68); }
+
+/* Search results: stronger airline identity and a more tactile fare choice. */
+.search-summary-bar {
+    border: 1px solid rgba(217,185,139,.28);
+    background:
+        linear-gradient(90deg, rgba(217,185,139,.14), transparent 22%),
+        linear-gradient(135deg, var(--av-deep), var(--av-navy));
+    box-shadow: 0 16px 40px rgba(13,27,51,.16);
+}
+.search-summary-bar::before {
+    content: "";
+    align-self: stretch;
+    width: 3px;
+    border-radius: 999px;
+    background: linear-gradient(var(--av-peach), var(--av-gold));
+}
+.filter-panel {
+    overflow: hidden;
+    background: linear-gradient(180deg, var(--av-white), #f4f7fb);
+    box-shadow: var(--av-shadow-sm);
+}
+.filter-panel::before,
+.panel::before,
+.admin-card::before,
+.hub-tool-card::before {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    inset: 0 0 auto;
+    height: 4px;
+    background: linear-gradient(90deg, var(--av-peach), var(--av-gold), #8db1df);
+    opacity: .95;
+}
+.panel,
+.admin-card,
+.hub-tool-card { position: relative; }
+.filter-value { background: var(--av-sky); color: var(--av-navy); border: 1px solid #d5e5f8; }
+.flight-card {
+    overflow: hidden;
+    border: 1px solid #dce3ed;
+    background: linear-gradient(135deg, white 0%, white 70%, #f2f6fc 100%);
+}
+.flight-card::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 5px;
+    background: linear-gradient(180deg, var(--av-peach), var(--av-navy));
+}
+.flight-card-top { background: linear-gradient(90deg, var(--av-sky), rgba(255,255,255,.4)); }
+.flight-card .fare-panel {
+    color: white;
+    border-left-color: rgba(255,255,255,.1);
+    background:
+        radial-gradient(circle at 100% 0, rgba(233,181,143,.24), transparent 42%),
+        linear-gradient(150deg, var(--av-navy), var(--av-deep));
+}
+.flight-card .fare-panel small,
+.flight-card .fare-panel span { color: rgba(255,255,255,.66); }
+.flight-card .fare-panel strong { color: white; }
+.flight-card .fare-panel .btn-primary { color: var(--av-deep); background: linear-gradient(135deg, #f5dcc3, var(--av-gold)); border-color: transparent; }
+.connection-card::before { background: linear-gradient(180deg, #88aa93, var(--av-gold)); }
+.connection-intro { border-color: #d7e7df; background: linear-gradient(110deg, var(--av-mint), white); }
+
+/* Checkout widgets use distinct functional tones instead of repeated white. */
+.booking-page { padding-bottom: 100px; }
+.booking-page > .page-heading { margin-bottom: 30px; }
+.booking-main > .panel:nth-of-type(1) { background: linear-gradient(145deg, #fff, var(--av-sky)); }
+.booking-main > .panel:nth-of-type(2) { background: linear-gradient(145deg, #fff, var(--av-cream)); }
+.booking-main > .panel:nth-of-type(3) { background: linear-gradient(145deg, #fff, var(--av-mint)); }
+.panel-head .number {
+    color: white;
+    background: linear-gradient(145deg, var(--av-blue), var(--av-deep));
+    box-shadow: 0 8px 18px rgba(20,44,88,.2);
+}
+.traveller-card {
+    border: 1px solid #e3d6c7;
+    background:
+        linear-gradient(90deg, rgba(233,181,143,.1), transparent 35%),
+        rgba(255,255,255,.82);
+}
+.traveller-title { color: var(--av-navy); }
+.payment-choice-grid label > span {
+    border-color: #dbe2ec;
+    background: linear-gradient(145deg, white, #f5f7fb);
+}
+.payment-choice-grid label:nth-child(2) > span { background: linear-gradient(145deg, white, var(--av-mint)); }
+.payment-choice-grid label:nth-child(3) > span { background: linear-gradient(145deg, white, var(--av-cream)); }
+.payment-choice-grid input:checked + span { border-color: var(--av-gold); box-shadow: 0 0 0 3px rgba(217,185,139,.18), var(--av-shadow-sm); }
+.promo-checkout { border-color: #ead2b8; background: linear-gradient(110deg, var(--av-cream), white); }
+.trip-summary {
+    color: white;
+    border-color: rgba(217,185,139,.28);
+    background:
+        radial-gradient(circle at 88% 10%, rgba(233,181,143,.25), transparent 31%),
+        linear-gradient(155deg, var(--av-navy), var(--av-deep));
+    box-shadow: var(--av-shadow-deep);
+}
+.trip-summary .eyebrow { color: var(--av-sun); }
+.trip-summary .flight-identity span,
+.trip-summary .summary-row > span,
+.trip-summary .summary-note { color: rgba(255,255,255,.66); }
+.trip-summary .flight-identity strong,
+.trip-summary .summary-row strong,
+.trip-summary .summary-route strong { color: white; }
+.trip-summary .summary-row,
+.trip-summary hr { border-color: rgba(255,255,255,.12); }
+.trip-summary .flight-identity img { background: white; }
+.trip-summary .secure-note { color: var(--av-sun); }
+
+/* Account pages: every shortcut and timeline item receives a visual identity. */
+.member-hero {
+    background:
+        linear-gradient(90deg, rgba(7,20,43,.94), rgba(20,44,88,.65)),
+        url('/images/aerovista-terminal-hero-v2.png') center 47% / cover;
+    box-shadow: var(--av-shadow-deep);
+}
+.member-card { background: linear-gradient(145deg, rgba(255,255,255,.18), rgba(255,255,255,.07)); border-color: rgba(255,255,255,.22); }
+.account-tool-grid > a { overflow: hidden; border: 1px solid transparent; box-shadow: var(--av-shadow-sm); }
+.account-tool-grid > a:nth-child(1) { background: linear-gradient(135deg, var(--av-sky), white); border-color: #d7e7f8; }
+.account-tool-grid > a:nth-child(2) { background: linear-gradient(135deg, var(--av-cream), white); border-color: #eedbc5; }
+.account-tool-grid > a:nth-child(3) { background: linear-gradient(135deg, var(--av-mint), white); border-color: #d2e7dd; }
+.account-tool-grid > a:nth-child(1) .feature-icon { background: #dcecff; color: #21528f; }
+.account-tool-grid > a:nth-child(2) .feature-icon { background: #f7dfbd; color: #8a5a19; }
+.account-tool-grid > a:nth-child(3) .feature-icon { background: #d7eee3; color: #287052; }
+.account-content { border: 1px solid var(--av-cloud); border-radius: 24px; background: rgba(255,255,255,.86); box-shadow: var(--av-shadow-sm); }
+.account-trip { border-left: 4px solid var(--av-gold); background: linear-gradient(90deg, var(--av-cream), white 35%); }
+.account-alerts { background: linear-gradient(180deg, white, var(--av-sky)); }
+.notification-timeline article {
+    border: 1px solid var(--av-cloud);
+    border-left: 4px solid #8caed8;
+    border-radius: 20px;
+    background: linear-gradient(110deg, white, var(--av-sky));
+    box-shadow: var(--av-shadow-sm);
+}
+.notification-timeline article:nth-child(3n+2) { border-left-color: var(--av-gold); background: linear-gradient(110deg, white, var(--av-cream)); }
+.notification-timeline article:nth-child(3n+3) { border-left-color: #70a88a; background: linear-gradient(110deg, white, var(--av-mint)); }
+.notification-timeline article.unread { box-shadow: 0 15px 36px rgba(20,44,88,.13); }
+.profile-grid > .panel:first-child { background: linear-gradient(145deg, white, var(--av-sky)); }
+.profile-grid > .panel:last-child { background: linear-gradient(145deg, white, var(--av-cream)); }
+.feedback-form { background: linear-gradient(145deg, white, var(--av-lilac)); }
+.feedback-history { background: linear-gradient(145deg, white, var(--av-cream)); }
+.rating-picker { border: 1px solid #e5ddf8; background: rgba(255,255,255,.72); }
+.rating-picker input:checked + span { color: var(--av-deep); background: linear-gradient(135deg, var(--av-peach), var(--av-gold)); }
+
+/* Manage booking combines a hero, progress journey and service colour states. */
+.manage-page { padding-top: 132px !important; }
+.manage-intro { margin-bottom: 26px; }
+.lookup-card {
+    padding: 24px;
+    border-color: #d9e3f0;
+    background: linear-gradient(110deg, var(--av-sky), white 58%, var(--av-cream));
+}
+.journey-card {
+    color: white;
+    background:
+        radial-gradient(circle at 85% 8%, rgba(233,181,143,.24), transparent 27%),
+        linear-gradient(145deg, var(--av-navy), var(--av-deep));
+}
+.journey-card .journey-head p,
+.journey-card .flight-times span,
+.journey-card .flight-times small { color: rgba(255,255,255,.68); }
+.journey-card .journey-head h2,
+.journey-card .flight-times strong,
+.journey-card .pnr strong { color: white; }
+.journey-card .pnr { border-color: rgba(255,255,255,.18); background: rgba(255,255,255,.08); }
+.journey-progress { background: linear-gradient(120deg, white, var(--av-sky)); }
+.progress-track .active > span { color: var(--av-deep); background: linear-gradient(135deg, var(--av-peach), var(--av-gold)); box-shadow: 0 0 0 5px rgba(217,185,139,.16); }
+.manage-actions-grid .panel:first-child { background: linear-gradient(140deg, var(--av-sky), white); }
+.manage-actions-grid .panel:last-child { background: linear-gradient(140deg, var(--av-mint), white); }
+.priority-service {
+    color: white;
+    border-color: rgba(217,185,139,.3);
+    background:
+        radial-gradient(circle at 6% 100%, rgba(233,181,143,.2), transparent 32%),
+        linear-gradient(135deg, var(--av-deep), var(--av-blue));
+}
+.priority-service h2,
+.priority-service h3 { color: white; }
+.priority-service p,
+.priority-service .service-disclaimer { color: rgba(255,255,255,.68); }
+.priority-service-cards article { border-color: rgba(255,255,255,.14); background: rgba(255,255,255,.08); }
+.priority-service-form { border-color: rgba(255,255,255,.15); background: rgba(255,255,255,.08); }
+.priority-service-form label { color: rgba(255,255,255,.66); }
+.cancellation-panel { border-color: #efd2cc; background: linear-gradient(110deg, #fff, var(--av-coral)); }
+.refund-amounts > span { background: rgba(255,255,255,.82); box-shadow: 0 8px 22px rgba(98,50,42,.06); }
+
+/* Public information widgets use varied tones and image-led depth. */
+.hub-tool-card.status-tool { background: linear-gradient(145deg, white, var(--av-sky)); }
+.hub-tool-card.visa-tool { background: linear-gradient(145deg, white, var(--av-cream)); }
+.flight-status-result { color: white; border-color: rgba(217,185,139,.25); background: linear-gradient(135deg, var(--av-navy), var(--av-deep)); }
+.flight-status-result .status-route,
+.flight-status-result span { color: rgba(255,255,255,.76); }
+.live-flight-panel { border-color: rgba(100,152,128,.3); background: linear-gradient(145deg, #0c342a, #102c42); color: white; }
+.live-flight-panel small,
+.live-flight-panel p { color: rgba(255,255,255,.68); }
+.telemetry-grid > div { border-color: rgba(255,255,255,.12); background: rgba(255,255,255,.07); }
+.facility-card:nth-child(4n+1) { background: linear-gradient(145deg, white, var(--av-sky)); }
+.facility-card:nth-child(4n+2) { background: linear-gradient(145deg, white, var(--av-cream)); }
+.facility-card:nth-child(4n+3) { background: linear-gradient(145deg, white, var(--av-mint)); }
+.facility-card:nth-child(4n+4) { background: linear-gradient(145deg, white, var(--av-lilac)); }
+.partner-card { overflow: hidden; }
+.partner-card::after { content: ""; position: absolute; inset: 0 0 auto; height: 5px; background: linear-gradient(90deg, var(--av-peach), var(--av-gold)); }
+.partner-card:nth-child(3n+2)::after { background: linear-gradient(90deg, #79a7d8, var(--av-blue)); }
+.partner-card:nth-child(3n+3)::after { background: linear-gradient(90deg, #79aa91, #306f57); }
+.partner-card:nth-child(3n+1) { background: linear-gradient(155deg, white, var(--av-cream)); }
+.partner-card:nth-child(3n+2) { background: linear-gradient(155deg, white, var(--av-sky)); }
+.partner-card:nth-child(3n+3) { background: linear-gradient(155deg, white, var(--av-mint)); }
+.payment-method-grid article:nth-child(1) { background: linear-gradient(145deg, white, var(--av-sky)); }
+.payment-method-grid article:nth-child(2) { background: linear-gradient(145deg, white, var(--av-mint)); }
+.payment-method-grid article:nth-child(3) { background: linear-gradient(145deg, white, var(--av-cream)); }
+.payment-method-grid article:nth-child(2) > span { background: #39765c; }
+.payment-method-grid article:nth-child(3) > span { color: var(--av-deep); background: linear-gradient(135deg, var(--av-peach), var(--av-gold)); }
+.payment-flow { background: linear-gradient(90deg, var(--av-sky), white 45%, var(--av-cream)); box-shadow: var(--av-shadow-sm); }
+.cabin-tier:nth-child(1) { background: linear-gradient(155deg, white, var(--av-sky)); }
+.cabin-tier.premium { background: linear-gradient(155deg, white, var(--av-lilac)); }
+.cabin-tier.first { background: linear-gradient(155deg, white, var(--av-cream)); }
+.policy-index { overflow: hidden; background: linear-gradient(180deg, var(--av-deep), var(--av-navy)); box-shadow: var(--av-shadow); }
+.policy-index strong { color: var(--av-sun); }
+.policy-index a { color: rgba(255,255,255,.68); }
+.policy-index a:hover { color: white; }
+.policy-content { background: linear-gradient(145deg, rgba(255,255,255,.98), #fbf8f4); box-shadow: var(--av-shadow-sm); }
+.policy-content section > span { display: inline-flex; min-width: 34px; padding: 6px 9px; justify-content: center; border-radius: 999px; color: var(--av-navy); background: var(--av-sky); }
+
+/* Operations pages now carry the same brand energy as the passenger product. */
+.admin-main { background: transparent; }
+.admin-header {
+    position: relative;
+    overflow: hidden;
+    margin: 18px 22px 28px;
+    padding: 28px 30px;
+    border: 1px solid rgba(217,185,139,.2);
+    border-radius: 22px;
+    color: white;
+    background:
+        radial-gradient(circle at 88% 15%, rgba(233,181,143,.26), transparent 28%),
+        linear-gradient(125deg, var(--av-deep), var(--av-navy) 62%, var(--av-blue));
+    box-shadow: var(--av-shadow);
+}
+.admin-header h1 { color: white; }
+.admin-header p { color: rgba(255,255,255,.68); }
+.admin-header .eyebrow { color: var(--av-sun); }
+.admin-header .back-link { color: rgba(255,255,255,.74); }
+.admin-header .btn-secondary { color: white; border-color: rgba(255,255,255,.22); background: rgba(255,255,255,.1); }
+.metric-grid article {
+    overflow: hidden;
+    border: 1px solid var(--av-cloud);
+    box-shadow: var(--av-shadow-sm);
+}
+.metric-grid article:nth-child(4n+1) { background: linear-gradient(145deg, white, var(--av-sky)); }
+.metric-grid article:nth-child(4n+2) { background: linear-gradient(145deg, white, var(--av-mint)); }
+.metric-grid article:nth-child(4n+3) { background: linear-gradient(145deg, white, var(--av-cream)); }
+.metric-grid article:nth-child(4n+4) { background: linear-gradient(145deg, white, var(--av-lilac)); }
+.metric-grid article::after {
+    content: "";
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    border: 18px solid rgba(20,44,88,.035);
+    border-radius: 50%;
+    right: -26px;
+    top: -30px;
+}
+.admin-card { overflow: hidden; box-shadow: var(--av-shadow-sm); background: rgba(255,255,255,.94); }
+.admin-card:nth-child(3n+2)::before { background: linear-gradient(90deg, #76a88a, #b8d7c7); }
+.admin-card:nth-child(3n+3)::before { background: linear-gradient(90deg, #8da6d5, #baa9e7); }
+.card-heading { padding-bottom: 14px; border-bottom: 1px solid #edf0f4; }
+.card-heading h2 { color: var(--av-deep); }
+.admin-card table thead { background: linear-gradient(90deg, #eef3f9, #f8f6f2); }
+.admin-card table tbody tr:nth-child(even) td { background: rgba(244,247,250,.56); }
+.entity-form { background: linear-gradient(145deg, white, var(--av-sky)); }
+.entity-form .form-section-title {
+    padding: 12px 14px;
+    border-radius: 12px;
+    color: var(--av-navy);
+    background: linear-gradient(90deg, var(--av-cream), rgba(255,255,255,.4));
+}
+.telemetry-admin { color: white; border-color: rgba(217,185,139,.28); background: linear-gradient(145deg, var(--av-deep), var(--av-navy)); }
+.telemetry-admin h2,
+.telemetry-admin strong { color: white; }
+.telemetry-admin p,
+.telemetry-admin small { color: rgba(255,255,255,.66); }
+.telemetry-summary article { border-color: rgba(255,255,255,.12); background: rgba(255,255,255,.08); }
+.telemetry-admin .field label { color: rgba(255,255,255,.66); }
+.telemetry-admin .field input { border-color: rgba(255,255,255,.16); background: rgba(255,255,255,.1); color: white; }
+.fleet-card:nth-child(3n+1) { background: linear-gradient(145deg, white, var(--av-sky)); }
+.fleet-card:nth-child(3n+2) { background: linear-gradient(145deg, white, var(--av-cream)); }
+.fleet-card:nth-child(3n+3) { background: linear-gradient(145deg, white, var(--av-mint)); }
+.feedback-ops-list article:nth-child(odd) { background: linear-gradient(100deg, var(--av-cream), white); }
+.feedback-ops-list article:nth-child(even) { background: linear-gradient(100deg, var(--av-sky), white); }
+
+/* Empty, recovery and error states remain branded instead of visually blank. */
+.empty-state,
+.account-empty,
+.empty-cell,
+.recovery-result {
+    background:
+        radial-gradient(circle at 90% 10%, rgba(233,181,143,.2), transparent 32%),
+        linear-gradient(145deg, white, var(--av-sky));
+}
+.empty-state,
+.account-empty { border: 1px dashed #bfd0e5; border-radius: 22px; box-shadow: var(--av-shadow-sm); }
+.empty-icon { color: var(--av-navy); background: linear-gradient(145deg, #f6ddc1, var(--av-gold)); box-shadow: 0 10px 25px rgba(217,185,139,.25); }
+.auth-box {
+    background:
+        radial-gradient(circle at 100% 0, rgba(233,181,143,.16), transparent 28%),
+        linear-gradient(145deg, white, #fcfbf9);
+}
+.auth-box::before {
+    content: "";
+    display: block;
+    width: 54px;
+    height: 4px;
+    margin-bottom: 22px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--av-peach), var(--av-gold));
+}
+.error-page {
+    color: white;
+    background:
+        linear-gradient(100deg, rgba(7,20,43,.94), rgba(20,44,88,.68)),
+        url('/images/aerovista-terminal-hero-v2.png') center / cover;
+}
+.error-page > div { border: 1px solid rgba(255,255,255,.16); background: rgba(13,27,51,.55); box-shadow: var(--av-shadow-deep); backdrop-filter: blur(18px); }
+.error-page h1 { color: white; }
+.error-page p { color: rgba(255,255,255,.72); }
+
+@media (max-width: 900px) {
+    .results-heading,
+    .booking-page > .page-heading,
+    .profile-page > .page-heading,
+    .account-shell > .page-heading,
+    .manage-intro { padding: 24px; }
+    .admin-header { margin: 12px 14px 22px; padding: 24px; }
+    .flight-card .fare-panel { border-left: 0; border-top: 1px solid rgba(255,255,255,.12); }
+}
+
+@media (max-width: 640px) {
+    .results-heading,
+    .booking-page > .page-heading,
+    .profile-page > .page-heading,
+    .account-shell > .page-heading,
+    .manage-intro { border-radius: 20px; padding: 22px 18px; }
+    .admin-header { border-radius: 18px; }
+    .policy-index { background: linear-gradient(125deg, var(--av-deep), var(--av-navy)); }
+    .search-summary-bar::before { display: none; }
+}
+
 /* Motion */
 @keyframes avRise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
 .hero-copy, .flight-search-card, .reference-trust, .section-heading { animation: avRise .72s cubic-bezier(.2,.7,.2,1) both; }
@@ -407,4 +859,112 @@ button, input, select, textarea { font: inherit; }
 @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
+
+/* Role-separated access and workspaces */
+.portal-access-page .auth-panel { padding: 42px clamp(24px, 4vw, 68px); }
+.portal-picker { width: min(680px, 100%); }
+.portal-picker > p { max-width: 56ch; }
+.portal-choice-grid { display: grid; gap: 14px; margin-top: 28px; }
+.portal-choice {
+    position: relative;
+    display: grid;
+    grid-template-columns: 54px 1fr auto;
+    align-items: center;
+    gap: 16px;
+    min-height: 118px;
+    padding: 20px;
+    overflow: hidden;
+    color: var(--av-ink);
+    border: 1px solid var(--av-cloud);
+    border-radius: 20px;
+    background: linear-gradient(110deg, rgba(255,255,255,.98), rgba(242,246,251,.92));
+    box-shadow: var(--av-shadow-sm);
+    transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+.portal-choice::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 5px; background: var(--av-blue); }
+.portal-choice.customer::before { background: linear-gradient(#45a083, #9ed4bc); }
+.portal-choice.staff::before { background: linear-gradient(var(--av-blue), #8da6d5); }
+.portal-choice.admin::before { background: linear-gradient(var(--av-gold), #edb58f); }
+.portal-choice:hover { transform: translateY(-3px); border-color: rgba(29,78,145,.2); box-shadow: var(--av-shadow); }
+.portal-choice-icon { width: 54px; height: 54px; display: grid; place-items: center; border-radius: 16px; color: var(--av-navy); background: var(--av-sky); }
+.portal-choice.customer .portal-choice-icon { color: #2e765f; background: var(--av-mint); }
+.portal-choice.admin .portal-choice-icon { color: #8a5f25; background: var(--av-sun); }
+.portal-choice-icon .icon { width: 24px; height: 24px; }
+.portal-choice div { display: grid; gap: 3px; }
+.portal-choice small { color: var(--av-muted); font: 800 .62rem var(--av-data); letter-spacing: .13em; }
+.portal-choice strong { color: var(--av-deep); font: 800 1.12rem var(--av-display); }
+.portal-choice p { margin: 0; color: var(--av-muted); font-size: .8rem; line-height: 1.55; }
+.portal-choice .portal-arrow { width: 18px; color: var(--av-blue); }
+.role-login-page.portal-staff .btn-primary { background: linear-gradient(135deg, #173e74, #245aa2); }
+.role-login-page.portal-admin .btn-primary { color: var(--av-deep); background: linear-gradient(135deg, #edc999, #d9b878); }
+
+.role-responsibility-panel {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 26px;
+    margin-bottom: 22px;
+    padding: 24px 28px;
+    overflow: hidden;
+    border: 1px solid rgba(29,78,145,.12);
+    border-radius: 22px;
+    background:
+        radial-gradient(circle at 94% 12%, rgba(94,136,201,.16), transparent 30%),
+        linear-gradient(110deg, rgba(255,255,255,.96), rgba(235,243,252,.9));
+    box-shadow: var(--av-shadow-sm);
+}
+.role-responsibility-panel h2 { margin: 5px 0; color: var(--av-deep); font-size: clamp(1.25rem, 2vw, 1.7rem); }
+.role-responsibility-panel p { max-width: 760px; margin: 0; color: var(--av-muted); font-size: .84rem; line-height: 1.6; }
+.admin-responsibility { background: radial-gradient(circle at 94% 12%, rgba(217,185,139,.18), transparent 30%), linear-gradient(110deg, #fffdf9, #f7efe4); }
+.customer-responsibility { margin-top: 24px; background: radial-gradient(circle at 94% 12%, rgba(118,168,138,.18), transparent 30%), linear-gradient(110deg, #fff, #eef8f3); }
+.role-permission-badge { flex: 0 0 auto; display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; color: var(--av-navy); border: 1px solid rgba(29,78,145,.14); border-radius: 999px; background: rgba(255,255,255,.82); font: 800 .68rem var(--av-data); letter-spacing: .04em; }
+.role-permission-badge .icon { width: 16px; }
+
+.workspace-task-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-bottom: 22px; }
+.workspace-task-grid > a {
+    position: relative;
+    display: flex;
+    min-height: 218px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 22px;
+    overflow: hidden;
+    color: var(--av-ink);
+    border: 1px solid var(--av-cloud);
+    border-radius: 22px;
+    background: rgba(255,255,255,.94);
+    box-shadow: var(--av-shadow-sm);
+    transition: transform .25s ease, box-shadow .25s ease;
+}
+.workspace-task-grid > a::after { content: ""; position: absolute; inset: auto -28px -38px auto; width: 112px; height: 112px; border-radius: 50%; background: rgba(94,136,201,.08); }
+.workspace-task-grid > a:hover { transform: translateY(-5px); box-shadow: var(--av-shadow); }
+.workspace-task-grid > a > div { display: grid; gap: 5px; }
+.workspace-task-grid small { color: var(--av-muted); font: 800 .62rem var(--av-data); letter-spacing: .13em; }
+.workspace-task-grid strong { color: var(--av-deep); font: 800 1.05rem var(--av-display); line-height: 1.3; }
+.workspace-task-grid p { margin: 0; color: var(--av-muted); font-size: .75rem; line-height: 1.55; }
+.workspace-task-grid > a > span:last-child { margin-top: auto; color: var(--av-blue); font: 800 .72rem var(--av-data); }
+.workspace-task-icon { width: 48px; height: 48px; display: grid; place-items: center; border-radius: 15px; }
+.workspace-task-icon .icon { width: 22px; height: 22px; }
+.workspace-task-icon.blue { color: var(--av-blue); background: var(--av-sky); }
+.workspace-task-icon.green { color: #2e765f; background: var(--av-mint); }
+.workspace-task-icon.amber { color: #956427; background: var(--av-sun); }
+.workspace-task-icon.violet { color: #64509a; background: var(--av-lilac); }
+.staff-header { background: radial-gradient(circle at 86% 12%, rgba(112,180,168,.22), transparent 30%), linear-gradient(135deg, #091c39, #153e70); }
+.staff-metrics { margin-top: 0; }
+.account-tool-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+@media (max-width: 1180px) {
+    .workspace-task-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 720px) {
+    .portal-access-page .auth-panel { padding: 22px 12px; }
+    .portal-choice { grid-template-columns: 46px 1fr; padding: 17px; }
+    .portal-choice-icon { width: 46px; height: 46px; }
+    .portal-choice .portal-arrow { display: none; }
+    .role-responsibility-panel { align-items: flex-start; flex-direction: column; padding: 21px; }
+    .workspace-task-grid { grid-template-columns: 1fr; }
+    .workspace-task-grid > a { min-height: 190px; }
+    .account-tool-grid { grid-template-columns: 1fr; }
 }

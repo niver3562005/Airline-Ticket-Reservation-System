@@ -19,11 +19,12 @@ The application combines a premium responsive passenger experience with a secure
 11. **Modern airline operations** — four cabin classes, automatic flight telemetry, altitude/speed/position/ETA displays, cabin-level availability and structured cancellation recovery through rebooking, credit or full refund.
 12. **Priority airport journey** — passenger-linked priority check-in, fast-track security, priority boarding, baggage assistance and meet-and-assist requests with transparent pricing and staff fulfilment controls.
 13. **Privacy centre** — premium multi-column service footer, clear privacy/cookie/legal pages, and persisted Accept all, Necessary only or category-level browser consent.
-14. **Published flight schedule** — more than ten seeded journeys with airline identity, flight numbers, gates, aircraft, departure/arrival times, live status, fare brands, onboard features and cabin-specific baggage allowances.
+14. **Published flight schedule** — 50 long-term services for every international destination, including outbound and return journeys, rotating times, airline identity, flight numbers, gates, aircraft, live status, fare brands, onboard features and cabin-specific baggage allowances.
 15. **Proactive disruption and cash returns** — revised delay times with in-app/email/SMS delivery, transparent refund quotes before cancellation, a qualifying 24-hour full-refund window and tracked return-to-original-payment processing.
 16. **Global destination catalogue** — 50 database-backed countries with featured cities, local currencies, emergency contacts, advisory entry guidance and an image-led destination browser.
 17. **Hotel and airport-transfer network** — 53 image-backed hotels across the 50 featured destinations, plus cabs, shared shuttles, executive chauffeurs and resort-transfer coordination.
 18. **Deals and secure checkout** — a dedicated offers page, four server-validated promo codes, illustrated payment guidance and a modern payment-method selector covering card, bank transfer and pay-at-counter workflows.
+19. **Separated role workspaces** — dedicated customer, airline-staff and administrator login experiences with task-focused dashboards and protected permissions for passenger care, daily operations and airline governance.
 
 ## Technology and architecture
 
@@ -40,7 +41,7 @@ The application combines a premium responsive passenger experience with a secure
 
 The passenger and operations experiences share one reference-led AeroVista design language: Sora display typography, Manrope body copy, Inter for dense travel data, a deep-navy/champagne palette, restrained shadows, generous rounded surfaces and responsive layouts. The home experience uses an airport-at-sunset hero and floating booking panel; the same tokens continue through authentication, search, checkout, confirmation, account, travel-service and administration pages. Motion respects the browser's reduced-motion preference.
 
-The LinkedIn showcase tooling lives in `linkedin-showcase/`. `capture_walkthrough.js` exercises the live MySQL-backed journey and records 54 verified screens, while `make_video.m` assembles them into a 55-scene `AeroVista-Premium-Platform-Walkthrough.mp4` with a matching cover image.
+The LinkedIn showcase tooling lives in `linkedin-showcase/`. `capture_walkthrough.js` supports the complete detailed demonstration, while `capture_short_walkthrough.js` captures the focused customer, staff and administrator story. `make_video.m` can render either the full walkthrough or the concise `AeroVista-LinkedIn-Short-Walkthrough.mp4` with a matching cover image.
 
 ```text
 Browser → MVC Controllers → Business Services → JPA Repositories → Database
@@ -75,7 +76,7 @@ Open [http://localhost:8080](http://localhost:8080). The application creates a p
 | Administrator | `admin` | `aeronest123` |
 | Operations agent | `agent` | `agent123` |
 
-Administrators manage airports and aircraft. Administrators and agents can use the operations dashboard, flight controls, manifests and booking views. Passengers have a separate account dashboard, profile and booking history.
+Customers enter through `/login/customer`, staff through `/login/staff`, and administrators through `/login/admin`. Administrators manage airports, aircraft and governance. Staff use the daily operations workspace for flights, manifests and passenger care. Customers have a separate journey dashboard, profile, booking history and refund tracking.
 
 ### MySQL profile
 
@@ -105,7 +106,7 @@ mvn test
 mvn clean package
 ```
 
-The 48 automated tests cover pricing boundaries, four-cabin inventory, valid and invalid promotion handling, payment selection, atomic booking creation, duplicate-seat rejection, cash-refund quotes, disruption choices, delay-email content, partner and priority-airport reservations, the 50-country/image-backed hotel catalogue, telemetry persistence, notification creation, privacy pages, account security, deals and payment pages, public travel tools, the public schedule, direct and connecting-flight search, aircraft schedule conflict prevention, checkout rendering, authentication and role authorization.
+The 51 automated tests cover pricing boundaries, four-cabin inventory, valid and invalid promotion handling, payment selection, atomic booking creation, duplicate-seat rejection, cash-refund quotes, disruption choices, delay-email content, partner and priority-airport reservations, the 50-country/image-backed hotel catalogue, long-term flight scheduling, telemetry persistence, notification creation, privacy pages, account security, deals and payment pages, public travel tools, the public schedule, direct and connecting-flight search, aircraft schedule conflict prevention, checkout rendering, authentication and role authorization.
 
 ## IntelliJ IDEA + MySQL setup
 

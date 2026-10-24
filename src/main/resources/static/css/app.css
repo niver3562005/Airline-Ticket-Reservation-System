@@ -3,7 +3,7 @@
   --sky:#49a5f6; --sky-soft:#eaf4ff; --soft:#f5f8fc; --paper:#fff;
   --gold:#d6aa5b; --gold-soft:#fff7e7; --ink:#15213b; --muted:#667085;
   --line:#e2e8f0; --green:#16a34a; --green-bg:#eaf8ef; --red:#dc2626;
-  --red-bg:#fff0f1; --amber:#a16207; --amber-bg:#fff8df; --violet:#6941c6;
+  --red-bg:#fff0f1; --amber:#a16207; --amber-bg:#fff8df; --violet:#1f6ca8;
   --shadow:0 24px 70px rgba(11,23,54,.12); --shadow-sm:0 10px 30px rgba(11,23,54,.07);
   --radius:20px; --body:'Inter',sans-serif; --display:'Plus Jakarta Sans',sans-serif;
 }
@@ -213,7 +213,7 @@ body{background:#f8f8f6}.btn{border-radius:999px}.panel,.admin-card{border-radiu
 .hub-section .package-card .package-top{margin:20px 24px 0}.hub-section .package-card>h3{margin:14px 24px 8px}.hub-section .package-card>p{margin:0 24px;min-height:58px}.hub-section .package-card .package-meta{margin:10px 24px 14px}.hub-section .package-card .package-inclusions{margin:0 24px 16px;background:linear-gradient(135deg,#f1f8ff,#f5fffd);border:1px solid #dcecf4}.hub-section .package-card>footer{margin:auto 24px 24px}
 .service-marketplace{position:relative}.service-marketplace:before{content:"";position:absolute;width:440px;height:440px;right:-260px;top:260px;border-radius:50%;background:radial-gradient(circle,rgba(50,194,216,.16),transparent 68%);pointer-events:none}
 .partner-card{border-color:rgba(192,215,234,.74);box-shadow:0 14px 38px rgba(11,38,78,.08)}
-.partner-card:nth-child(5n+1) .partner-type{color:#0e75d8}.partner-card:nth-child(5n+2) .partner-type{color:#008f92}.partner-card:nth-child(5n+3) .partner-type{color:#9b6410}.partner-card:nth-child(5n+4) .partner-type{color:#7a47bd}.partner-card:nth-child(5n) .partner-type{color:#cb4c68}
+.partner-card:nth-child(5n+1) .partner-type{color:#0e75d8}.partner-card:nth-child(5n+2) .partner-type{color:#2479b4}.partner-card:nth-child(5n+3) .partner-type{color:#9b6410}.partner-card:nth-child(5n+4) .partner-type{color:#1d70aa}.partner-card:nth-child(5n) .partner-type{color:#d9b466}
 .partner-highlights{background:linear-gradient(135deg,#f2f8ff,#f3fffb);border:1px solid #e0edf4}
 .support-band{max-width:1300px;margin:24px auto 0;border-radius:28px 28px 0 0;background:radial-gradient(circle at 88% 12%,rgba(255,192,91,.42),transparent 24%),radial-gradient(circle at 14% 100%,rgba(36,214,200,.32),transparent 33%),linear-gradient(118deg,#0b46ad,#087eb1 62%,#06a1a8);box-shadow:0 22px 62px rgba(16,83,166,.25)}
 .support-channels article{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.15);backdrop-filter:blur(10px)}

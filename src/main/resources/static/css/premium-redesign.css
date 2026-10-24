@@ -349,7 +349,7 @@ button, input, select, textarea { font: inherit; }
     --av-cream: #fff8ef;
     --av-sky: #edf5ff;
     --av-mint: #eaf7f2;
-    --av-lilac: #f2efff;
+    --av-lilac: #eaf4ff;
     --av-coral: #fff0ea;
     --av-sun: #f6d7a8;
 }
@@ -507,8 +507,8 @@ body.admin-page {
 .flight-card .fare-panel span { color: rgba(255,255,255,.66); }
 .flight-card .fare-panel strong { color: white; }
 .flight-card .fare-panel .btn-primary { color: var(--av-deep); background: linear-gradient(135deg, #f5dcc3, var(--av-gold)); border-color: transparent; }
-.connection-card::before { background: linear-gradient(180deg, #88aa93, var(--av-gold)); }
-.connection-intro { border-color: #d7e7df; background: linear-gradient(110deg, var(--av-mint), white); }
+.connection-card::before { background: linear-gradient(180deg, #2d84bd, var(--av-gold)); }
+.connection-intro { border-color: #b9d9f2; background: linear-gradient(110deg, #e8f4ff, white); }
 
 /* Checkout widgets use distinct functional tones instead of repeated white. */
 .booking-page { padding-bottom: 100px; }
@@ -950,7 +950,7 @@ body.admin-page {
 .workspace-task-icon.blue { color: var(--av-blue); background: var(--av-sky); }
 .workspace-task-icon.green { color: #2e765f; background: var(--av-mint); }
 .workspace-task-icon.amber { color: #956427; background: var(--av-sun); }
-.workspace-task-icon.violet { color: #64509a; background: var(--av-lilac); }
+.workspace-task-icon.violet { color: #174f93; background: var(--av-lilac); }
 .staff-header { background: radial-gradient(circle at 86% 12%, rgba(112,180,168,.22), transparent 30%), linear-gradient(135deg, #091c39, #153e70); }
 .staff-metrics { margin-top: 0; }
 .account-tool-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
@@ -1109,8 +1109,8 @@ body.admin-page .metric-grid article {
     --av-night-2: #06152f;
     --av-cobalt-2: #174f93;
     --av-azure-2: #3279bd;
-    --av-indigo-2: #443b79;
-    --av-orchid-2: #654c78;
+    --av-indigo-2: #174f93;
+    --av-orchid-2: #2f75b8;
     --av-bronze-2: #8c632d;
     --av-champagne-2: #e7c48d;
     --av-steel-2: #344d70;
@@ -1146,7 +1146,7 @@ body.admin-page .metric-grid article {
 .badge-danger {
     color: #fff !important;
     border-color: rgba(231,196,141,.3) !important;
-    background: linear-gradient(135deg, #344d70, #5e4774) !important;
+    background: linear-gradient(135deg, #263f63, #15538b) !important;
 }
 .delay-copy { color: #745021 !important; }
 .btn-danger,
@@ -1154,14 +1154,14 @@ body.admin-page .metric-grid article {
 .card-actions button {
     color: #fff !important;
     border-color: rgba(231,196,141,.48) !important;
-    background: linear-gradient(135deg, #243e69, #604978) !important;
+    background: linear-gradient(135deg, #183967, #0f5d9b) !important;
     box-shadow: 0 12px 26px rgba(32,38,79,.2);
 }
 .actions button,
 .card-actions button { padding: 7px 11px; border-radius: 999px; }
 .feature-icon.danger {
     color: #fff !important;
-    background: linear-gradient(135deg, #263f6a, #654b79) !important;
+    background: linear-gradient(135deg, #17375f, #246da9) !important;
 }
 .metric-icon.green,
 .workspace-task-icon.green {
@@ -1176,7 +1176,7 @@ body.admin-page .metric-grid article {
 .metric-icon.violet,
 .workspace-task-icon.violet {
     color: #fff !important;
-    background: linear-gradient(135deg, #3f427f, #725487) !important;
+    background: linear-gradient(135deg, #17477e, #2f7db7) !important;
 }
 
 /* Confirmation becomes a composed premium ticket, not a card floating in an
@@ -1333,7 +1333,7 @@ body.admin-page .metric-grid article {
 .facility-card:nth-child(4n+4),
 .payment-method-grid article:nth-child(4n+4),
 .cabin-tier:nth-child(4n+4) {
-    background: linear-gradient(145deg, #282f67, #654c78) !important;
+    background: linear-gradient(145deg, #0e376a, #2874ae) !important;
 }
 .manage-actions-grid .panel,
 .account-tool-grid > a,
@@ -1372,11 +1372,11 @@ body.admin-page .metric-grid article {
 .fleet-card:nth-child(4n+1),
 .partner-card:nth-child(4n+1) { background: linear-gradient(150deg, #09234a, #18558f) !important; }
 .fleet-card:nth-child(4n+2),
-.partner-card:nth-child(4n+2) { background: linear-gradient(150deg, #183c6b, #4c4b86) !important; }
+.partner-card:nth-child(4n+2) { background: linear-gradient(150deg, #153c6d, #286fa9) !important; }
 .fleet-card:nth-child(4n+3),
 .partner-card:nth-child(4n+3) { background: linear-gradient(150deg, #745128, #a7773a 42%, #1b416f) !important; }
 .fleet-card:nth-child(4n+4),
-.partner-card:nth-child(4n+4) { background: linear-gradient(150deg, #252f62, #674a72) !important; }
+.partner-card:nth-child(4n+4) { background: linear-gradient(150deg, #113868, #2d7aaf) !important; }
 .fleet-card,
 .partner-card {
     color: #fff;
@@ -1430,7 +1430,7 @@ body.admin-page .metric-grid article {
     inset: 0 auto 0 0;
     width: 5px;
     border-radius: inherit;
-    background: linear-gradient(180deg, #225f9f, #dfb978, #514377);
+    background: linear-gradient(180deg, #225f9f, #dfb978, #174f93);
 }
 .admin-card:nth-child(3n+2),
 .profile-grid > .panel:nth-child(3n+2),
@@ -1440,7 +1440,7 @@ body.admin-page .metric-grid article {
 .admin-card:nth-child(3n+3),
 .profile-grid > .panel:nth-child(3n+3),
 .booking-main > .panel:nth-child(3n+3) {
-    background: radial-gradient(circle at 94% 4%, rgba(91,73,126,.17), transparent 30%), linear-gradient(145deg, rgba(250,249,255,.94), rgba(226,235,248,.88)) !important;
+    background: radial-gradient(circle at 94% 4%, rgba(31,105,166,.18), transparent 30%), linear-gradient(145deg, rgba(248,252,255,.94), rgba(220,238,252,.88)) !important;
 }
 
 .cancellation-panel {
@@ -1448,7 +1448,7 @@ body.admin-page .metric-grid article {
     border-color: rgba(231,196,141,.34) !important;
     background:
         radial-gradient(circle at 8% 10%, rgba(231,196,141,.2), transparent 26%),
-        linear-gradient(125deg, #172f59, #5b4773) !important;
+        linear-gradient(125deg, #102f5c, #17649d) !important;
     box-shadow: var(--av-jewel-shadow);
 }
 .cancellation-panel h2,
@@ -1473,4 +1473,199 @@ body.admin-page .metric-grid article {
 @media (max-width: 760px) {
     .confirmation-bg .ticket-details { grid-template-columns: repeat(2, 1fr); }
     .confirmation-bg .confirmation-wrap::before { height: 760px; }
+}
+
+/* Photographic card system -------------------------------------------------
+   Every major card family now carries purpose-matched travel photography
+   beneath a strict navy, aviation-blue and champagne treatment. */
+.workspace-task-grid > a,
+.account-tool-grid > a,
+.manage-actions-grid .panel,
+.metric-grid article,
+.facility-card,
+.payment-method-grid article,
+.cabin-tier,
+.fleet-card,
+.role-responsibility-panel,
+.journey-card,
+.journey-progress,
+.cancellation-panel,
+.admin-card,
+.profile-grid > .panel,
+.feedback-form,
+.feedback-history,
+.booking-main > .panel,
+.filter-panel,
+.payment-flow,
+.notification-timeline {
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+}
+
+.workspace-task-grid > a:nth-child(4n+1),
+.account-tool-grid > a:nth-child(6n+1),
+.manage-actions-grid .panel:nth-child(4n+1) {
+    background-image: linear-gradient(120deg, rgba(4,22,53,.94), rgba(13,77,132,.72)), url('/images/aerovista-hero.png') !important;
+}
+.workspace-task-grid > a:nth-child(4n+2),
+.account-tool-grid > a:nth-child(6n+2),
+.manage-actions-grid .panel:nth-child(4n+2) {
+    background-image: linear-gradient(120deg, rgba(4,24,55,.94), rgba(24,98,157,.68)), url('/images/aerovista-terminal-hero-v2.png') !important;
+}
+.workspace-task-grid > a:nth-child(4n+3),
+.account-tool-grid > a:nth-child(6n+3),
+.manage-actions-grid .panel:nth-child(4n+3) {
+    background-image: linear-gradient(120deg, rgba(5,27,60,.93), rgba(15,77,125,.7)), url('/images/aerovista-transfers-v1.png') !important;
+}
+.workspace-task-grid > a:nth-child(4n+4),
+.account-tool-grid > a:nth-child(6n+4),
+.manage-actions-grid .panel:nth-child(4n+4) {
+    background-image: linear-gradient(120deg, rgba(4,25,59,.93), rgba(22,96,153,.68)), url('/images/aerovista-connect-v1.png') !important;
+}
+.account-tool-grid > a:nth-child(6n+5) {
+    background-image: linear-gradient(120deg, rgba(4,22,54,.94), rgba(15,81,139,.68)), url('/images/aerovista-hotels-v1.png') !important;
+}
+.account-tool-grid > a:nth-child(6n+6) {
+    background-image: linear-gradient(120deg, rgba(4,23,55,.93), rgba(20,96,151,.7)), url('/images/aerovista-dining-v1.png') !important;
+}
+
+.metric-grid article:nth-child(4n+1) {
+    background-image: linear-gradient(110deg, rgba(4,25,58,.95), rgba(22,88,145,.76)), url('/images/aerovista-hero.png') !important;
+}
+.metric-grid article:nth-child(4n+2) {
+    background-image: linear-gradient(110deg, rgba(4,26,60,.95), rgba(28,105,166,.74)), url('/images/aerovista-terminal-hero-v2.png') !important;
+}
+.metric-grid article:nth-child(4n+3) {
+    background-image: linear-gradient(110deg, rgba(8,35,70,.94), rgba(166,116,52,.7)), url('/images/aerovista-journey-canvas-v1.png') !important;
+}
+.metric-grid article:nth-child(4n+4) {
+    background-image: linear-gradient(110deg, rgba(4,27,61,.95), rgba(24,105,158,.72)), url('/images/aerovista-destinations-v1.png') !important;
+}
+
+.facility-card:nth-child(4n+1) {
+    background-image: linear-gradient(120deg, rgba(4,25,57,.91), rgba(17,88,143,.69)), url('/images/services/facility-family.jpg') !important;
+}
+.facility-card:nth-child(4n+2) {
+    background-image: linear-gradient(120deg, rgba(4,24,56,.91), rgba(18,91,149,.68)), url('/images/services/facility-shop.jpg') !important;
+}
+.facility-card:nth-child(4n+3) {
+    background-image: linear-gradient(120deg, rgba(4,24,56,.92), rgba(17,88,145,.66)), url('/images/services/facility-spa.jpg') !important;
+}
+.facility-card:nth-child(4n+4) {
+    background-image: linear-gradient(120deg, rgba(4,24,56,.92), rgba(18,92,149,.67)), url('/images/aerovista-dining-v1.png') !important;
+}
+
+.payment-method-grid article:nth-child(1) {
+    background-image: linear-gradient(120deg, rgba(4,24,56,.93), rgba(18,86,143,.7)), url('/images/aerovista-terminal-hero-v2.png') !important;
+}
+.payment-method-grid article:nth-child(2) {
+    background-image: linear-gradient(120deg, rgba(4,24,56,.93), rgba(19,94,151,.7)), url('/images/aerovista-destinations-v1.png') !important;
+}
+.payment-method-grid article:nth-child(3) {
+    background-image: linear-gradient(120deg, rgba(5,26,59,.92), rgba(168,119,52,.7)), url('/images/aerovista-journey-canvas-v1.png') !important;
+}
+.cabin-tier:nth-child(1) {
+    background-image: linear-gradient(120deg, rgba(4,24,56,.94), rgba(18,86,142,.7)), url('/images/aerovista-hero.png') !important;
+}
+.cabin-tier:nth-child(2) {
+    background-image: linear-gradient(120deg, rgba(4,24,56,.94), rgba(22,99,158,.68)), url('/images/aerovista-terminal-hero-v2.png') !important;
+}
+.cabin-tier:nth-child(3) {
+    background-image: linear-gradient(120deg, rgba(4,24,56,.94), rgba(20,91,148,.68)), url('/images/aerovista-hotels-v1.png') !important;
+}
+.cabin-tier:nth-child(4) {
+    background-image: linear-gradient(120deg, rgba(5,25,57,.93), rgba(169,119,52,.68)), url('/images/aerovista-journey-canvas-v1.png') !important;
+}
+
+.fleet-card:nth-child(3n+1) {
+    background-image: linear-gradient(120deg, rgba(4,23,55,.94), rgba(15,83,141,.7)), url('/images/aerovista-hero.png') !important;
+}
+.fleet-card:nth-child(3n+2) {
+    background-image: linear-gradient(120deg, rgba(4,24,57,.94), rgba(23,101,159,.68)), url('/images/aerovista-terminal-hero-v2.png') !important;
+}
+.fleet-card:nth-child(3n+3) {
+    background-image: linear-gradient(120deg, rgba(5,25,57,.93), rgba(167,118,51,.68)), url('/images/aerovista-journey-canvas-v1.png') !important;
+}
+
+.role-responsibility-panel,
+.journey-card {
+    background-image: linear-gradient(110deg, rgba(4,22,52,.95), rgba(18,88,145,.7)), url('/images/aerovista-terminal-hero-v2.png') !important;
+}
+.journey-progress {
+    background-image: linear-gradient(110deg, rgba(4,23,55,.95), rgba(24,105,165,.72)), url('/images/aerovista-hero.png') !important;
+}
+.cancellation-panel {
+    background-image: linear-gradient(110deg, rgba(4,23,55,.95), rgba(22,93,148,.72)), url('/images/aerovista-journey-canvas-v1.png') !important;
+}
+.confirmation-bg .ticket {
+    background-image: linear-gradient(118deg, rgba(5,24,57,.97), rgba(20,88,148,.82)), url('/images/aerovista-terminal-hero-v2.png') !important;
+    background-position: center 54% !important;
+    background-size: cover !important;
+}
+
+.admin-card:nth-child(3n+1),
+.profile-grid > .panel:nth-child(3n+1),
+.booking-main > .panel:nth-child(3n+1) {
+    background-image: linear-gradient(120deg, rgba(248,251,255,.94), rgba(224,238,252,.9)), url('/images/aerovista-terminal-hero-v2.png') !important;
+}
+.admin-card:nth-child(3n+2),
+.profile-grid > .panel:nth-child(3n+2),
+.booking-main > .panel:nth-child(3n+2) {
+    background-image: linear-gradient(120deg, rgba(249,252,255,.94), rgba(221,238,252,.89)), url('/images/aerovista-destinations-v1.png') !important;
+}
+.admin-card:nth-child(3n+3),
+.profile-grid > .panel:nth-child(3n+3),
+.booking-main > .panel:nth-child(3n+3) {
+    background-image: linear-gradient(120deg, rgba(249,252,255,.94), rgba(222,238,251,.89)), url('/images/aerovista-hotels-v1.png') !important;
+}
+.feedback-form,
+.feedback-history,
+.notification-timeline {
+    background-image: linear-gradient(120deg, rgba(249,252,255,.94), rgba(220,237,251,.88)), url('/images/aerovista-connect-v1.png') !important;
+}
+.filter-panel,
+.payment-flow {
+    background-image: linear-gradient(120deg, rgba(249,252,255,.94), rgba(222,239,252,.89)), url('/images/aerovista-journey-canvas-v1.png') !important;
+}
+
+.partner-card:nth-child(4n+1),
+.partner-card:nth-child(4n+2),
+.partner-card:nth-child(4n+3),
+.partner-card:nth-child(4n+4) {
+    background: linear-gradient(150deg, #082650, #17609a) !important;
+}
+.partner-card:nth-child(4n+2) { background: linear-gradient(150deg, #0d376b, #2479b4) !important; }
+.partner-card:nth-child(4n+3) { background: linear-gradient(150deg, #173c68, #9b7138) !important; }
+.partner-card:nth-child(4n+4) { background: linear-gradient(150deg, #0b315f, #1d70aa) !important; }
+.partner-card .partner-type,
+.flight-badge.connection {
+    color: #d9b466 !important;
+}
+.flight-badge.connection {
+    border: 1px solid rgba(217,180,102,.42) !important;
+    background: linear-gradient(135deg, #0d376b, #2479b4) !important;
+}
+
+.workspace-task-icon.violet,
+.metric-icon.violet,
+.portal-choice.customer .portal-choice-icon,
+.service-symbol {
+    color: #fff !important;
+    background: linear-gradient(135deg, #15508b, #2d84bd) !important;
+}
+.service-promise .icon { color: #d9b98b !important; }
+.portal-choice.customer::before,
+.portal-choice.staff::before,
+.portal-choice.admin::before { background: linear-gradient(#1d69a7, #d9b98b) !important; }
+
+:root { --violet: #1f6ca8; }
+.seat-grid button.business-seat {
+    color: #15588f !important;
+    border-color: #8fc4ec !important;
+    background: #eaf5ff !important;
+}
+.seat-grid button.business-seat.occupied {
+    color: #fff !important;
+    background: #317bae !important;
 }
